@@ -1,0 +1,1442 @@
+{
+  "artifact_commit": "9b6609be7c5414ffd0b16624283e7c1a1e750541",
+  "package": "examples/generated/enzyme-kinetics",
+  "review_date": "2026-10-03",
+  "reviewer": "P2",
+  "acceptance": "needs_revision",
+  "artifact_hashes": {
+    "input.json": {
+      "git_blob_sha256": "52ae0b7b786a7085967899bb9fa40c780793eee1e0d571f39fe0efb9b7af15b3",
+      "reviewed_checkout_sha256": "482140cb35740b059122b71dcafbf93c88d3ff6085e7faa284633573c501301f"
+    },
+    "lesson.json": {
+      "git_blob_sha256": "1a09ebe28ae200ab655baea52edeb2cac29268f6c4fd796c2742f2409d7296fc",
+      "reviewed_checkout_sha256": "c291f78d102ea7590c509b4a938ea860c1e15424da2263bb354539818325d5ed"
+    },
+    "index.html": {
+      "git_blob_sha256": "964a7a09495c167c6d87bc314673f97783d953ee761f868eebdffce01a89aeb2",
+      "reviewed_checkout_sha256": "b3bf88973ba5be51e1b3fac78670237c989002fac0f8f2f12eccfc21a3c34a6f"
+    },
+    "trace.jsonl": {
+      "git_blob_sha256": "2cd8229ac71b41d350d8ad0be0c47870658f89104c6514c36414c1cf702066ff",
+      "reviewed_checkout_sha256": "0735c4237e1c4a6a365f4b4790d1d2a82405ac891db04254c8d70b9b3883ce2b"
+    }
+  },
+  "hash_note": "Git LF blobs and Windows CRLF checkout hashes recorded. The generated package remained unchanged.",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "source_fidelity": {
+    "url": "https://www.chem.uwec.edu/Chem352_F18/pages/readings/media/Michaelis_%26_Menton_1913.pdf",
+    "locator": "Equations (3)-(4), PDF page 11",
+    "equations_independently_verified": true,
+    "teaching_provenance_needs_revision": true,
+    "notation": "Equation (3) uses C*Phi as the modern Vmax prefactor, and equation (4) gives fractional rate rather than Vmax. The source k is renamed Km in teaching notation; this is not a general derivation from arbitrary kinetic constants."
+  },
+  "identity": {
+    "spec": true,
+    "compiled": true,
+    "math": true,
+    "ui": true
+  },
+  "trace_summary": {
+    "final_result": "success",
+    "requests": 1,
+    "request_limit": 10,
+    "observed_prompt_tokens": 6743,
+    "observed_completion_tokens": 2005,
+    "observed_total_tokens": 8748,
+    "observed_reasoning_tokens": 0,
+    "usage_is_complete": true,
+    "attempts_missing_usage": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0
+    },
+    "reserved_completion_tokens": 8000,
+    "completion_token_limit": 30000,
+    "elapsed_seconds": 44.123,
+    "remaining_seconds": 525.877,
+    "CLI_browser_review": "skipped",
+    "CLI_independent_science": "skipped"
+  },
+  "numerical_core_observations": [
+    {
+      "state": {
+        "s": 0,
+        "km": 2,
+        "vmax": 10
+      },
+      "ok": true,
+      "outputs": {
+        "v": 0,
+        "frac": 0,
+        "km_ref": 2,
+        "vmax_ref": 10
+      },
+      "expected": {
+        "v": 0.0,
+        "frac": 0.0,
+        "km_ref": 2,
+        "vmax_ref": 10
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "s": 2,
+        "km": 2,
+        "vmax": 10
+      },
+      "ok": true,
+      "outputs": {
+        "v": 5,
+        "frac": 0.5,
+        "km_ref": 2,
+        "vmax_ref": 10
+      },
+      "expected": {
+        "v": 5.0,
+        "frac": 0.5,
+        "km_ref": 2,
+        "vmax_ref": 10
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "s": 6,
+        "km": 2,
+        "vmax": 10
+      },
+      "ok": true,
+      "outputs": {
+        "v": 7.5,
+        "frac": 0.75,
+        "km_ref": 2,
+        "vmax_ref": 10
+      },
+      "expected": {
+        "v": 7.5,
+        "frac": 0.75,
+        "km_ref": 2,
+        "vmax_ref": 10
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "s": 2,
+        "km": 6,
+        "vmax": 10
+      },
+      "ok": true,
+      "outputs": {
+        "v": 2.5,
+        "frac": 0.25,
+        "km_ref": 6,
+        "vmax_ref": 10
+      },
+      "expected": {
+        "v": 2.5,
+        "frac": 0.25,
+        "km_ref": 6,
+        "vmax_ref": 10
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "s": 20,
+        "km": 2,
+        "vmax": 10
+      },
+      "ok": true,
+      "outputs": {
+        "v": 9.090909090909092,
+        "frac": 0.9090909090909091,
+        "km_ref": 2,
+        "vmax_ref": 10
+      },
+      "expected": {
+        "v": 9.09090909090909,
+        "frac": 0.9090909090909091,
+        "km_ref": 2,
+        "vmax_ref": 10
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "s": 2,
+        "km": 2,
+        "vmax": 0.1
+      },
+      "ok": true,
+      "outputs": {
+        "v": 0.05,
+        "frac": 0.5,
+        "km_ref": 2,
+        "vmax_ref": 0.1
+      },
+      "expected": {
+        "v": 0.05,
+        "frac": 0.5,
+        "km_ref": 2,
+        "vmax_ref": 0.1
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "s": 2,
+        "km": 0.1,
+        "vmax": 10
+      },
+      "ok": true,
+      "outputs": {
+        "v": 9.523809523809524,
+        "frac": 0.9523809523809523,
+        "km_ref": 0.1,
+        "vmax_ref": 10
+      },
+      "expected": {
+        "v": 9.523809523809524,
+        "frac": 0.9523809523809523,
+        "km_ref": 0.1,
+        "vmax_ref": 10
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "s": 0,
+        "km": 0,
+        "vmax": 10
+      },
+      "ok": false,
+      "error": "Km (half-saturation constant): value is outside the allowed bounds.",
+      "expected": "Rejected outside the generated control domain/shape",
+      "passed": true
+    },
+    {
+      "state": {
+        "s": -1,
+        "km": 2,
+        "vmax": 10
+      },
+      "ok": false,
+      "error": "S (substrate concentration): value is outside the allowed bounds.",
+      "expected": "Rejected outside the generated control domain/shape",
+      "passed": true
+    }
+  ],
+  "browser": {
+    "name": "Codex in-app Chromium",
+    "version": "not supplied by the browser tool",
+    "url": "http://127.0.0.1:8083/examples/generated/enzyme-kinetics/index.html",
+    "tolerance": {
+      "atol": 5e-06,
+      "rtol": 5e-06
+    },
+    "observations": [
+      {
+        "action": "Default half-saturation",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 1
+        },
+        "expected": {
+          "v": 0.5,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 1
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 0.5,
+          "vmax_ref": 1
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333331 101.5,176.48275862068965 115.5,155.33333333333331 129.5,138.75675675675674 143.5,125.41463414634146 161,111.99999999999997 175,103.19999999999999 189,95.7037037037037 203,89.24137931034483 220.5,82.31746031746033 234.5,77.52238805970148 248.5,73.26760563380282 262.5,69.46666666666667 280,65.24999999999997 294,62.23809523809524 308,59.5 322,57 339.5,54.16494845360822 353.5,52.09900990099007 367.5,50.190476190476176 381.5,48.42201834862385 399,46.385964912280684 413.00000000000006,44.88135593220338 427,43.47540983606555 441,42.15873015873015 458.50000000000006,40.625954198473266 472.49999999999994,39.48148148148147 486.5,38.40287769784172 500.5,37.38461538461539 518,36.189189189189165 532,35.28947368421052 546,34.43589743589743 560,33.625 577.5,32.66666666666666 591.5,31.940828402366833 605.5,31.248554913294782 619.5,30.587570621468956 637,29.80219780219781 651,29.20430107526883 665,28.63157894736841 679.0000000000001,28.082474226804123 696.5000000000001,27.42713567839195 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.981042654028442 756.0000000000001,25.425925925925895 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 0.5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "0.227273",
+            "5",
+            "0.454545",
+            "10",
+            "0.681818",
+            "15",
+            "0.909091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 0.9090909090909091,
+          "maximum_y_coordinate_error": 5.684341886080802e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Independent half-maximum baseline",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 5.0,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Raise substrate to three times Km",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 6,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 7.5,
+          "frac": 0.75,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.75,
+          "km_ref": 2,
+          "v": 7.5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "280",
+            "cy": "65.25",
+            "title": "S (substrate concentration): 6; result: 7.5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Raise Km to six",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 6,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 2.5,
+          "frac": 0.25,
+          "km_ref": 6,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.25,
+          "km_ref": 6,
+          "v": 2.5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,236.3125 101.5,216 115.5,201.75342465753425 129.5,188.98701298701297 143.5,177.48148148148147 161,164.6046511627907 175,155.33333333333331 189,146.85106382978725 203,139.06122448979593 220.5,130.1747572815534 234.5,123.66355140186914 248.5,117.62162162162161 262.5,112 280,105.5 294,100.67741935483872 308,96.15625000000003 322,91.9090909090909 339.5,86.94890510948906 353.5,83.23404255319147 367.5,79.72413793103448 381.5,76.40268456375841 399,72.49350649350649 413.00000000000006,69.54430379746839 427,66.74074074074076 441,64.07228915662651 458.50000000000006,60.91228070175438 472.49999999999994,58.514285714285734 486.5,56.223463687150826 500.5,54.03278688524591 518,51.42553191489364 532,49.43750000000003 546,47.53061224489798 560,45.69999999999999 577.5,43.51219512195124 591.5,41.837320574162675 605.5,40.22535211267606 619.5,38.67281105990787 637,36.81081081081081 651,35.38053097345133 665,34 679.0000000000001,32.66666666666666 696.5000000000001,31.06276150627616 710.5,29.827160493827165 724.5,28.63157894736844 738.5,27.47410358565739 756.0000000000001,26.07812500000003 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "180.25",
+            "title": "S (substrate concentration): 2; result: 2.5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "1.92308",
+            "5",
+            "3.84615",
+            "10",
+            "5.76923",
+            "15",
+            "7.69231",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 7.6923076923076925,
+          "maximum_y_coordinate_error": 5.684341886080802e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Minimum Vmax",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 0.1
+        },
+        "expected": {
+          "v": 0.05,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 0.1
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 0.05,
+          "vmax_ref": 0.1
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333331 101.5,176.48275862068965 115.5,155.33333333333331 129.5,138.75675675675674 143.5,125.41463414634146 161,111.99999999999997 175,103.19999999999996 189,95.7037037037037 203,89.24137931034483 220.5,82.3174603174603 234.5,77.52238805970148 248.5,73.26760563380279 262.5,69.46666666666667 280,65.24999999999997 294,62.23809523809524 308,59.49999999999997 322,56.99999999999994 339.5,54.16494845360822 353.5,52.0990099009901 367.5,50.190476190476176 381.5,48.42201834862382 399,46.385964912280684 413.00000000000006,44.88135593220338 427,43.47540983606555 441,42.15873015873015 458.50000000000006,40.625954198473295 472.49999999999994,39.48148148148147 486.5,38.40287769784172 500.5,37.38461538461536 518,36.189189189189165 532,35.28947368421052 546,34.43589743589743 560,33.625 577.5,32.66666666666663 591.5,31.940828402366833 605.5,31.248554913294754 619.5,30.587570621468927 637,29.80219780219781 651,29.20430107526883 665,28.631578947368382 679.0000000000001,28.082474226804152 696.5000000000001,27.42713567839195 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.981042654028442 756.0000000000001,25.425925925925895 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 0.05"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "0.0227273",
+            "5",
+            "0.0454545",
+            "10",
+            "0.0681818",
+            "15",
+            "0.0909091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 0.09090909090909091,
+          "maximum_y_coordinate_error": 8.526512829121202e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Zero substrate endpoint",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 0,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 0.0,
+          "frac": 0.0,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0,
+          "km_ref": 2,
+          "v": 0,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "70",
+            "cy": "255",
+            "title": "S (substrate concentration): 0; result: 0"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Maximum substrate endpoint",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 20,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 9.09090909090909,
+          "frac": 0.9090909090909091,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.909091,
+          "km_ref": 2,
+          "v": 9.09091,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "770",
+            "cy": "25",
+            "title": "S (substrate concentration): 20; result: 9.09091"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Minimum Km endpoint",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 0.1,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 9.523809523809524,
+          "frac": 0.9523809523809523,
+          "km_ref": 0.1,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.952381,
+          "km_ref": 0.1,
+          "v": 9.52381,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,70.07999999999998 101.5,46.964999999999975 115.5,40.360714285714295 129.5,36.69166666666669 143.5,34.35681818181817 161,32.4111111111111 175,31.306451612903203 189,30.454285714285703 203,29.776923076923083 220.5,29.103409090909054 234.5,28.66562499999995 248.5,28.295192307692275 262.5,27.977678571428555 280,27.639344262295054 294,27.406153846153813 308,27.19999999999999 322,27.01643835616437 339.5,26.813461538461524 353.5,26.66890243902435 367.5,26.53779069767441 381.5,26.418333333333294 399,26.283157894736803 413.00000000000006,26.184848484848487 427,26.094174757281507 441,26.010280373831762 458.50000000000006,25.913839285714232 472.49999999999994,25.842672413793082 486.5,25.776250000000005 500.5,25.714112903225782 518,25.641860465116252 532,25.587969924812 546,25.53722627737227 560,25.48936170212761 577.5,25.43321917808217 591.5,25.39099999999999 605.5,25.35097402597401 619.5,25.312974683544297 637,25.268098159509208 651,25.234131736526933 665,25.201754385964932 679.0000000000001,25.17085714285713 696.5000000000001,25.13416666666666 710.5,25.10624999999999 724.5,25.079521276595727 738.5,25.05390625000001 756.0000000000001,25.02335025380711 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "34.85714285714286",
+            "title": "S (substrate concentration): 2; result: 9.52381"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.48756",
+            "5",
+            "4.97512",
+            "10",
+            "7.46269",
+            "15",
+            "9.95025",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.950248756218905,
+          "maximum_y_coordinate_error": 5.684341886080802e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Maximum Km endpoint",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 10,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 1.6666666666666665,
+          "frac": 0.16666666666666666,
+          "km_ref": 10,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.166667,
+          "km_ref": 10,
+          "v": 1.66667,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,241.73076923076923 101.5,226.5137614678899 115.5,215.30973451327435 129.5,204.87179487179486 143.5,195.12396694214877 161,183.8095238095238 175,175.38461538461542 189,167.4626865671642 203,160 220.5,151.25874125874128 234.5,144.69387755102042 248.5,138.47682119205297 262.5,132.58064516129033 280,125.625 294,120.36585365853657 308,115.35714285714286 322,110.58139534883722 339.5,104.91525423728814 353.5,100.60773480662982 367.5,96.48648648648648 381.5,92.53968253968253 399,87.83505154639172 413.00000000000006,84.24242424242428 427,80.79207920792078 441,77.4757281553398 458.50000000000006,73.50710900473933 472.49999999999994,70.4651162790698 486.5,67.53424657534245 500.5,64.70852017937224 518,61.31578947368422 532,58.70689655172416 546,56.18644067796612 560,53.75000000000003 577.5,50.81632653061226 591.5,48.554216867469876 605.5,46.3636363636364 619.5,44.24124513618679 637,41.679389312977094 651,39.69924812030075 665,37.77777777777777 679.0000000000001,35.91240875912408 696.5000000000001,33.655913978494624 710.5,31.90812720848058 724.5,30.209059233449494 738.5,28.556701030927854 756.0000000000001,26.55405405405409 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "197.5",
+            "title": "S (substrate concentration): 2; result: 1.66667"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "1.66667",
+            "5",
+            "3.33333",
+            "10",
+            "5",
+            "15",
+            "6.66667",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 6.666666666666666,
+          "maximum_y_coordinate_error": 8.526512829121202e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Restore half-maximum baseline",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 5.0,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Double both concentrations leaves rate invariant",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 4,
+          "s": 4,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 5.0,
+          "frac": 0.5,
+          "km_ref": 4,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 4,
+          "v": 5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,229.9090909090909 101.5,204.3061224489796 115.5,187.30188679245282 129.5,172.68421052631578 143.5,159.98360655737704 161,146.27272727272728 175,136.71428571428572 189,128.18918918918916 203,120.53846153846155 220.5,112.01204819277112 234.5,105.89655172413794 248.5,100.31868131868134 262.5,95.21052631578948 280,89.4 294,85.15384615384616 308,81.22222222222226 322,77.57142857142858 339.5,73.35897435897436 353.5,70.2396694214876 367.5,67.32000000000002 381.5,64.58139534883722 399,61.38805970149255 413.00000000000006,59.00000000000003 427,56.746478873239454 441,54.616438356164394 458.50000000000006,52.11258278145695 472.49999999999994,50.225806451612925 486.5,48.43396226415098 500.5,46.73006134969327 518,44.71428571428575 532,43.18604651162795 546,41.72727272727275 560,40.33333333333334 577.5,38.67567567567568 591.5,37.412698412698404 605.5,36.202072538860136 619.5,35.04060913705587 637,33.65346534653466 651,32.592233009708764 665,31.571428571428612 679.0000000000001,30.588785046728958 696.5000000000001,29.410958904109577 710.5,28.50672645739911 724.5,27.634361233480178 738.5,26.79220779220782 756.0000000000001,25.779661016949206 770,25",
+          "observed_marker": {
+            "cx": "210",
+            "cy": "117",
+            "title": "S (substrate concentration): 4; result: 5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.08333",
+            "5",
+            "4.16667",
+            "10",
+            "6.25",
+            "15",
+            "8.33333",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 8.333333333333334,
+          "maximum_y_coordinate_error": 5.684341886080802e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Generated two-Km case",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 4,
+          "vmax": 1
+        },
+        "expected": {
+          "v": 0.6666666666666666,
+          "frac": 0.6666666666666666,
+          "km_ref": 2,
+          "vmax_ref": 1
+        },
+        "observed": {
+          "frac": 0.666667,
+          "km_ref": 2,
+          "v": 0.666667,
+          "vmax_ref": 1
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333331 101.5,176.48275862068965 115.5,155.33333333333331 129.5,138.75675675675674 143.5,125.41463414634146 161,111.99999999999997 175,103.19999999999999 189,95.7037037037037 203,89.24137931034483 220.5,82.31746031746033 234.5,77.52238805970148 248.5,73.26760563380282 262.5,69.46666666666667 280,65.24999999999997 294,62.23809523809524 308,59.5 322,57 339.5,54.16494845360822 353.5,52.09900990099007 367.5,50.190476190476176 381.5,48.42201834862385 399,46.385964912280684 413.00000000000006,44.88135593220338 427,43.47540983606555 441,42.15873015873015 458.50000000000006,40.625954198473266 472.49999999999994,39.48148148148147 486.5,38.40287769784172 500.5,37.38461538461539 518,36.189189189189165 532,35.28947368421052 546,34.43589743589743 560,33.625 577.5,32.66666666666666 591.5,31.940828402366833 605.5,31.248554913294782 619.5,30.587570621468956 637,29.80219780219781 651,29.20430107526883 665,28.63157894736841 679.0000000000001,28.082474226804123 696.5000000000001,27.42713567839195 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.981042654028442 756.0000000000001,25.425925925925895 770,25",
+          "observed_marker": {
+            "cx": "210",
+            "cy": "86.33333333333334",
+            "title": "S (substrate concentration): 4; result: 0.666667"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "0.227273",
+            "5",
+            "0.454545",
+            "10",
+            "0.681818",
+            "15",
+            "0.909091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 0.9090909090909091,
+          "maximum_y_coordinate_error": 5.684341886080802e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Return to generated default",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 1
+        },
+        "expected": {
+          "v": 0.5,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 1
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 0.5,
+          "vmax_ref": 1
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333331 101.5,176.48275862068965 115.5,155.33333333333331 129.5,138.75675675675674 143.5,125.41463414634146 161,111.99999999999997 175,103.19999999999999 189,95.7037037037037 203,89.24137931034483 220.5,82.31746031746033 234.5,77.52238805970148 248.5,73.26760563380282 262.5,69.46666666666667 280,65.24999999999997 294,62.23809523809524 308,59.5 322,57 339.5,54.16494845360822 353.5,52.09900990099007 367.5,50.190476190476176 381.5,48.42201834862385 399,46.385964912280684 413.00000000000006,44.88135593220338 427,43.47540983606555 441,42.15873015873015 458.50000000000006,40.625954198473266 472.49999999999994,39.48148148148147 486.5,38.40287769784172 500.5,37.38461538461539 518,36.189189189189165 532,35.28947368421052 546,34.43589743589743 560,33.625 577.5,32.66666666666666 591.5,31.940828402366833 605.5,31.248554913294782 619.5,30.587570621468956 637,29.80219780219781 651,29.20430107526883 665,28.63157894736841 679.0000000000001,28.082474226804123 696.5000000000001,27.42713567839195 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.981042654028442 756.0000000000001,25.425925925925895 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 0.5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "0.227273",
+            "5",
+            "0.454545",
+            "10",
+            "0.681818",
+            "15",
+            "0.909091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 0.9090909090909091,
+          "maximum_y_coordinate_error": 5.684341886080802e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Vmax at upper bound then upward step",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 5.0,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Km at lower bound then downward step",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 0.1,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 9.523809523809524,
+          "frac": 0.9523809523809523,
+          "km_ref": 0.1,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.952381,
+          "km_ref": 0.1,
+          "v": 9.52381,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,70.07999999999998 101.5,46.964999999999975 115.5,40.360714285714295 129.5,36.69166666666669 143.5,34.35681818181817 161,32.4111111111111 175,31.306451612903203 189,30.454285714285703 203,29.776923076923083 220.5,29.103409090909054 234.5,28.66562499999995 248.5,28.295192307692275 262.5,27.977678571428555 280,27.639344262295054 294,27.406153846153813 308,27.19999999999999 322,27.01643835616437 339.5,26.813461538461524 353.5,26.66890243902435 367.5,26.53779069767441 381.5,26.418333333333294 399,26.283157894736803 413.00000000000006,26.184848484848487 427,26.094174757281507 441,26.010280373831762 458.50000000000006,25.913839285714232 472.49999999999994,25.842672413793082 486.5,25.776250000000005 500.5,25.714112903225782 518,25.641860465116252 532,25.587969924812 546,25.53722627737227 560,25.48936170212761 577.5,25.43321917808217 591.5,25.39099999999999 605.5,25.35097402597401 619.5,25.312974683544297 637,25.268098159509208 651,25.234131736526933 665,25.201754385964932 679.0000000000001,25.17085714285713 696.5000000000001,25.13416666666666 710.5,25.10624999999999 724.5,25.079521276595727 738.5,25.05390625000001 756.0000000000001,25.02335025380711 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "34.85714285714286",
+            "title": "S (substrate concentration): 2; result: 9.52381"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.48756",
+            "5",
+            "4.97512",
+            "10",
+            "7.46269",
+            "15",
+            "9.95025",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.950248756218905,
+          "maximum_y_coordinate_error": 5.684341886080802e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Substrate at lower bound then downward step",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 0.1,
+          "s": 0,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 0.0,
+          "frac": 0.0,
+          "km_ref": 0.1,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0,
+          "km_ref": 0.1,
+          "v": 0,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,70.07999999999998 101.5,46.964999999999975 115.5,40.360714285714295 129.5,36.69166666666669 143.5,34.35681818181817 161,32.4111111111111 175,31.306451612903203 189,30.454285714285703 203,29.776923076923083 220.5,29.103409090909054 234.5,28.66562499999995 248.5,28.295192307692275 262.5,27.977678571428555 280,27.639344262295054 294,27.406153846153813 308,27.19999999999999 322,27.01643835616437 339.5,26.813461538461524 353.5,26.66890243902435 367.5,26.53779069767441 381.5,26.418333333333294 399,26.283157894736803 413.00000000000006,26.184848484848487 427,26.094174757281507 441,26.010280373831762 458.50000000000006,25.913839285714232 472.49999999999994,25.842672413793082 486.5,25.776250000000005 500.5,25.714112903225782 518,25.641860465116252 532,25.587969924812 546,25.53722627737227 560,25.48936170212761 577.5,25.43321917808217 591.5,25.39099999999999 605.5,25.35097402597401 619.5,25.312974683544297 637,25.268098159509208 651,25.234131736526933 665,25.201754385964932 679.0000000000001,25.17085714285713 696.5000000000001,25.13416666666666 710.5,25.10624999999999 724.5,25.079521276595727 738.5,25.05390625000001 756.0000000000001,25.02335025380711 770,25",
+          "observed_marker": {
+            "cx": "70",
+            "cy": "255",
+            "title": "S (substrate concentration): 0; result: 0"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.48756",
+            "5",
+            "4.97512",
+            "10",
+            "7.46269",
+            "15",
+            "9.95025",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.950248756218905,
+          "maximum_y_coordinate_error": 5.684341886080802e-14,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Restore legal interior state after endpoint checks",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 5.0,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Switch theme to light",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "true",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 5.0,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Restore initial dark theme",
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "state": {
+          "km": 2,
+          "s": 2,
+          "vmax": 10
+        },
+        "expected": {
+          "v": 5.0,
+          "frac": 0.5,
+          "km_ref": 2,
+          "vmax_ref": 10
+        },
+        "observed": {
+          "frac": 0.5,
+          "km_ref": 2,
+          "v": 5,
+          "vmax_ref": 10
+        },
+        "curve": {
+          "observed_polyline_points": "70,255 84,212.83333333333334 101.5,176.48275862068965 115.5,155.33333333333334 129.5,138.75675675675677 143.5,125.41463414634148 161,112 175,103.20000000000002 189,95.70370370370375 203,89.24137931034485 220.5,82.31746031746033 234.5,77.52238805970151 248.5,73.26760563380282 262.5,69.4666666666667 280,65.25 294,62.23809523809527 308,59.50000000000003 322,57 339.5,54.164948453608275 353.5,52.099009900990126 367.5,50.19047619047623 381.5,48.42201834862385 399,46.38596491228071 413.00000000000006,44.881355932203434 427,43.47540983606558 441,42.15873015873018 458.50000000000006,40.625954198473295 472.49999999999994,39.481481481481495 486.5,38.402877697841745 500.5,37.38461538461539 518,36.18918918918925 532,35.28947368421055 546,34.43589743589749 560,33.62500000000003 577.5,32.666666666666714 591.5,31.94082840236686 605.5,31.24855491329481 619.5,30.587570621468984 637,29.80219780219781 651,29.20430107526886 665,28.63157894736844 679.0000000000001,28.082474226804152 696.5000000000001,27.427135678391977 710.5,26.926108374384228 724.5,26.44444444444443 738.5,25.98104265402847 756.0000000000001,25.42592592592598 770,25",
+          "observed_marker": {
+            "cx": "140",
+            "cy": "128.5",
+            "title": "S (substrate concentration): 2; result: 5"
+          },
+          "axis_labels": [
+            "0",
+            "0",
+            "2.27273",
+            "5",
+            "4.54545",
+            "10",
+            "6.81818",
+            "15",
+            "9.09091",
+            "20",
+            "S (substrate concentration)",
+            "v (initial rate)"
+          ],
+          "sample_count": 48,
+          "independent_rate_at_sweep_endpoint": 9.09090909090909,
+          "maximum_y_coordinate_error": 1.1368683772161603e-13,
+          "coordinate_atol": 1e-09,
+          "all_48_samples_and_current_marker_passed": true,
+          "comparison": "Recover S from x on the observed 0..20 substrate axis; compute Vmax*S/(Km+S) with the independent oracle; compare y using the observed axis rectangle x=70..770,y=255..25 and v=0..v(S=20)."
+        },
+        "status": "passed"
+      }
+    ],
+    "console_warnings_errors": [],
+    "labels_and_controls": {
+      "checkboxes": 0,
+      "curve_elements": [
+        {
+          "tag": "title",
+          "text": "Initial rate v versus substrate concentration S"
+        },
+        {
+          "tag": "path",
+          "text": ""
+        },
+        {
+          "tag": "line",
+          "text": ""
+        },
+        {
+          "tag": "text",
+          "text": "0"
+        },
+        {
+          "tag": "text",
+          "text": "0"
+        },
+        {
+          "tag": "line",
+          "text": ""
+        },
+        {
+          "tag": "text",
+          "text": "2.27273"
+        },
+        {
+          "tag": "text",
+          "text": "5"
+        },
+        {
+          "tag": "line",
+          "text": ""
+        },
+        {
+          "tag": "text",
+          "text": "4.54545"
+        },
+        {
+          "tag": "text",
+          "text": "10"
+        },
+        {
+          "tag": "line",
+          "text": ""
+        },
+        {
+          "tag": "text",
+          "text": "6.81818"
+        },
+        {
+          "tag": "text",
+          "text": "15"
+        },
+        {
+          "tag": "line",
+          "text": ""
+        },
+        {
+          "tag": "text",
+          "text": "9.09091"
+        },
+        {
+          "tag": "text",
+          "text": "20"
+        },
+        {
+          "tag": "text",
+          "text": "S (substrate concentration)"
+        },
+        {
+          "tag": "text",
+          "text": "v (initial rate)"
+        },
+        {
+          "tag": "polyline",
+          "text": ""
+        },
+        {
+          "tag": "circle",
+          "text": "S (substrate concentration): 2; result: 5"
+        }
+      ],
+      "line_attributes": [
+        {
+          "x1": "70",
+          "x2": "770",
+          "y1": "255",
+          "y2": "255"
+        },
+        {
+          "x1": "70",
+          "x2": "770",
+          "y1": "197.5",
+          "y2": "197.5"
+        },
+        {
+          "x1": "70",
+          "x2": "770",
+          "y1": "140",
+          "y2": "140"
+        },
+        {
+          "x1": "70",
+          "x2": "770",
+          "y1": "82.5",
+          "y2": "82.5"
+        },
+        {
+          "x1": "70",
+          "x2": "770",
+          "y1": "25",
+          "y2": "25"
+        }
+      ],
+      "ranges": [
+        {
+          "id": "control-vmax",
+          "max": "10",
+          "min": "0.1",
+          "step": "0.1"
+        },
+        {
+          "id": "control-km",
+          "max": "10",
+          "min": "0.1",
+          "step": "0.1"
+        },
+        {
+          "id": "control-s",
+          "max": "20",
+          "min": "0",
+          "step": "0.1"
+        }
+      ],
+      "reference_headings": [
+        "Initial rate v",
+        "Fraction of Vmax attained, S/(Km+S)",
+        "Km reference line value",
+        "Vmax reference line value"
+      ]
+    },
+    "disclosure_open_close_states": [
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null
+    ],
+    "layout": {
+      "requested_desktop": [
+        1280,
+        900
+      ],
+      "requested_narrow": [
+        390,
+        844
+      ],
+      "observed": [
+        {
+          "client_width": 1150,
+          "height": 818,
+          "scroll_width": 1150,
+          "width": 1164
+        },
+        {
+          "client_width": 341,
+          "height": 767,
+          "scroll_width": 341,
+          "width": 355
+        }
+      ],
+      "horizontal_overflow": false,
+      "viewport_override_reset": true
+    },
+    "error_recovery": "Range widgets expose no blank text edit and clamp legal endpoints. Invalid Km/substrate states were rejected in the core; no browser evaluation error is claimed.",
+    "theme": "Switched to light and restored the initial dark theme; calculations stayed unchanged."
+  },
+  "offline": {
+    "status": "not tested for this package",
+    "reason": "The browser tool blocks file://. User-reported fresh entropy offline evidence is recorded separately; repeat on the selected release HTML."
+  },
+  "findings": [
+    {
+      "id": "enzyme-transcription-provenance",
+      "priority": 1,
+      "status": "open",
+      "finding": "eq3.quote is the explicitly supplied ASCII equation transcription in input.json. The source evidence block drops its transcription label. The original equation (3), modern Vmax=C*Phi teaching renaming, and equation (4) fractional-rate interpretation are mathematically faithful.",
+      "action": "Preserve the equation-transcription label and distinguish it from exact original prose quotation in a fresh package."
+    },
+    {
+      "id": "enzyme-unplotted-reference-line-labels",
+      "priority": 2,
+      "status": "open",
+      "finding": "The Km/Vmax calculation headings call the numbers reference line values, but the actual SVG contains only the rate curve, current marker, axes and horizontal grid. No Km vertical line or Vmax asymptote is plotted; the y axis ends at v(S=20), below Vmax.",
+      "action": "Rename these readouts as parameter/reference values, or generate supported views that actually show the references. Do not imply unseen plotted lines."
+    }
+  ],
+  "limitations": [
+    "The generated Vmax domain is 0.1 to 10. Independent Vmax=0 and Vmax=20 fixture states are excluded; controls and bounds were not altered.",
+    "Initial-rate algebra only, without original experimental fitting or a full reaction time course.",
+    "Direct-file offline interaction remains unverified for this package."
+  ]
+}
