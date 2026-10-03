@@ -1,5 +1,7 @@
 # Independent scientific acceptance fixtures
 
+The later [new-paper experiment](GENERALIZATION.md) prepares 20 independent states for Brownian diffusion and Hubble's historical relation, then measures six real generations and reports failures as well as usable output. The replay helper `python -m tests.science.check_generated` now handles explicit Git LF/Windows CRLF conversion and UTF-8 while still rejecting content changes; it passed 632 saved-state checks on P2's Python 3.12.
+
 These development fixtures are independent of model responses and production prompts. They are **not** a paper-answer lookup table. The numeric examples are small teaching examples chosen by P2; the underlying relationships come from the cited original papers. Source quotations are short; equation transcriptions use plain-text notation and are identified explicitly.
 
 Run the reference checks without an API key:
