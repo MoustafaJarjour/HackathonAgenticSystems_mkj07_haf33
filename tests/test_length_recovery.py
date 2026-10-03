@@ -43,7 +43,7 @@ class LengthRecovery(unittest.TestCase):
         code, events, payloads = run_fixture(
             self.output, [completion(wrong), completion(unchanged), completion(corrected)])
         self.assertEqual(code, 0)
-        self.assertEqual([payload["max_tokens"] for payload in payloads], [8000, 3500, 3500, 3500])
+        self.assertEqual([payload["max_tokens"] for payload in payloads], [8000, 3500, 3500, 4000, 3500])
         replacements = [event for event in events if event["action"] == "component_replacements"]
         self.assertEqual(len(replacements), 2)
         self.assertTrue(all(event["metadata"]["preserved_numerical_cases"] for event in replacements))
@@ -52,9 +52,9 @@ class LengthRecovery(unittest.TestCase):
         default_cases = [event["metadata"]["check"] for event in events
                          if event["action"] == "runtime_case"
                          and event["metadata"]["check"]["name"] == "default_case"]
-        self.assertEqual([record["status"] for record in default_cases], ["failed", "failed", "passed"])
-        self.assertEqual([record["actual"]["result"] for record in default_cases], [7, 7, 5])
-        self.assertEqual(events[-1]["metadata"]["reserved_completion_tokens"], 18500)
+        self.assertEqual([record["status"] for record in default_cases], ["failed", "failed", "passed", "passed"])
+        self.assertEqual([record["actual"]["result"] for record in default_cases], [7, 7, 5, 5])
+        self.assertEqual(events[-1]["metadata"]["reserved_completion_tokens"], 22500)
 
 
 if __name__ == "__main__":

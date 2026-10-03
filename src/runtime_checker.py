@@ -7,7 +7,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from .models import SpecError
+from .models import SpecError, visualization_sources
 
 
 def execute_states(spec, compiled, states, timeout=5.0):
@@ -58,6 +58,10 @@ def close(actual, expected, atol, rtol):
 def view_errors(spec, outputs):
     errors = []
     for view in spec["visualizations"]:
+        if view["kind"] == "diagram":
+            for source in visualization_sources(view):
+                shape(outputs[source])  # Scalars, vectors and matrices all have live representations.
+            continue
         dims = shape(outputs[view["source"]])
         required = {"line": 0, "bars": 1, "heatmap": 2}[view["kind"]]
         if len(dims) != required:
@@ -148,7 +152,8 @@ def check_runtime(spec, compiled, timeout=5.0):
             record.update(status="failed", details="; ".join(errors))
         records.append(record)
     visible = {item["id"] for item in spec["computations"] if item["show"]}
-    visible.update(view["source"] for view in spec["visualizations"])
+    for view in spec["visualizations"]:
+        visible.update(visualization_sources(view))
     baseline = results[0].get("outputs")
     probe_results = results[1 + len(cases):1 + len(cases) + len(probes)]
     background_results = results[1 + len(cases) + len(probes):1 + len(cases) + 2 * len(probes)]

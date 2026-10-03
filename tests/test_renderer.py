@@ -3,11 +3,78 @@ import unittest
 from html.parser import HTMLParser
 
 from src.renderer import render
+from src.rich_text import equation, inline, math, prose
+from src.branding import logo_data_uri
+from src.models import SpecError
 from src.validator import validate_html
 from tests.fixtures import lesson
 
 
 class RendererTests(unittest.TestCase):
+    def test_plot_titles_captions_and_all_label_types_support_math(self):
+        spec = lesson()
+        vis = spec["visualizations"][0]
+        vis.update(title="**Probability** $p_i$", x_label="$i$", y_label="$p_i$",
+                   labels=["$x_0$"], row_labels=["$q_1$"], column_labels=["$k_1$"])
+        page = render(spec, {})
+        validate_html(page, spec)
+        self.assertIn(f'<h3 id="plot-heading-{vis["id"]}"><strong>Probability</strong> <span class="math inline">', page)
+        self.assertNotIn('aria-label="**Probability**', page)
+        for key in ("x_label", "y_label", "labels-0", "row_labels-0", "column_labels-0"):
+            self.assertIn(f'id="plot-label-{vis["id"]}-{key}"', page)
+        self.assertIn('<figcaption><span class="math inline">', page)
+        vis["x_label"] = '<img src=x onerror=alert(1)>'
+        validate_html(render(spec, {}), spec)
+
+    def test_brand_logo_is_embedded_and_only_trusted_image_is_allowed(self):
+        spec = lesson()
+        page = render(spec, {})
+        validate_html(page, spec)
+        self.assertIn('alt="AhaLab"', page)
+        self.assertIn('Turn papers into playgrounds.', page)
+        self.assertIn(' | AhaLab</title>', page)
+        self.assertNotIn('Paper to Playground', page)
+        for replacement in ('https://example.com/logo.png', 'data:image/svg+xml;base64,PHN2Zz4='):
+            with self.assertRaises(SpecError):
+                validate_html(page.replace(logo_data_uri(), replacement), spec)
+
+    def test_rich_lesson_has_native_math_and_balanced_blocks(self):
+        spec = lesson()
+        spec["concept_summary"] = "**Probability** uses $p_i$.\n\n- First outcome\n- Second outcome\n\n$$\\sum_i p_i = 1$$"
+        spec["equations"][0]["expression"] = r"$$H = -\sum_{i=1}^{n} p_i \log_2 p_i$$"
+        spec["explanation_steps"][0]["body"] = "Use `weights` and *normalize*.\n\nA second paragraph."
+        spec["terms"][0]["symbol"] = "$p_i$"
+        spec["grounding"]["source_claims"][0]["quote"] = "**exact source** $p_i$"
+        page = render(spec, {})
+        validate_html(page, spec)
+        self.assertIn("<strong>Probability</strong>", page)
+        self.assertIn("<li>First outcome</li>", page)
+        self.assertIn("<msub>", page)
+        self.assertIn("<munderover>", page)
+        self.assertIn('<math display="block"', page)
+        self.assertIn("<em>normalize</em>", page)
+        self.assertIn('<blockquote>**exact source** $p_i$</blockquote>', page)
+
+    def test_untrusted_markdown_and_math_cannot_add_resources(self):
+        spec = lesson()
+        spec["concept_summary"] = '<img src=x onerror=alert(1)>\n\n![remote](https://example.com/x.png)\n\n[bad](javascript:alert(1))\n\n[good](https://example.com)'
+        spec["equations"][0]["expression"] = r'$$\text{<script>alert(1)</script>}$$'
+        page = render(spec, {})
+        validate_html(page, spec)
+        self.assertEqual(page.count('<img '), 1)  # Only the trusted brand asset.
+        self.assertNotIn('href="javascript:', page)
+        self.assertIn('href="https://example.com"', page)
+        self.assertIn('&lt;script&gt;', page)
+        unsafe = math(r'\href{javascript:alert(1)}{x}')
+        self.assertNotIn('href=', unsafe)
+        self.assertNotIn('style=', math(r'\style{background:url(x)}{x}'))
+
+    def test_code_currency_and_legacy_equations_are_preserved(self):
+        self.assertIn('<code>$p_i$</code>', inline('`$p_i$`'))
+        self.assertNotIn('<math', prose('Costs $5 and $10.'))
+        self.assertEqual(equation('p_i = w_i / sum(w)'), '<code>p_i = w_i / sum(w)</code>')
+        self.assertIn('math-fallback', math(r'\frac{'))
+
     def test_numeric_array_editors_and_single_control_markers(self):
         spec = lesson()
         spec["controls"] = [

@@ -71,6 +71,27 @@ def case():
             "audience": "Engineering undergraduate", "excerpt": SOURCE}
 
 
+def diagram():
+    """A visual explanation of the same synthetic relation, with a live output."""
+    return {
+        "id": "mechanism", "kind": "diagram", "title": "Scale, shift, and observe",
+        "caption": "Follow the two operations, then change either control to update the output.",
+        "diagram": {
+            "nodes": [
+                {"id": "scale", "label": "Scale the input", "detail": "Multiply the fixed input by $a$.",
+                 "column": 0, "row": 0},
+                {"id": "shift", "label": "Add the offset", "detail": "Add $b$ after scaling.",
+                 "column": 1, "row": 0},
+                {"id": "output", "label": "Observe $y$", "detail": "The result updates with the controls.",
+                 "source": "result", "column": 2, "row": 0},
+            ],
+            "edges": [{"from": "scale", "to": "shift", "label": "Then add"},
+                      {"from": "shift", "to": "output"}],
+            "provenance": "teaching_simplification", "evidence_ids": [],
+        },
+    }
+
+
 def completion(spec, usage=True):
     body = {"id": "offline-fixture-response", "choices": [
         {"finish_reason": "stop", "message": {"content": json.dumps(spec)}}]}
@@ -87,13 +108,16 @@ def mock_http(handler):
         yield
 
 
-def run_fixture(output: Path, responses=None, input_case=None, model="offline/test-model", audit_responses=None):
+def run_fixture(output: Path, responses=None, input_case=None, model="offline/test-model", audit_responses=None,
+                visualization_responses=None, visualization_tokens=4000):
     """Exercise actual agent.main and client; intercept every HTTP request in memory."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     input_path = output / "case.json"
     input_path.write_text(json.dumps(case() if input_case is None else input_case), encoding="utf-8")
     responses = [completion(lesson())] if responses is None else list(responses)
+    visualization_responses = ([completion({"visualizations": lesson()["visualizations"]})]
+                               if visualization_responses is None else list(visualization_responses))
     # Successful paths now include one bounded source-critique request. Failure
     # paths never reach it. The empty patch models a reviewer finding no change;
     # separate tests exercise concrete semantic repairs and rechecking.
@@ -102,12 +126,18 @@ def run_fixture(output: Path, responses=None, input_case=None, model="offline/te
     payloads = []
     audit_count = 0
     generation_count = 0
+    visualization_count = 0
 
     def handler(request):
-        nonlocal audit_count, generation_count
+        nonlocal audit_count, generation_count, visualization_count
         assert str(request.url) == "https://openrouter.ai/api/v1/chat/completions"
         payloads.append(json.loads(request.content))
         is_audit = "SOURCE AUDIT CONTRACT" in payloads[-1]["messages"][1]["content"]
+        is_visualization = "VISUALIZATION DESIGN CONTRACT" in payloads[-1]["messages"][1]["content"]
+        if is_visualization:
+            visualization_count += 1
+            assert visualization_count <= len(visualization_responses), "Unexpected extra visualization request"
+            return httpx.Response(200, json=visualization_responses[visualization_count - 1])
         if is_audit:
             audit_count += 1
             assert audit_count <= len(audit_responses), "Unexpected extra audit request"
@@ -119,6 +149,7 @@ def run_fixture(output: Path, responses=None, input_case=None, model="offline/te
     env = {"OPENROUTER_API_KEY": "offline-test-key-never-valid", "PTP_ALLOW_SOURCE_FETCH": "",
            "PTP_SOURCE_FILE": "", "PTP_SOURCE_DIR": ""}
     with patch.dict(os.environ, env), mock_http(handler), patch.object(agent, "PROCESS_STARTED", time.monotonic()):
-        code = agent.main(["--input", str(input_path), "--output", str(output), "--model", model])
+        code = agent.main(["--input", str(input_path), "--output", str(output), "--model", model,
+                           "--visualization-tokens", str(visualization_tokens)])
     events = [json.loads(line) for line in (output / "trace.jsonl").read_text(encoding="utf-8").splitlines()]
     return code, events, payloads

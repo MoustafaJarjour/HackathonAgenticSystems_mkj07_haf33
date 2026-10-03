@@ -1,0 +1,23 @@
+{
+  "Outcome index": "Outcome index $i$",
+  "Probability": "Probability $p_i$",
+  "Scaled weight": "Scaled weight $c\\,w_i$",
+  "Probabilities p_i = w_i / sum(w)": "Probabilities $p_i = \\frac{w_i}{\\sum_j w_j}$",
+  "Scaled weights c*w_i (same probabilities, total multiplied by c)": "Scaled weights $c\\,w_i$ (same probabilities, total multiplied by $c$)",
+  "Scaled weights c*w_i (same probabilities, larger total)": "Scaled weights $c\\,w_i$ (same probabilities, larger total)",
+  "Substrate concentration S": "Substrate concentration $S$",
+  "Initial rate v": "Initial rate $v$",
+  "State x": "State $x$",
+  "x0": "$x_0$",
+  "x1": "$x_1$",
+  "x2": "$x_2$",
+  "x3": "$x_3$",
+  "x4": "$x_4$",
+  "key index": "Key index $j$",
+  "query index": "Query index $i$",
+  "query 1": "Query $1$",
+  "query 2": "Query $2$",
+  "key 1": "Key $1$",
+  "key 2": "Key $2$",
+  "v": "$v$"
+}

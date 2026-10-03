@@ -4,7 +4,8 @@ import re
 from html.parser import HTMLParser
 
 from .expressions import ARITY, compile_computations
-from .models import SpecError, validate_schema
+from .models import SpecError, validate_schema, visualization_sources
+from .branding import logo_data_uri
 
 
 def require(condition, message):
@@ -69,8 +70,29 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
             require(len(shape(value)) <= 2, "Expectations must be scalars, vectors or matrices.")
     visible = {c["id"] for c in spec["computations"] if c["show"]}
     for v in spec["visualizations"]:
-        require(v["source"] in compiled, "Visualization source must reference a computation.")
-        visible.add(v["source"])
+        if v["kind"] == "diagram":
+            require("diagram" in v and "caption" in v, "Diagram views need diagram and caption.")
+            require(not set(v) & {"source", "x_label", "y_label", "sweep_control", "labels",
+                                 "row_labels", "column_labels", "value_label"},
+                    "Diagram views cannot include chart fields.")
+            nodes, edges = v["diagram"]["nodes"], v["diagram"]["edges"]
+            node_ids = {node["id"] for node in nodes}
+            require(len(node_ids) == len(nodes), "Diagram node ids must be locally unique.")
+            require(len({(node["column"], node["row"]) for node in nodes}) == len(nodes),
+                    "Diagram nodes must occupy distinct grid slots.")
+            connections = {(edge["from"], edge["to"]) for edge in edges}
+            require(len(connections) == len(edges), "Diagram connections must be unique.")
+            require(all(start in node_ids and end in node_ids and start != end for start, end in connections),
+                    "Diagram edges need existing, distinct node endpoints.")
+            require(set().union(*(set(pair) for pair in connections)) == node_ids,
+                    "Every diagram node must participate in an edge.")
+        else:
+            require(all(field in v for field in ("source", "x_label", "y_label")),
+                    "Charts need source, x_label and y_label.")
+            require("diagram" not in v, "Charts cannot include diagram metadata.")
+        sources = visualization_sources(v)
+        require(sources <= set(compiled), "Visualization source must reference a computation.")
+        visible.update(sources)
         if v["kind"] == "line":
             control = controls.get(v.get("sweep_control"))
             require(control is not None and control["kind"] != "array",
@@ -93,7 +115,8 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
             start, end = claim["source_start"], claim["source_end"]
             require(0 <= start < end <= len(source_text), "Evidence offsets are outside full source bounds.")
             require(" ".join(source_text[start:end].split()) == quote, "Evidence offsets do not match the quoted span.")
-    for item in spec["equations"] + spec["computations"] + spec["explanation_steps"]:
+    diagrams = [view["diagram"] for view in spec["visualizations"] if view["kind"] == "diagram"]
+    for item in spec["equations"] + spec["computations"] + spec["explanation_steps"] + diagrams:
         require(set(item["evidence_ids"]) <= evidence, "Unknown evidence reference.")
         if item["provenance"] == "source_supported":
             require(bool(item["evidence_ids"]), "Source-supported items need evidence references.")
@@ -115,7 +138,10 @@ class PageInspector(HTMLParser):
             self.controls.append(attrs["data-control-id"])
         if tag in ("iframe", "object", "embed", "base", "link"):
             self.resources.append(tag)
-        if any(k in attrs for k in ("src", "srcset", "poster")):
+        trusted_logo = (tag == "img" and attrs.get("class") == "brand-logo"
+                        and attrs.get("src") == logo_data_uri()
+                        and attrs.get("alt") == "AhaLab")
+        if ("src" in attrs and not trusted_logo) or any(k in attrs for k in ("srcset", "poster")):
             self.resources.append(tag)
         if any(k.startswith("on") for k in attrs):
             self.resources.append("inline event handler")

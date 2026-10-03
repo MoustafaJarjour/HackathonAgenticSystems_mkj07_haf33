@@ -37,6 +37,7 @@ class Budget:
     completion_tokens: int = 0
     total_tokens: int = 0
     reserved_completion_tokens: int = 0
+    held_completion_tokens: int = 0
     reasoning_tokens: int = 0
     _usage_responses: int = field(default=0, init=False)
     _unknown_prompt: int = field(default=0, init=False)
@@ -53,7 +54,7 @@ class Budget:
             raise BudgetError("The 10-request API budget has been exceeded.")
         if self.completion_tokens > 30_000:
             raise BudgetError("Reported completion usage exceeded 30,000 tokens.")
-        if self.reserved_completion_tokens > 30_000:
+        if self.reserved_completion_tokens + self.held_completion_tokens > 30_000:
             raise BudgetError("The 30,000-token completion budget has been exceeded.")
 
     def begin_attempt(self, max_tokens: int) -> None:
@@ -64,7 +65,7 @@ class Budget:
             raise ValueError("max_tokens must be a positive integer.")
         if self.requests >= 10:
             raise BudgetError("No API requests remain; retries count toward the limit.")
-        if self.reserved_completion_tokens + max_tokens > 30_000:
+        if self.reserved_completion_tokens + self.held_completion_tokens + max_tokens > 30_000:
             raise BudgetError("The next API attempt would exceed the completion budget.")
         # Reserve before transport, including attempts whose usage is unavailable.
         self.requests += 1
@@ -110,6 +111,7 @@ class Budget:
                 "total_tokens": self._unknown_total + self.requests - self._usage_responses,
             },
             "reserved_completion_tokens": self.reserved_completion_tokens,
+            "held_completion_tokens": self.held_completion_tokens,
             "completion_token_limit": 30_000,
             "elapsed_seconds": round(elapsed, 3),
             "remaining_seconds": round(self.remaining(), 3),
@@ -138,14 +140,16 @@ class OpenRouterClient:
         )
 
     def complete(self, messages: list[dict], max_tokens: int = 8000, schema: dict | None = None,
-                 *, reasoning_enabled: bool = False) -> str:
+                 *, reasoning_enabled: bool = False, temperature: float = 0.2) -> str:
         if type(reasoning_enabled) is not bool:
             raise ValueError("reasoning_enabled must be a boolean.")
+        if type(temperature) not in (int, float) or not 0 <= temperature <= 2:
+            raise ValueError("temperature must be a finite number from 0 to 2.")
         payload = {
             "model": self.model,
             "messages": messages,
             "max_tokens": max_tokens,
-            "temperature": 0.2,
+            "temperature": temperature,
             "response_format": {"type": "json_object"},
             "provider": {"require_parameters": True},
             # This model's low effort still spent the full completion cap on
@@ -166,6 +170,7 @@ class OpenRouterClient:
                 "openrouter", "request", "started", request_number=number,
                 model=self.model, retry=attempt, max_tokens=max_tokens,
                 format=payload["response_format"]["type"], reasoning_enabled=reasoning_enabled,
+                temperature=temperature,
                 reserved_completion_tokens=self.budget.reserved_completion_tokens,
             )
             response: httpx.Response | None = None

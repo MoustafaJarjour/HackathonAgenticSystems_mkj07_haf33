@@ -1,4 +1,4 @@
-# Independent scientific acceptance fixtures
+# AhaLab independent scientific acceptance fixtures
 
 These development fixtures are independent of model responses and production prompts. They are **not** a paper-answer lookup table. The numeric examples are small teaching examples chosen by P2; the underlying relationships come from the cited original papers. Source quotations are short; equation transcriptions use plain-text notation and are identified explicitly.
 

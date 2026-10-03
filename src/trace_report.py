@@ -59,7 +59,7 @@ def render_report(events: list[dict], issues: list[str] | None = None) -> str:
     summary = terminal.get("metadata", {})
     start = _time(first.get("timestamp"))
     counts = Counter(str(e.get("result", "unknown")) for e in events)
-    lines = ["# Run trace", "", f"**Outcome: {_cell(outcome).upper()}**", "",
+    lines = ["# AhaLab run trace", "", f"**Outcome: {_cell(outcome).upper()}**", "",
              "| Summary | Value |", "| --- | --- |",
              f"| Model | {_cell(first.get('metadata', {}).get('model', 'unknown'))} |",
              f"| Started (timestamp includes timezone) | {_cell(first.get('timestamp', 'unknown'))} |",
@@ -70,6 +70,13 @@ def render_report(events: list[dict], issues: list[str] | None = None) -> str:
                        ("Total tokens (observed)", "observed_total_tokens"),
                        ("Reasoning tokens (observed)", "observed_reasoning_tokens")):
         lines.append(f"| {label} | {_cell(summary.get(key, 'unknown'))} |")
+    allocation = next((event.get("metadata", {}) for event in events
+                       if event.get("action") == "budget_allocation"), {})
+    if allocation:
+        for label, key in (("Generation output ceiling", "generation_tokens"),
+                           ("Visualization output ceiling", "visualization_tokens"),
+                           ("Source review output ceiling", "source_review_tokens")):
+            lines.append(f"| {label} | {_cell(allocation.get(key, 'unknown'))} |")
     lines.extend([f"| Usage accounting complete | {_cell(summary.get('usage_is_complete', 'unknown'))} |",
                   f"| Events | {len(events)} |", "",
                   "Event results across the entire run (including earlier attempts): " +

@@ -32,6 +32,39 @@ PROVENANCE = {
     "evidence_ids": items(ID, minimum=0),
 }
 
+VISUALIZATION_SCHEMA = obj({
+    "id": ID, "kind": {"enum": ["line", "bars", "heatmap", "diagram"]},
+    "title": TEXT, "source": ID, "x_label": TEXT, "y_label": TEXT,
+    "sweep_control": ID,
+    "labels": items(TEXT, maximum=64), "value_label": TEXT,
+    "row_labels": items(TEXT, maximum=64), "column_labels": items(TEXT, maximum=64),
+    "caption": {"type": "string", "minLength": 1, "maxLength": 1200},
+    "diagram": obj({
+        "nodes": items(obj({
+            "id": ID, "label": {"type": "string", "minLength": 1, "maxLength": 80},
+            "detail": {"type": "string", "minLength": 1, "maxLength": 160},
+            "column": {"type": "integer", "minimum": 0, "maximum": 2},
+            "row": {"type": "integer", "minimum": 0, "maximum": 3},
+            "source": ID,
+        }, ["id", "label", "column", "row"]), minimum=2, maximum=8),
+        "edges": items(obj({
+            "from": ID, "to": ID,
+            "label": {"type": "string", "minLength": 1, "maxLength": 48},
+        }, ["from", "to"]), maximum=12),
+        **PROVENANCE,
+    }),
+}, ["id", "kind", "title"])
+
+VISUALIZATION_DESIGN_SCHEMA = obj({"visualizations": items(VISUALIZATION_SCHEMA, maximum=3)})
+
+
+def visualization_sources(view):
+    """Computation bindings that are actually displayed by this view."""
+    if view["kind"] == "diagram":
+        return {node["source"] for node in view["diagram"]["nodes"] if "source" in node}
+    return {view["source"]}
+
+
 LESSON_SCHEMA = obj({
     "schema_version": {"const": 2},
     "title": TEXT,
@@ -54,13 +87,7 @@ LESSON_SCHEMA = obj({
         "unit": {"type": "string", "maxLength": 100}, "show": {"type": "boolean"},
         **PROVENANCE,
     }), maximum=24),
-    "visualizations": items(obj({
-        "id": ID, "kind": {"enum": ["line", "bars", "heatmap"]},
-        "title": TEXT, "source": ID, "x_label": TEXT, "y_label": TEXT,
-        "sweep_control": ID,
-        "labels": items(TEXT, maximum=64), "value_label": TEXT,
-        "row_labels": items(TEXT, maximum=64), "column_labels": items(TEXT, maximum=64),
-    }, ["id", "kind", "title", "source", "x_label", "y_label"]), maximum=3),
+    "visualizations": items(VISUALIZATION_SCHEMA, maximum=3),
     "explorations": items(obj({"change": TEXT, "observe": TEXT, "why": TEXT}), minimum=2, maximum=3),
     "limitations": items(TEXT, maximum=8),
     "grounding": obj({
@@ -76,7 +103,10 @@ LESSON_SCHEMA = obj({
         "state": {"type": "object", "minProperties": 1,
                   "additionalProperties": {"anyOf": [FINITE, ARRAY]}},
         "expected": {"type": "object", "minProperties": 1,
-                     "additionalProperties": {"anyOf": [FINITE, ARRAY]}},
+                     "additionalProperties": {"anyOf": [FINITE, ARRAY,
+                         {"type": "string", "minLength": 1, "maxLength": 1500}]}},
+        "expected_expressions": {"type": "object", "minProperties": 1,
+                                 "additionalProperties": {"type": "string", "minLength": 1, "maxLength": 1500}},
         "atol": {"type": "number", "minimum": 0, "maximum": 1e-3},
         "rtol": {"type": "number", "minimum": 0, "maximum": 1e-3},
     }, ["id", "name", "state", "expected"]), minimum=2, maximum=8),

@@ -1,4 +1,8 @@
-# Generated lessons and review evidence
+# AhaLab — historical generated lessons and review evidence
+
+For the current branding and renderer, open the [AhaLab presentation copies](../ahalab/README.md).
+This directory preserves the original reviewed artifacts; their recorded hashes
+and browser observations apply to those historical files, not the new copies.
 
 These packages preserve fresh CLI output and separately identified model repairs. Keep each package's `input.json`, `lesson.json`, `index.html`, and `trace.jsonl` unchanged during review; publish revisions as distinct packages. Authored development fixtures live separately under `tests/science/` and ignored `review-out/`.
 

@@ -14,8 +14,12 @@ const jsonEqual = (actual, expected) => assert.equal(JSON.stringify(actual), JSO
 function boot(controls, compiled, visualizations = []) {
   const nodes = new Map();
   const create = () => ({
-    value: "", checked: false, disabled: false, textContent: "", className: "", attrs: {}, children: [], listeners: {},
+    value: "", checked: false, disabled: false, textContent: "", className: "", attrs: {}, children: [], listeners: {}, style: {},
     setAttribute(key, value) { this.attrs[key] = String(value); },
+    getAttribute(key) { return this.attrs[key] ?? null; },
+    replaceWith(node) {
+      if(this.parent) { const parent=this.parent;parent.children[parent.children.indexOf(this)]=node;node.parent=parent; }
+    },
     removeAttribute(key) { delete this.attrs[key]; },
     append(...children) { children.forEach(child => { child.parent = this; this.children.push(child); }); },
     replaceChildren(...children) { this.children = children; },
@@ -123,9 +127,16 @@ const editing = boot([
 }, [{id:"bars",kind:"bars",title:"Weights",source:"weights_copy",x_label:"Entry",y_label:"Value"}]);
 const inputs = id => editing.element(`cells-${id}`).querySelectorAll("[data-array-cell]");
 assert.equal(editing.state.runtimeState,"ok");
+const stepButtons = input => input.parent.children[1].children;
+stepButtons(inputs("weights")[0])[0].fire("click");
+assert.equal(inputs("weights")[0].value,"2");
+assert.equal(editing.element("calculation-total").textContent,"4");
+stepButtons(inputs("weights")[0])[1].fire("click");
+assert.equal(inputs("weights")[0].value,"1");
 editing.element("add-weights").fire("click");
 assert.equal(inputs("weights").length,3);
 assert.equal(inputs("weights")[2].value,"0");
+assert.equal(stepButtons(inputs("weights")[2]).length,2);
 assert.equal(editing.element("calculation-count").textContent,"3");
 assert.equal(editing.element("add-weights").disabled,true);
 editing.element("add-weights").fire("click");
@@ -168,3 +179,46 @@ editing.element("theme-toggle").fire("click");
 assert.equal(editing.state.theme,"light");
 assert.equal(editing.element("theme-toggle").attrs["aria-pressed"],"true");
 console.log("Runtime smoke passed: shared math, numeric matrix/vector edits, bounded zero-append/trailing-remove, numeric toggles, error recovery, stale plot clearing, theme and stepped SVG sweep (simulated DOM).");
+
+const bounded = boot([{id:"a",kind:"number",label:"A",default:.9,min:0,max:1,step:.1}],{value:variable("a")});
+const scalarButtons = stepButtons(bounded.element("control-a"));
+scalarButtons[0].fire("click");
+assert.equal(bounded.element("control-a").value,"1");
+assert.equal(scalarButtons[0].disabled,true);
+assert.equal(bounded.element("calculation-value").textContent,"1");
+scalarButtons[1].fire("click");
+assert.equal(bounded.element("control-a").value,"0.9");
+bounded.element("control-a").value="";
+bounded.api.update();
+assert.equal(scalarButtons[0].disabled,true);
+assert.equal(scalarButtons[1].disabled,true);
+
+// Diagrams bind the same computed values as charts, including vectors and matrices.
+const diagramRun = boot(controls, compiled, [{
+  id:"flow",kind:"diagram",title:"Compute and inspect",caption:"Follow the computed values.",
+  diagram:{nodes:[
+    {id:"scalar",label:"Product",source:"product",column:0,row:0},
+    {id:"vector",label:"Samples",source:"samples",column:1,row:0},
+    {id:"matrix",label:"Scaled matrix",source:"scaled",column:2,row:0},
+  ],edges:[{from:"scalar",to:"vector",label:"Inspect"},{from:"vector",to:"matrix"}]},
+}]);
+const descendants = node => [node,...node.children.flatMap(descendants)];
+const diagramValues = () => descendants(diagramRun.element("visualization-flow"))
+  .filter(node => node.attrs["data-node-source"])
+  .map(node => [node.attrs["data-node-source"],node.textContent]);
+assert.equal(diagramRun.state.runtimeState,"ok");
+jsonEqual(diagramValues(),[["product","6"],["samples","[2, 2.5, 3]"],["scaled","2 × 2 matrix\n[2, 4; 6, 8]"]]);
+const diagramSvg = diagramRun.element("visualization-flow").children[0];
+assert.equal(diagramSvg.attrs.class,"mechanism-diagram");
+assert.equal(diagramSvg.children.filter(node => node.attrs.points).length,2); // Arrowheads.
+diagramRun.element("control-b").value="4";
+assert.equal(diagramRun.api.update().ok,true);
+jsonEqual(diagramValues().slice(0,2),[["product","8"],["samples","[2, 3, 4]"]]);
+diagramRun.element("control-b").value="";
+assert.equal(diagramRun.api.update().ok,false);
+assert.equal(diagramRun.element("visualization-flow").children[0].className,"plot-error");
+assert.equal(diagramValues().length,0);
+diagramRun.element("control-b").value="2";
+assert.equal(diagramRun.api.update().ok,true);
+assert.equal(diagramValues()[0][1],"4");
+console.log("Diagram smoke passed: directed connections, live scalar/vector/matrix bindings, stale view clearing and recovery.");

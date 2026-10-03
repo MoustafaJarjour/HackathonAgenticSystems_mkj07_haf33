@@ -25,7 +25,7 @@ class SourceAuditTests(unittest.TestCase):
         wrong["computations"][0]["expression"] += " + (slope-2)*(slope+4)"
         code, events, requests = run_fixture(self.output, [completion(wrong)], audit_responses=[report()])
         self.assertEqual(code, 0)
-        self.assertEqual([request["max_tokens"] for request in requests], [8000, 3500])
+        self.assertEqual([request["max_tokens"] for request in requests], [8000, 4000, 3500])
         saved = json.loads((self.output / "lesson.json").read_text())
         self.assertEqual(saved["computations"], lesson()["computations"])
         self.assertEqual(saved["checks"], wrong["checks"])
@@ -43,7 +43,7 @@ class SourceAuditTests(unittest.TestCase):
         wrong["checks"][1]["expected"]["result"] = -11
         code, events, requests = run_fixture(self.output, [completion(wrong)], audit_responses=[report()])
         self.assertEqual(code, 1)
-        self.assertEqual(len(requests), 2)
+        self.assertEqual(len(requests), 3)
         self.assertEqual(events[-1]["metadata"]["error_type"], "SourceReviewError")
         self.assertFalse((self.output / "index.html").exists())
         partial = json.loads((self.output / "partial.lesson.json").read_text())
@@ -54,7 +54,7 @@ class SourceAuditTests(unittest.TestCase):
         empty = {"controls": [], "computations": [], "visualizations": [], "teaching": {}}
         code, events, requests = run_fixture(self.output, audit_responses=[report("unresolved", empty)])
         self.assertEqual(code, 1)
-        self.assertEqual(len(requests), 2)
+        self.assertEqual(len(requests), 3)
         self.assertEqual(events[-1]["metadata"]["error_type"], "SourceReviewError")
         self.assertFalse((self.output / "lesson.json").exists())
 
@@ -62,7 +62,7 @@ class SourceAuditTests(unittest.TestCase):
         patch = {"controls": [], "computations": [], "visualizations": [], "teaching": {}, "checks": []}
         code, events, requests = run_fixture(self.output, audit_responses=[report("revised", patch)])
         self.assertEqual(code, 1)
-        self.assertEqual(len(requests), 2)
+        self.assertEqual(len(requests), 3)
         self.assertFalse((self.output / "index.html").exists())
 
     def test_truncated_audit_fails_without_repeating_an_identical_request(self):
@@ -70,8 +70,8 @@ class SourceAuditTests(unittest.TestCase):
         truncated["choices"][0]["finish_reason"] = "length"
         code, events, requests = run_fixture(self.output, audit_responses=[truncated, report()])
         self.assertEqual(code, 1)
-        self.assertEqual(len(requests), 2)
-        self.assertEqual(events[-1]["metadata"]["reserved_completion_tokens"], 11500)
+        self.assertEqual(len(requests), 3)
+        self.assertEqual(events[-1]["metadata"]["reserved_completion_tokens"], 15500)
         self.assertFalse((self.output / "index.html").exists())
 
 

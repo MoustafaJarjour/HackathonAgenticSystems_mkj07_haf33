@@ -12,23 +12,39 @@ from pathlib import Path
 
 from src.models import SpecError, load_case
 from src.openrouter_client import Budget, BudgetError, OpenRouterClient, OpenRouterError, TruncatedCompletion
-from src.planner import generate, repair, select_context, can_repair, audit_source, SourceReviewError
+from src.planner import generate, repair, select_context, can_repair, audit_source, SourceReviewError, SOURCE_AUDIT_TOKENS
 from src.renderer import render
 from src.source import SourceError, obtain_source
 from src.trace import Trace
 from src.trace_report import write_report
 from src.validator import validate_html, validate_spec
 from src.runtime_checker import check_runtime
+from src.visualizations import DEFAULT_VISUALIZATION_TOKENS, VisualizationDesignError, design_visualizations
+
+
+def visualization_tokens(value):
+    try:
+        tokens = int(value)
+    except ValueError as exc:
+        raise argparse.ArgumentTypeError("Use 0 to disable or an integer from 1000 to 8000.") from exc
+    if tokens != 0 and not 1000 <= tokens <= 8000:
+        raise argparse.ArgumentTypeError("Use 0 to disable or an integer from 1000 to 8000.")
+    return tokens
 
 
 def main(argv=None) -> int:
-    parser = argparse.ArgumentParser(description="Turn a supplied paper concept into an offline interactive lesson.")
+    parser = argparse.ArgumentParser(description="AhaLab — turn papers into playgrounds: offline interactive lessons.")
     parser.add_argument("--input", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--model", required=True)
+    parser.add_argument("--visualization-tokens", type=visualization_tokens, default=DEFAULT_VISUALIZATION_TOKENS,
+                        help="Dedicated visualization output ceiling (default: 4000; 1000-8000; 0 disables the pass).")
     args = parser.parse_args(argv)
     trace, client, timer = None, None, None
     budget = Budget(PROCESS_STARTED)
+    # Keep one design call and one source review available while generation/repair
+    # attempts consume their own conservative reservations.
+    budget.held_completion_tokens = args.visualization_tokens + SOURCE_AUDIT_TOKENS
 
     def report_trace():
         if trace:
@@ -66,7 +82,13 @@ def main(argv=None) -> int:
         trace.event("source", "select_context", "ok", source_characters=len(source.text),
                     context_characters=len(context), method="lexical_windows" if context != source.text else "complete_excerpt")
         client = OpenRouterClient(args.model, trace, budget)
+        trace.event("planning", "budget_allocation", "ok", generation_tokens=8000,
+                    visualization_tokens=args.visualization_tokens, source_review_tokens=SOURCE_AUDIT_TOKENS,
+                    completion_token_limit=30000)
         spec, errors, compact, source_reviewed = None, None, False, False
+        visualizations_designed = args.visualization_tokens == 0
+        if visualizations_designed:
+            trace.event("planning", "visualization_design", "skipped", reason="Disabled with --visualization-tokens 0.")
         for attempt in range(3):
             budget.check()
             trace.event("planning", "generate" if attempt == 0 else "revise", "started", attempt=attempt + 1)
@@ -97,8 +119,33 @@ def main(argv=None) -> int:
                 errors = [record for record in runtime_checks if record["status"] != "passed"]
                 if errors:
                     raise SpecError("Executed numerical/control checks failed; see expected/actual evidence.")
+                if not visualizations_designed:
+                    stage = "visualization_design"
+                    budget.held_completion_tokens -= args.visualization_tokens
+                    trace.event("planning", "visualization_design", "started",
+                                max_tokens=args.visualization_tokens, temperature=0.5)
+                    spec = design_visualizations(client, case, context, spec, max_tokens=args.visualization_tokens)
+                    visualizations_designed = True
+                    stage = "visualization_validation"
+                    try:
+                        compiled, spec_checks = validate_spec(spec, source.text, case["source_url"])
+                    except SpecError as exc:
+                        raise VisualizationDesignError(str(exc)) from exc
+                    trace.event("validation", "visualization_spec_checks", "passed", checks=spec_checks)
+                    stage = "runtime"
+                    runtime_checks = check_runtime(spec, compiled, timeout=min(5.0, budget.remaining()))
+                    for record in runtime_checks:
+                        trace.event("validation", "runtime_case", record["status"], check=record,
+                                    after_visualization_design=True)
+                    errors = [record for record in runtime_checks if record["status"] != "passed"]
+                    if errors:
+                        raise SpecError("Executed checks failed after visualization design.")
+                    trace.event("planning", "visualization_design", "applied", view_count=len(spec["visualizations"]),
+                                kinds=[view["kind"] for view in spec["visualizations"]],
+                                preserved_numerical_cases=True)
                 if not source_reviewed:
                     stage = "source_review"
+                    budget.held_completion_tokens -= SOURCE_AUDIT_TOKENS
                     trace.event("planning", "source_semantics_review", "started",
                                 independent_science_verified=False)
                     reviewed = audit_source(client, case, context, spec, runtime_checks)
@@ -129,9 +176,9 @@ def main(argv=None) -> int:
                             browser_executed=False, scientific_fidelity_verified=False)
                 break
             except TruncatedCompletion as exc:
-                if stage == "source_review":
-                    trace.event("planning", "source_semantics_review", "failed",
-                                reason="Source critique was truncated; no reviewed output can be promoted.")
+                if stage in ("source_review", "visualization_design"):
+                    trace.event("planning", "source_semantics_review" if stage == "source_review" else stage, "failed",
+                                reason="Dedicated design/review was truncated; no completed output can be promoted.")
                     raise
                 errors = [{"name": "completion_length", "stage": "generation", "status": "failed", "details": str(exc)}]
                 # A compact full generation already changed the output strategy.
@@ -144,8 +191,9 @@ def main(argv=None) -> int:
                                    "Compact full generation was already tried or no repair attempts remain.")
                 if not recover_length:
                     raise
-            except SourceReviewError as exc:
-                trace.event("validation", "source_semantics_review", "failed", reason=str(exc),
+            except (SourceReviewError, VisualizationDesignError) as exc:
+                trace.event("validation", "visualization_design" if isinstance(exc, VisualizationDesignError)
+                            else "source_semantics_review", "failed", reason=str(exc),
                             preserved_numerical_cases=True)
                 if isinstance(spec, dict):
                     (args.output / "partial.lesson.json").write_text(

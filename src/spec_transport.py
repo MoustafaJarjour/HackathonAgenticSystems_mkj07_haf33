@@ -92,4 +92,10 @@ def normalize_references(spec):
         for field, namespace in (("source", computations), ("sweep_control", controls)):
             if field in view:
                 view[field] = reference(view[field], namespace, f"visualizations/{index}/{field}")
+        diagram = view.get("diagram")
+        if isinstance(diagram, dict) and isinstance(diagram.get("nodes"), list):
+            for node_index, node in enumerate(diagram["nodes"]):
+                if isinstance(node, dict) and "source" in node:
+                    node["source"] = reference(node["source"], computations,
+                                               f"visualizations/{index}/diagram/nodes/{node_index}/source")
     return result, records

@@ -2,3 +2,6 @@ httpx==0.28.1
 jsonschema==4.25.1
 pypdf==5.9.0
 quickjs-ng==0.17.0.1
+markdown-it-py==4.0.0
+mdit-py-plugins==0.5.0
+latex2mathml==3.78.1

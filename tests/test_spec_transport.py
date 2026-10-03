@@ -85,8 +85,8 @@ class SpecTransport(unittest.TestCase):
         self.assertEqual(saved["checks"], lesson()["checks"])
         cases = [event["metadata"]["check"] for event in events
                  if event["action"] == "runtime_case" and event["metadata"]["check"]["name"] == "default_case"]
-        self.assertEqual([record["actual"]["result"] for record in cases], [7, 5])
-        self.assertEqual([record["status"] for record in cases], ["failed", "passed"])
+        self.assertEqual([record["actual"]["result"] for record in cases], [7, 5, 5])
+        self.assertEqual([record["status"] for record in cases], ["failed", "passed", "passed"])
         normalizations = [event for event in events if event["action"] == "reference_normalization"]
         self.assertEqual(len(normalizations), 2)
         self.assertTrue(all(event["metadata"]["numeric_values_changed"] is False for event in normalizations))

@@ -1,6 +1,14 @@
-# Paper to Playground
+# AhaLab
+
+![AhaLab logo](assets/brand/ahalab-logo.png)
+
+**Turn papers into playgrounds.**
+
+Explore the [AhaLab example lessons](examples/ahalab/README.md).
 
 Turn a supplied research-paper excerpt into one offline interactive lesson. The model proposes explanations, controls, mathematical expressions, and views. Trusted Python validates the lesson and compiles a bounded expression tree; fixed JavaScript computes values and draws the page.
+
+Lessons explain the intuition, causal steps, and effects of changing inputs, using small worked examples where helpful. Source quotations and attribution belong in the grounding section; each explanation's provenance is available under “Source and teaching notes.” Saved lesson prose needs regeneration or editing to adopt updated teaching prompts; rendering alone only updates its presentation.
 
 Team: **mkj07 / haf33**. P1 owns generation, source handling, mathematical compilation, checking, budgets, and integration. P2 owns presentation, browser controls, independent scientific examples, and browser review.
 
@@ -22,6 +30,13 @@ Set `OPENROUTER_API_KEY` in the environment. Keep the key out of input files, so
 python agent.py --input examples/generated/entropy-showcase/input.json --output out --model deepseek/deepseek-v4.1-flash
 ```
 
+Generation now includes a separate visualization design pass with a **4,000-output-token ceiling**
+and temperature **0.5**. It can design up to three complementary views, including mechanism diagrams
+with directed connections, annotations, and live computed values. Set `--visualization-tokens 6000`
+to give this pass more room (allowed: 1,000–8,000), or `--visualization-tokens 0` to disable it.
+The ceiling is an allowance, not a requirement to spend tokens. Saved lessons need regeneration to
+receive new designs; rendering an existing lesson retains its declared views.
+
 Open `out/index.html` locally. It contains its styles, lesson data, math core, controls, and SVG views. Interactions require no API calls or downloaded resources. `out/lesson.json` contains the saved lesson; `out/trace.jsonl` records stages, attempts, reported usage, and outcomes. Read the final trace status and exit code; a partial file is not evidence of success.
 
 Open `out/trace.md` for a readable run report, automatically written on success or failure. It includes the final outcome, elapsed time, observed token usage, a timeline, and formatted numerical evidence. Earlier failed checks remain visible even when a repair succeeds; missing usage is shown as unknown. The JSONL file remains the original audit log.
@@ -38,9 +53,33 @@ Input JSON requires nonempty `source_url`, `focus`, and `audience` strings. Supp
 
 ## Offline verification
 
+Lesson prose supports paragraphs, emphasis, lists, links, and code through restricted
+Markdown. Use `$p_i$` for inline LaTeX and `$$...$$` on separate lines for display
+math. `equations.expression` accepts display LaTeX wrapped in `$$...$$`;
+`terms.symbol` accepts inline math. LaTeX backslashes must be escaped in JSON.
+Lesson and plot titles, calculation labels/units, captions, axes, and category,
+row, and column labels, section headings, and control labels support inline Markdown
+and math too. Source quotes stay verbatim. `computations.expression`
+always uses the validated calculation language, independent of display notation.
+Markdown is rendered with raw HTML and images disabled, and equations become
+native MathML during generation, so no browser libraries, fonts, or network access
+are required. Legacy plain-text equations remain readable; malformed math falls
+back to escaped text. Typesetting requires a browser with native MathML support.
+
+The renderer also upgrades recognized legacy scientific notation throughout the
+displayed lesson, including prose, symbols, labels, explorations, and limitations.
+This operates on a presentation copy; the embedded specification, executable
+expressions, numerical checks, and original source quotations are unchanged.
+Calculation disclosures show a typeset formula, with literal code in its own disclosure.
+
+Numeric inputs use themed increase/decrease buttons, with keyboard editing and
+control bounds preserved. The provenance badge “Teaching simplification” identifies
+a teaching relationship rather than a claim directly supported by the source.
+
 ```bash
 python -m unittest discover -s tests -v
 python -m tests.create_demo --output smoke-out
+python -m tests.create_demo --diagrams --output diagram-smoke-out
 python -m tests.science.create_previews
 python -m tests.science.check_generated
 python -m src.renderer --spec smoke-out/lesson.json --output review-out/saved/index.html
@@ -48,19 +87,21 @@ python -m src.renderer --spec smoke-out/lesson.json --output review-out/saved/in
 
 The generic demo intercepts the model request and uses synthetic data. The source-backed developer previews are authored fixtures, rendered from saved JSON and checked against independent expectations. Neither proves fresh model-generation quality. See [scientific acceptance fixtures](tests/science/README.md) for sources, assumptions, numerical derivations, and invalid domains. Optional `node tests/runtime_smoke.cjs` checks a simulated DOM; it does not establish Chromium rendering.
 
-The submitted dependencies were installed with standard pip in a clean **Python 3.11.15** environment. The final suite passes **51 tests** on Python 3.11; Node smoke checks also pass. Recorded independent checks of the final entropy, attention and enzyme packages cover **607 legal states and 25 invalid-state rejections**, at absolute/relative tolerance 1e-12. The independent review states can be replayed with `python -m tests.science.check_generated`; their expectations come from separate mathematical reference calculations, not the model's own cases.
+The submitted dependencies were installed with standard pip in a clean **Python 3.11.15** environment. The current suite passes **71 tests** on Python 3.11; Node smoke checks also pass, including diagram updates and recovery. Recorded independent checks of the final entropy, attention and enzyme packages cover **607 legal states and 25 invalid-state rejections**, at absolute/relative tolerance 1e-12. The independent review states can be replayed with `python -m tests.science.check_generated`; their expectations come from separate mathematical reference calculations, not the model's own cases.
 
 [Reviewed examples](examples/generated/README.md) include resizable entropy, attention with a scaling checkbox, enzyme kinetics and four explicitly unrolled logistic-map updates. P2's final exact-output review adds **89 Chromium observations and 116 numerical checks**, including invalid states, on the three showcases at `17c2dbd`. Scaling, all matrix cells, bounded resizing, slider updates, curves/bars, invalid edits and recovery passed. Earlier original/revised packages retain 154 separately scoped observations. The final entropy page has nine additional P1 Chromium states and five user-reported direct-file offline steps. The user also verified the fresh attention checkbox and three final enzyme slider states offline. [Browser notes](tests/browser/README.md) identify exact files and evidence scopes. A separately traced [entropy title correction](examples/generated/entropy-polished/index.html) resolves the original chart's wording for scale below 1; every other lesson field and compiled computation matches the reviewed parent.
 
-The shared `src/math_runtime.js` is used by the page and the pip-installed QuickJS checker. Generation executes defaults, immutable numerical cases, control-effect probes and legal line-sweep samples. A bounded model source critique then checks interpretations, units, labels and explorations; any replacements rerun structural and numerical gates. An unresolved critique, truncated review, or correction conflicting with preserved expectations fails without promoting a page. Model critique is not independent scientific verification: it caught an entropy interpretation error, but independent review still found teaching-label/prose errors in two other cases. Those showcase corrections have separately traced model repairs.
+The shared `src/math_runtime.js` is used by the page and the pip-installed QuickJS checker. Generation executes defaults, immutable numerical cases, control-effect probes and legal line-sweep samples. A dedicated visualization pass then replaces only the views; its output reruns structural and numerical gates. A bounded model source critique checks interpretations, units, diagram relationships, labels and explorations; any replacements rerun those gates. An unresolved critique, truncated design/review, or correction conflicting with preserved expectations fails without promoting a page. Model critique is not independent scientific verification: it caught an entropy interpretation error, but independent review still found teaching-label/prose errors in two other cases. Those showcase corrections have separately traced model repairs.
 
-Typical generation starts with an 8,000-token ceiling; source critique and targeted repairs each have a 3,500-token ceiling. Actual output is usually much smaller. Three fresh runs after adding critique used 2,989 completion tokens for entropy, 2,416 for enzyme and 6,002 for attention (including a numerical repair), with 2/2/3 API attempts respectively. These are CLI costs, excluding subsequent independent-review teaching repairs; [the example table](examples/generated/README.md) accounts for the complete showcase histories. Optional reasoning is disabled; reported reasoning tokens remain part of completion accounting when present. Prompt tokens are separate from the 30,000 completion limit but count toward efficiency.
+Generation has an 8,000-token ceiling; visualization design defaults to 4,000; source critique and targeted repairs each have a 3,500-token ceiling. The normal three-call path reserves 15,500 completion tokens. One visualization call and one source-review call have their capacity held aside so earlier generation/repair attempts cannot consume it. All retries still count against the shared 30,000-token and 10-request limits; no capacity is reclaimed merely because a response is short. Design uses temperature 0.5; generation, critique and repairs use 0.2. Optional reasoning stays disabled, so the design allowance is available for its JSON output. Budget allocation, each attempt's ceiling, temperature and observed usage are recorded in the trace.
+
+Historical runs before the dedicated visualization pass used 2,989 completion tokens for entropy, 2,416 for enzyme and 6,002 for attention (including a numerical repair), with 2/2/3 API attempts respectively. These are CLI costs, excluding subsequent independent-review teaching repairs; [the example table](examples/generated/README.md) accounts for the complete showcase histories. Those saved examples do not establish live quality of the new design pass. Reported reasoning tokens remain part of completion accounting when present. Prompt tokens are separate from the 30,000 completion limit but count toward efficiency.
 
 Source selection preserves supplied locators and page markers, using complete short excerpts or lexical windows bounded to 24,000 characters. This is a character bound, not a firm token budget or a section-aware retrieval system. Source-quote occurrence and valid evidence references are structural checks. The CLI records external browser and independent-science reviews as skipped because it does not perform those reviews itself.
 
 ## Scope and limits
 
-- Views are scalar line sweeps, vector bars, and rectangular heatmaps. Controls support bounded scalar values, numeric vectors/matrices, and numeric 0/1 toggles. Every meaningful control should change a relevant visible calculation in its valid domain.
+- Views are scalar line sweeps, vector bars, rectangular heatmaps, and mechanism diagrams. Diagrams have 2–8 nodes on a bounded three-column/four-row grid and 1–12 directed connections. Nodes can bind existing scalar/vector/matrix computations; vectors and matrices show short entry previews (plus matrix shape), with full values in tooltips and the accessible description. Labels support sanitized Markdown/MathML. Connections, placement, computation references and diagram provenance are validated. Controls support bounded scalar values, numeric vectors/matrices, and numeric 0/1 toggles. Every meaningful control should change a relevant visible calculation in its valid domain.
 - Computations use whitelisted arithmetic and functions, with at most 64 numeric cells per value, expression depth 32, 256 syntax nodes, and 1,500 expression characters. No expression-string evaluation, arbitrary generated HTML, or generated JavaScript is used.
 - `normalize` is **L2 normalization**. Probability weights use `weights/sum(weights)` with a positive total. `xlogx(0)` is exactly zero; negative inputs are rejected. Attention scaling uses actual query/key column count.
 - The expression language has no arbitrary indexing, conditionals, or loops. A short recurrence can be explicitly unrolled; a short trajectory does not establish chaos or reproduce a full numerical algorithm. Unsupported mechanisms must fail honestly rather than be replaced by unrelated calculations.

@@ -10,6 +10,10 @@ import json
 from pathlib import Path
 from urllib.parse import urlparse
 
+from .rich_text import equation, inline, math, plain, prose
+from .branding import NAME, TAGLINE, logo_data_uri
+from .display_notation import latex_expression, presentation_spec, symbols_for
+
 
 ASSETS = Path(__file__).parent
 
@@ -26,16 +30,19 @@ def _json(value: object) -> str:
             .replace("\u2029", "\\u2029"))
 
 
-def _provenance(item: dict) -> str:
+def _provenance(item: dict, labels: dict) -> str:
     kind = item["provenance"]
     label = "Source-supported relationship" if kind == "source_supported" else "Teaching simplification"
-    evidence = ", ".join(f'<a href="#evidence-{_text(identifier)}">{_text(identifier)}</a>'
+    evidence = ", ".join(f'<a href="#evidence-{_text(identifier)}">{_text(labels[identifier])}</a>'
                          for identifier in item.get("evidence_ids", []))
     return (f'<span class="badge badge-{kind}">{label}</span>'
             + (f'<span class="evidence"> Evidence: {evidence}</span>' if evidence else ""))
 
 
 def _control(control: dict) -> str:
+    control = dict(control)
+    label_html = inline(control["label"])
+    control["label"] = plain(control["label"])
     identifier = _text(control["id"])
     kind = control["kind"]
     attrs = " ".join(f'{name}="{_text(control[name])}"' for name in ("min", "max", "step") if name in control)
@@ -44,10 +51,10 @@ def _control(control: dict) -> str:
         is_matrix = isinstance(value[0], list)
         rows = value if is_matrix else [value]
         cells = "".join(
-            f'<label class="array-cell"><span>{("r" + str(r + 1) + " · c" + str(c + 1)) if is_matrix else str(c + 1)}</span>'
+            f'<div class="array-cell"><span>{("r" + str(r + 1) + " · c" + str(c + 1)) if is_matrix else str(c + 1)}</span>'
             f'<input type="number" step="any" data-array-cell="" value="{_text(number)}" '
             f'aria-label="{_text(control["label"])}{(", row " + str(r + 1) + ", column " + str(c + 1)) if is_matrix else (", entry " + str(c + 1))}" '
-            f'aria-describedby="meaning-{identifier}"></label>'
+            f'aria-describedby="meaning-{identifier}"></div>'
             for r, row in enumerate(rows) for c, number in enumerate(row))
         field = (f'<div id="control-{identifier}" class="array-editor" role="group" '
                  f'aria-labelledby="label-{identifier}" aria-describedby="meaning-{identifier}">'
@@ -67,62 +74,96 @@ def _control(control: dict) -> str:
                           f' aria-label="Append zero to {_text(control["label"])}"'
                           + (' disabled' if len(value) >= maximum else '') + '>Add entry</button>'
                           f'<span class="muted">{minimum}–{maximum} entries · new entries start at 0</span></div>')
-        label = f'<div class="control-label" id="label-{identifier}">{_text(control["label"])}<output id="value-{identifier}"></output></div>'
+        label = f'<div class="control-label" id="label-{identifier}"><span id="control-name-{identifier}">{label_html}</span><output id="value-{identifier}"></output></div>'
     elif kind == "toggle":
         field = (f'<div class="toggle-field"><input type="checkbox" id="control-{identifier}"'
                  + (' checked' if control["default"] == 1 else '')
                  + f' aria-label="{_text(control["label"])}" aria-describedby="meaning-{identifier}"><label for="control-{identifier}">Enabled</label></div>')
-        label = f'<div class="control-label">{_text(control["label"])}<output id="value-{identifier}" for="control-{identifier}"></output></div>'
+        label = f'<div class="control-label"><span id="control-name-{identifier}">{label_html}</span><output id="value-{identifier}" for="control-{identifier}"></output></div>'
     else:
         if "step" not in control:
             attrs += ' step="any"'
         field = (f'<input type="{kind}" id="control-{identifier}" '
                  f'value="{_text(control["default"])}" {attrs} aria-describedby="meaning-{identifier}">')
-        label = (f'<label class="control-label" for="control-{identifier}">{_text(control["label"])} '
+        label = (f'<label class="control-label" for="control-{identifier}"><span id="control-name-{identifier}">{label_html}</span> '
                  f'<output id="value-{identifier}" for="control-{identifier}"></output></label>')
     return (f'<div class="control" data-control-id="{identifier}">{label}{field}'
-            f'<p class="muted" id="meaning-{identifier}">{_text(control["meaning"])}</p></div>')
+            f'<p class="muted" id="meaning-{identifier}">{inline(control["meaning"])}</p></div>')
+
+
+def _calculation_expression(item, spec):
+    try:
+        display = '<div class="formula">' + math(latex_expression(item["expression"], symbols_for(spec)), display=True) + '</div>'
+    except (ValueError, SyntaxError):
+        display = ""
+    return display + '<details><summary>Calculation code</summary><code>' + _text(item["expression"]) + '</code></details>'
 
 
 def render(spec: dict, compiled: dict) -> str:
     """Render an already validated spec and computation-id -> checked AST mapping."""
+    config = _json({"spec": spec, "compiled": compiled})
+    spec = presentation_spec(spec)
+    evidence_labels = {item["id"]: f"Claim {index + 1}" for index, item in enumerate(spec["grounding"]["source_claims"])}
     style = (ASSETS / "style.css").read_text(encoding="utf-8")
     runtime = (ASSETS / "math_runtime.js").read_text(encoding="utf-8") + "\n" + (ASSETS / "runtime.js").read_text(encoding="utf-8")
-    terms = "".join(f'<div class="term-pill"><dt>{_text(item["symbol"])}</dt><dd>{_text(item["meaning"])}</dd></div>' for item in spec["terms"])
+    terms = "".join(f'<div class="term-pill"><dt>{inline(item["symbol"])}</dt><dd>{inline(item["meaning"])}</dd></div>' for item in spec["terms"])
     equations = "".join(
-        f'<article class="equation-hud"><p class="formula">{_text(item["expression"])}</p><p>{_text(item["explanation"])}</p>'
-        f'<p>{_provenance(item)}</p></article>' for item in spec["equations"])
+        f'<article class="equation-hud"><div class="formula">{equation(item["expression"])}</div>{prose(item["explanation"])}'
+        f'<p>{_provenance(item, evidence_labels)}</p></article>' for item in spec["equations"])
     steps = "".join(
-        f'<li><h3>{_text(item["heading"])}</h3><p>{_text(item["body"])}</p>'
-        f'<p>{_provenance(item)}</p></li>' for item in spec.get("explanation_steps", []))
+        f'<li><h3>{inline(item["heading"])}</h3>{prose(item["body"])}'
+        f'<details><summary>Source and teaching notes</summary><p>{_provenance(item, evidence_labels)}</p></details></li>'
+        for item in spec.get("explanation_steps", []))
     controls = "".join(_control(item) for item in spec["controls"])
     calculations = "".join(
-        f'<article class="calculation"><h3>{_text(item["label"])}</h3>'
+        f'<article class="calculation"><h3>{inline(item["label"])}</h3>'
         f'<pre id="calculation-{_text(item["id"])}" aria-live="polite">—</pre>'
-        f'<p class="unit">{_text(item["unit"])}</p>'
-        f'<details><summary>Calculation and evidence</summary><code>{_text(item["expression"])}</code>'
-        f'<p>{_provenance(item)}</p></details></article>'
+        f'<p class="unit">{inline(item["unit"])}</p>'
+        f'<details><summary>Calculation and evidence</summary>{_calculation_expression(item, spec)}'
+        f'<p>{_provenance(item, evidence_labels)}</p></details></article>'
         for item in spec["computations"] if item["show"])
     visuals = "".join(
-        f'<figure><h3>{_text(item["title"])}</h3>'
-        f'<div id="visualization-{_text(item["id"])}" class="visual" aria-label="{_text(item["title"])}"></div>'
-        f'<figcaption>{_text(item["x_label"])} · {_text(item["y_label"])}'
+        f'<figure><h3 id="plot-heading-{_text(item["id"])}">{inline(item["title"])}</h3>'
+        f'<div id="visualization-{_text(item["id"])}" class="visual{" diagram-visual" if item["kind"] == "diagram" else ""}"'
+        + (' tabindex="0" role="region"' if item["kind"] == "diagram" else '')
+        + f' aria-label="{_text(plain(item["title"]))}"></div>'
+        + f'<figcaption>{inline(item["caption"]) if "caption" in item else inline(item["x_label"]) + " · " + inline(item["y_label"])}'
         + (' · The marker shows the current setting; the curve sweeps the selected control.' if item["kind"] == "line" else '')
-        + '</figcaption></figure>' for item in spec["visualizations"])
+        + '</figcaption>'
+        + ('<details><summary>Source and teaching notes</summary><p>' + _provenance(item["diagram"], evidence_labels) + '</p></details>'
+           if item["kind"] == "diagram" else '')
+        + '</figure>' for item in spec["visualizations"])
+    # Only trusted Python creates this markup. The runtime clones the sanitized
+    # HTML/MathML into SVG foreignObject labels, never parses model HTML.
+    plot_labels = "".join(
+        f'<template id="plot-label-{_text(vis["id"])}-{_text(key)}"><span xmlns="http://www.w3.org/1999/xhtml" class="plot-label{" diagram-edge-label" if key.startswith("edges-") else ""}">{inline(value)}</span></template>'
+        for vis in spec["visualizations"]
+        for key, value in (
+            [(key, vis[key]) for key in ("x_label", "y_label") if key in vis]
+            + [(f"{key}-{i}", value) for key in ("labels", "row_labels", "column_labels")
+               for i, value in enumerate(vis.get(key, []))]
+            + [(f"edges-{i}", edge["label"]) for i, edge in enumerate(vis.get("diagram", {}).get("edges", []))
+               if "label" in edge]))
+    plot_labels += "".join(
+        f'<template id="diagram-node-{_text(vis["id"])}-{_text(node["id"])}">'
+        f'<div xmlns="http://www.w3.org/1999/xhtml" class="diagram-card">'
+        f'<div class="diagram-label">{inline(node["label"])}</div>'
+        + (f'<p class="diagram-detail">{inline(node["detail"])}</p>' if "detail" in node else '')
+        + '</div></template>'
+        for vis in spec["visualizations"] for node in vis.get("diagram", {}).get("nodes", []))
     explorations = "".join(
-        f'<li><p><strong>Change:</strong> {_text(item["change"])}</p>'
-        f'<p><strong>Observe:</strong> {_text(item["observe"])}</p>'
-        f'<p><strong>Why:</strong> {_text(item["why"])}</p></li>' for item in spec["explorations"])
-    limitations = "".join(f'<li>{_text(item)}</li>' for item in spec["limitations"])
+        f'<li><p><strong>Change:</strong> {inline(item["change"])}</p>'
+        f'<p><strong>Observe:</strong> {inline(item["observe"])}</p>'
+        f'<p><strong>Why:</strong> {inline(item["why"])}</p></li>' for item in spec["explorations"])
+    limitations = "".join(f'<li>{prose(item)}</li>' for item in spec["limitations"])
     grounding = spec["grounding"]
     claims = "".join(
-        f'<li id="evidence-{_text(item["id"])}"><strong>{_text(item["id"])}</strong>: {_text(item["claim"])}'
+        f'<li id="evidence-{_text(item["id"])}"><strong>{_text(evidence_labels[item["id"]])}</strong>: {inline(item["claim"])}'
         f'<p class="muted">Source location: {_text(item["locator"])}</p>'
         + (f'<blockquote>{_text(item["quote"])}</blockquote>' if item.get("quote") else '')
         + '</li>' for item in grounding["source_claims"])
-    simplifications = "".join(f'<li>{_text(item)}</li>' for item in grounding["teaching_simplifications"])
-    config = _json({"spec": spec, "compiled": compiled})
-    title = _text(spec["title"])
+    simplifications = "".join(f'<li>{prose(item)}</li>' for item in grounding["teaching_simplifications"])
+    title = _text(plain(spec["title"]))
     source_url = grounding["source_url"]
     parsed = urlparse(source_url)
     source_link = (f'<a href="{_text(source_url)}" target="_blank" rel="noopener noreferrer">Read the source</a>'
@@ -131,13 +172,13 @@ def render(spec: dict, compiled: dict) -> str:
     return f'''<!doctype html>
 <html lang="en" data-theme="dark"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<title>{title}</title><style>{style}</style></head>
-<body><a class="skip-link" href="#controls">Skip to the interactive controls</a><main><header class="command-bar"><p class="brand-title">Paper to Playground<span class="brand-badge">Interactive lesson</span></p><button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">Light theme</button></header>
-<div class="hero-statement"><p class="eyebrow">From a relationship to a working model</p><h1>{title}</h1><nav aria-label="Lesson navigation"><a href="#concept">Understand</a><a href="#controls">Explore</a><a href="#grounding">Check the source</a></nav></div>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>{title} | {NAME}</title><style>{style}</style></head>
+<body><a class="skip-link" href="#controls">Skip to the interactive controls</a><main><header class="command-bar"><div class="brand-title"><img class="brand-logo" src="{logo_data_uri()}" alt="{NAME}" width="2172" height="724"><p class="brand-tagline">{TAGLINE}</p></div><button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">Light theme</button></header>
+<div class="hero-statement"><p class="eyebrow">From a relationship to a working model</p><h1>{inline(spec["title"])}</h1><nav aria-label="Lesson navigation"><a href="#concept">Understand</a><a href="#controls">Explore</a><a href="#grounding">Check the source</a></nav></div>
 <div class="brief-cards">
-<section id="concept"><h2>The concept</h2><p>{_text(spec["concept_summary"])}</p></section>
-<section id="why"><h2>Why it matters</h2><p>{_text(spec["why_it_matters"])}</p></section>
+<section id="concept"><h2>The concept</h2>{prose(spec["concept_summary"])}</section>
+<section id="why"><h2>Why it matters</h2>{prose(spec["why_it_matters"])}</section>
 </div>
 <section id="terms"><h2>Symbols and terms</h2><dl>{terms}</dl></section>
 {('<section id="explanation"><h2>How the mechanism works</h2><ol class="explanation-steps">' + steps + '</ol></section>') if steps else ''}
@@ -151,9 +192,9 @@ def render(spec: dict, compiled: dict) -> str:
 </div></div>
 <section id="explorations"><h2>Try these explorations</h2><ol>{explorations}</ol></section>
 <section id="limitations"><h2>Assumptions and limitations</h2><ul>{limitations}</ul></section>
-<section id="grounding"><h2>Grounding in the source</h2><p><strong>{_text(grounding["paper_title"])}</strong></p><p class="source-url">{source_link}</p><h3>Source-supported claims</h3><ul>{claims}</ul><h3>Our teaching simplifications</h3><ul>{simplifications}</ul><p class="muted">This lesson illustrates a mechanism. A toy calculation does not reproduce the paper’s experimental results.</p></section>
-<footer>All calculations and visualizations run locally in this file.</footer></main>
-<script id="lesson-data" type="application/json">{config}</script><script>{runtime}</script></body></html>'''
+<section id="grounding"><h2>Grounding in the source</h2><p><strong>{inline(grounding["paper_title"])}</strong></p><p class="source-url">{source_link}</p><h3>Source-supported claims</h3><ul>{claims}</ul><h3>Our teaching simplifications</h3><ul>{simplifications}</ul><p class="muted">This lesson illustrates a mechanism. A toy calculation does not reproduce the paper’s experimental results.</p></section>
+<footer>{NAME} · {TAGLINE}<br>All calculations and visualizations run locally in this file.</footer></main>
+{plot_labels}<script id="lesson-data" type="application/json">{config}</script><script>{runtime}</script></body></html>'''
 
 
 def main() -> int:

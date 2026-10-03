@@ -1,4 +1,8 @@
-# Browser checks
+# AhaLab browser checks
+
+Current [AhaLab presentation copies](../../examples/ahalab/README.md) use the latest
+branding and renderer. Historical observations below apply to the original
+hash-identified pages and do not constitute a browser review of the new copies.
 
 Current showcase evidence is indexed in [the generated lesson table](../../examples/generated/README.md). The records below identify earlier original/revised packages by exact hashes. The final resizable entropy review adds nine served-Chromium observations and five user-reported direct-file offline steps; the fresh attention checkbox and three final enzyme slider states have separate user-reported offline checks. P2 completed the final three-page recheck: 89 observations passed. These evidence scopes are kept separate.
 
