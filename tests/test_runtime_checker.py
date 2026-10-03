@@ -10,7 +10,8 @@ import unittest
 from src.expressions import compile_computations, compile_expression
 from src.models import SpecError
 from src.runtime_checker import check_runtime, execute_states
-from tests.fixtures import lesson
+from src.validator import validate_spec
+from tests.fixtures import lesson, SOURCE, SOURCE_URL
 
 
 def math_spec(controls, expressions):
@@ -116,6 +117,32 @@ for code in ('const =', 'while(true){}', 'new Array(10000000).fill(1)'):
         compiled, _ = compile_computations(spec)
         self.assertTrue(any(r["name"] == "resize_effect:values" and r["status"] == "passed"
                             for r in check_runtime(spec, compiled)))
+
+    def test_one_sided_array_bounds_agree_with_executed_state_validation(self):
+        spec = lesson()
+        spec["controls"] = [{"id":"values", "label":"Values", "meaning":"Editable bounded values",
+                             "kind":"array", "default":[1,2], "min_items":1, "max_items":3, "min":0}]
+        spec["computations"][0]["expression"] = "values * 2"
+        spec["visualizations"] = [{"id":"bars", "kind":"bars", "source":"result", "title":"Doubled values",
+                                   "x_label":"Entry", "y_label":"Doubled value"}]
+        spec["checks"] = [{"id":"one", "name":"First state", "state":{"values":[1,2]},
+                           "expected":{"result":[2,4]}, "atol":1e-6, "rtol":1e-6},
+                          {"id":"two", "name":"Boundary state", "state":{"values":[0,2]},
+                           "expected":{"result":[0,4]}, "atol":1e-6, "rtol":1e-6}]
+        compiled, _ = validate_spec(spec, SOURCE, SOURCE_URL)
+        records = execute_states(spec, compiled, [{"values":[100,2]}, {"values":[-1,2]}])
+        self.assertTrue(records[0]["ok"])
+        self.assertFalse(records[1]["ok"])
+        control = spec["controls"][0]
+        control.pop("min")
+        control["max"] = 10
+        compiled, _ = validate_spec(spec, SOURCE, SOURCE_URL)
+        records = execute_states(spec, compiled, [{"values":[-100,2]}, {"values":[11,2]}])
+        self.assertTrue(records[0]["ok"])
+        self.assertFalse(records[1]["ok"])
+        control["min"] = 10
+        with self.assertRaisesRegex(SpecError, "min < max"):
+            validate_spec(spec, SOURCE, SOURCE_URL)
 
     def test_oversized_intermediate_arrays_and_constants_are_rejected(self):
         with self.assertRaises(SpecError):

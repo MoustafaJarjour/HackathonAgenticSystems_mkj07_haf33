@@ -41,9 +41,11 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
                         "Vector resizing needs both min_items and max_items; matrices stay fixed.")
                 require(c["min_items"] <= len(a) <= c["max_items"], "Default vector length is outside resize bounds.")
             if "min" in c or "max" in c:
-                require("min" in c and "max" in c and c["min"] < c["max"], "Array bounds need min < max.")
+                if "min" in c and "max" in c:
+                    require(c["min"] < c["max"], "Array bounds need min < max.")
                 values = [v for row in a for v in row] if matrix else a
-                require(all(c["min"] <= v <= c["max"] for v in values), "Array default is outside bounds.")
+                require(all(c.get("min", -math.inf) <= v <= c.get("max", math.inf) for v in values),
+                        "Array default is outside bounds.")
     if len(controls) == 1:
         c = next(iter(controls.values()))
         require(c["kind"] == "array" and c.get("min_items", 1) < c.get("max_items", 1),

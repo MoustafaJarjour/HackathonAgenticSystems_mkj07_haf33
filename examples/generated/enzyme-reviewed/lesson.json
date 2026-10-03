@@ -1,0 +1,233 @@
+{
+  "checks": [
+    {
+      "atol": 1e-06,
+      "expected": {
+        "v": 0.5
+      },
+      "id": "half_saturation",
+      "name": "S equals Km gives half of Vmax",
+      "rtol": 1e-06,
+      "state": {
+        "km": 2,
+        "s": 2,
+        "vmax": 1
+      }
+    },
+    {
+      "atol": 1e-06,
+      "expected": {
+        "v": 0.6666666666666666
+      },
+      "id": "two_km",
+      "name": "S = 2*Km gives two-thirds of Vmax",
+      "rtol": 1e-06,
+      "state": {
+        "km": 2,
+        "s": 4,
+        "vmax": 1
+      }
+    }
+  ],
+  "computations": [
+    {
+      "evidence_ids": [
+        "eq3"
+      ],
+      "expression": "vmax*s/(km+s)",
+      "id": "v",
+      "label": "Initial rate v",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "same rate unit as Vmax"
+    },
+    {
+      "evidence_ids": [
+        "eq3"
+      ],
+      "expression": "s/(km+s)",
+      "id": "frac",
+      "label": "Fraction of Vmax attained, S/(Km+S)",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "dimensionless"
+    },
+    {
+      "evidence_ids": [],
+      "expression": "km",
+      "id": "km_ref",
+      "label": "Km reference line value",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": "concentration"
+    },
+    {
+      "evidence_ids": [],
+      "expression": "vmax",
+      "id": "vmax_ref",
+      "label": "Vmax reference line value",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": "rate"
+    }
+  ],
+  "concept_summary": "For a single-substrate enzyme at initial rate, the measured velocity v rises with substrate concentration S but saturates: v = Vmax*S/(Km+S). Vmax is the limiting rate approached at high S, and Km is the substrate concentration at which v is exactly half of Vmax. Because S and Km are both concentrations, their ratio S/Km is dimensionless, so the shape of the curve depends only on how S compares with Km.",
+  "controls": [
+    {
+      "default": 1,
+      "id": "vmax",
+      "kind": "range",
+      "label": "Vmax (limiting rate)",
+      "max": 10,
+      "meaning": "The limiting initial rate approached as S becomes large; sets the vertical scale of the curve.",
+      "min": 0.1,
+      "step": 0.1
+    },
+    {
+      "default": 2,
+      "id": "km",
+      "kind": "range",
+      "label": "Km (half-saturation constant)",
+      "max": 10,
+      "meaning": "Substrate concentration giving half of Vmax; sets the horizontal position of the saturation curve. Same concentration unit as S.",
+      "min": 0.1,
+      "step": 0.1
+    },
+    {
+      "default": 2,
+      "id": "s",
+      "kind": "range",
+      "label": "S (substrate concentration)",
+      "max": 20,
+      "meaning": "Substrate concentration at which the initial rate is evaluated; same unit as Km.",
+      "min": 0,
+      "step": 0.1
+    }
+  ],
+  "equations": [
+    {
+      "evidence_ids": [
+        "eq3"
+      ],
+      "explanation": "The 1913 rate expression: the rate nu is proportional to the substrate concentration [S] divided by [S] plus a constant k, with C*Phi as the proportionality constant.",
+      "expression": "nu = C*Phi*[S]/([S]+k)",
+      "provenance": "source_supported"
+    },
+    {
+      "evidence_ids": [
+        "eq3"
+      ],
+      "explanation": "Modern teaching notation for the same form: v is the initial rate, Vmax = C*Phi is the limiting rate, and Km = k is the substrate concentration at half-saturation.",
+      "expression": "v = Vmax*S/(Km+S)",
+      "provenance": "teaching_simplification"
+    },
+    {
+      "evidence_ids": [
+        "eq3"
+      ],
+      "explanation": "Dividing numerator and denominator by Km shows the rate depends only on the dimensionless ratio S/Km, which is why S and Km must share a concentration unit.",
+      "expression": "v = Vmax*(S/Km)/(1+S/Km)",
+      "provenance": "teaching_simplification"
+    }
+  ],
+  "explanation_steps": [
+    {
+      "body": "The 1913 invertase paper writes the initial rate as nu = C*Phi*[S]/([S]+k): the rate grows with substrate concentration [S] but is divided by [S] plus a constant k, so it cannot grow without bound.",
+      "evidence_ids": [
+        "eq3"
+      ],
+      "heading": "The rate law has a saturating form",
+      "provenance": "source_supported"
+    },
+    {
+      "body": "Modern teaching notation renames the constant prefactor C*Phi as Vmax and the constant k as Km, giving v = Vmax*S/(Km+S). Vmax is the limiting rate at high S; Km is the substrate concentration at which v = Vmax/2. Because S and Km are added together, they must carry the same concentration unit.",
+      "evidence_ids": [
+        "eq3"
+      ],
+      "heading": "What Vmax and Km mean",
+      "provenance": "teaching_simplification"
+    },
+    {
+      "body": "Dividing top and bottom by Km gives v = Vmax*(S/Km)/(1+S/Km). The rate therefore depends only on the dimensionless ratio S/Km: doubling both S and Km leaves v unchanged. This is why the curve's shape is set by how S compares with Km, not by absolute concentrations.",
+      "evidence_ids": [
+        "eq3"
+      ],
+      "heading": "Only the ratio S/Km sets the shape",
+      "provenance": "teaching_simplification"
+    }
+  ],
+  "explorations": [
+    {
+      "change": "Set S to 0, then raise S gradually toward Km and beyond while keeping Vmax and Km fixed.",
+      "observe": "At S = 0 the rate is 0; at S = Km the rate is exactly Vmax/2; as S grows well past Km the rate flattens toward Vmax.",
+      "why": "The denominator Km+S makes the response hyperbolic: small S gives near-linear growth, and large S makes Km negligible so v approaches Vmax."
+    },
+    {
+      "change": "Double both S and Km together (for example S = 2, Km = 2, then S = 4, Km = 4) while holding Vmax fixed.",
+      "observe": "The computed rate v and the fraction S/(Km+S) stay the same even though the absolute concentrations changed.",
+      "why": "v depends only on the dimensionless ratio S/Km, so scaling both concentrations by the same factor leaves the rate unchanged; this is the practical reason S and Km must share a unit."
+    }
+  ],
+  "grounding": {
+    "paper_title": "The Kinetics of Invertase Action (1913), Johnson and Goody translation",
+    "source_url": "https://www.chem.uwec.edu/Chem352_F18/pages/readings/media/Michaelis_%26_Menton_1913.pdf",
+    "source_claims": [
+      {
+        "id": "eq3",
+        "claim": "The supplied equation transcription states the initial rate is proportional to substrate concentration divided by substrate concentration plus a constant, with a proportionality constant C.",
+        "locator": "Equations (3)-(4), PDF page 11; supplied equation transcription",
+        "quote": "nu = C*Phi*[S]/([S]+k)"
+      }
+    ],
+    "teaching_simplifications": [
+      "The modern symbols Vmax and Km are teaching notation; the source writes C*Phi and k.",
+      "The lesson treats the rate law as a given initial-rate expression and does not derive it from the underlying reaction scheme.",
+      "The demo uses a single substrate concentration S and does not model product inhibition, reversibility, or time-course effects.",
+      "This lesson evaluates the stated initial-rate saturation law. Renaming the historical constant k as Km is a teaching convention for this model; Km should not generally be interpreted as a binding dissociation constant."
+    ]
+  },
+  "limitations": [
+    "The demo evaluates only the algebraic initial-rate expression; it does not simulate the full time course of an enzyme reaction.",
+    "No experimental invertase data are reproduced here, so the plotted curve is illustrative of the rate law, not a fit to the 1913 measurements.",
+    "The model assumes a single substrate and ignores product inhibition, reversibility, and enzyme inactivation.",
+    "Km is treated as a given constant; the lesson does not derive it from individual rate constants.",
+    "This lesson evaluates the stated initial-rate saturation law. Renaming the historical constant k as Km is a teaching convention for this model; Km should not generally be interpreted as a binding dissociation constant."
+  ],
+  "schema_version": 2,
+  "terms": [
+    {
+      "meaning": "Initial reaction rate (velocity) at a given substrate concentration.",
+      "symbol": "v (nu)"
+    },
+    {
+      "meaning": "Limiting rate approached as substrate concentration becomes large; in the source this is the constant prefactor C*Phi.",
+      "symbol": "Vmax"
+    },
+    {
+      "meaning": "Substrate concentration at which the rate is half of Vmax; in the source this is the constant k. Same concentration unit as S.",
+      "symbol": "Km"
+    },
+    {
+      "meaning": "Substrate concentration, in the same concentration unit as Km.",
+      "symbol": "S ([S])"
+    },
+    {
+      "meaning": "Dimensionless ratio S/Km that alone determines the fraction of Vmax attained.",
+      "symbol": "S/Km"
+    }
+  ],
+  "title": "Initial-Rate Saturation: v = Vmax*S/(Km+S)",
+  "visualizations": [
+    {
+      "id": "curve",
+      "kind": "line",
+      "source": "v",
+      "sweep_control": "s",
+      "title": "Initial rate v versus substrate concentration S",
+      "value_label": "v",
+      "x_label": "S (substrate concentration)",
+      "y_label": "v (initial rate)"
+    }
+  ],
+  "why_it_matters": "This saturating rate law is the foundation of enzyme kinetics: it explains why reaction rate rises with substrate but plateaus once the enzyme is working at capacity, and it defines two measurable constants, Vmax and Km, that characterize an enzyme. Recognizing that S and Km share a concentration unit prevents unit-mismatch errors when fitting or comparing data, and the dimensionless ratio S/Km lets you predict the fractional saturation without knowing absolute concentrations."
+}

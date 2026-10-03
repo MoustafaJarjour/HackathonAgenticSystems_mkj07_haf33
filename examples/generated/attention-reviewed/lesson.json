@@ -1,0 +1,415 @@
+{
+  "checks": [
+    {
+      "atol": 1e-06,
+      "expected": {
+        "attn_weights": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ]
+      },
+      "id": "identical_keys",
+      "name": "Identical keys give uniform weights",
+      "rtol": 1e-06,
+      "state": {
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    },
+    {
+      "atol": 1e-06,
+      "expected": {
+        "attn_weights": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "output": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ]
+      },
+      "id": "zero_query",
+      "name": "Zero query row gives uniform weights and mean of values",
+      "rtol": 1e-06,
+      "state": {
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "q": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "v": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      }
+    }
+  ],
+  "computations": [
+    {
+      "evidence_ids": [
+        "dk_dimension"
+      ],
+      "expression": "ncols(k)",
+      "id": "dk",
+      "label": "Key/query feature dimension d_k",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "features"
+    },
+    {
+      "evidence_ids": [
+        "scaled_dot_product"
+      ],
+      "expression": "matmul(q, transpose(k)) / sqrt(dk)",
+      "id": "scaled_scores",
+      "label": "Scaled scores Q·Kᵀ/√d_k",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "score"
+    },
+    {
+      "evidence_ids": [
+        "softmax_rows"
+      ],
+      "expression": "softmax(scaled_scores)",
+      "id": "attn_weights",
+      "label": "Attention weights softmax(Q·Kᵀ/√d_k)",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "probability"
+    },
+    {
+      "evidence_ids": [
+        "weighted_sum"
+      ],
+      "expression": "matmul(attn_weights, v)",
+      "id": "output",
+      "label": "Weighted output = weights·V",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "value"
+    },
+    {
+      "evidence_ids": [],
+      "expression": "matmul(q, transpose(k))",
+      "id": "raw_scores",
+      "label": "Raw dot-product scores Q·Kᵀ (before scaling)",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": "score"
+    },
+    {
+      "id": "row_sums",
+      "label": "Row sums of attention weights (each row should total 1)",
+      "expression": "matmul(attn_weights, [[1], [1]])",
+      "unit": "probability",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    }
+  ],
+  "concept_summary": "Scaled dot-product attention turns a query into a weighted average of value vectors. Each query is compared with every key by a dot product; the scores are divided by √d_k (d_k = number of key/query feature columns) and passed through a row-wise softmax to form nonnegative weights that sum to one. The output row is the weighted sum of the value rows. Editing the tiny Q, K, V matrices lets you watch scores, weights, and outputs change together.",
+  "controls": [
+    {
+      "default": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "id": "q",
+      "kind": "array",
+      "label": "Query matrix Q",
+      "meaning": "One row per query; each row has d_k feature columns. Row 1 is the default query used in the guided explorations."
+    },
+    {
+      "default": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "id": "k",
+      "kind": "array",
+      "label": "Key matrix K",
+      "meaning": "One row per key; each row must have the same number of feature columns as Q, which fixes d_k."
+    },
+    {
+      "default": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "id": "v",
+      "kind": "array",
+      "label": "Value matrix V",
+      "meaning": "One row per key position; each row is the value vector that gets averaged. Row count must equal the number of keys."
+    }
+  ],
+  "equations": [
+    {
+      "evidence_ids": [
+        "scaled_dot_product",
+        "softmax_rows"
+      ],
+      "explanation": "The compatibility of each query with each key is a dot product, scaled by 1/√d_k, then softmaxed row by row so each query's weights are nonnegative and sum to 1.",
+      "expression": "Attention(Q,K,V) = softmax(Q*K^T/sqrt(d_k))*V",
+      "provenance": "source_supported"
+    },
+    {
+      "evidence_ids": [
+        "dk_dimension"
+      ],
+      "explanation": "d_k is not a free knob: it is the number of feature columns shared by Q and K. The demo reads it from the actual key matrix.",
+      "expression": "d_k = ncols(K)",
+      "provenance": "source_supported"
+    },
+    {
+      "evidence_ids": [
+        "weighted_sum"
+      ],
+      "explanation": "Each output row is the weighted sum of the value rows, with weights taken from the corresponding softmax row.",
+      "expression": "output[i] = sum_j attn_weights[i,j] * V[j]",
+      "provenance": "source_supported"
+    }
+  ],
+  "explanation_steps": [
+    {
+      "body": "Attention compares a query with every key using a dot product. The dot product reflects both alignment and magnitude; it is the query-key compatibility score used here. The source describes the output as 'a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.'",
+      "evidence_ids": [
+        "weighted_sum"
+      ],
+      "heading": "Score each query against every key",
+      "provenance": "source_supported"
+    },
+    {
+      "body": "The source scales dot products by 1/sqrt(d_k) before softmax: 'We compute the dot products of the query with all keys, divide each by sqrt(d_k), and apply a softmax function to obtain the weights on the values.' Here d_k is read from the actual feature columns of K, and the fixed example has d_k=2.",
+      "evidence_ids": [
+        "scaled_dot_product",
+        "dk_dimension"
+      ],
+      "heading": "Scale by √d_k, then softmax each row",
+      "provenance": "source_supported"
+    },
+    {
+      "body": "The softmaxed weights multiply the value matrix: output row i is the weighted average of the value rows. Because softmax rows sum to 1, the output is a convex combination of values. If all keys are identical, every score in a row is equal and the weights are uniform; if a query is the zero vector, all its scores are 0 and its weights are also uniform.",
+      "evidence_ids": [
+        "softmax_rows",
+        "weighted_sum"
+      ],
+      "heading": "Average the values with those weights",
+      "provenance": "source_supported"
+    }
+  ],
+  "explorations": [
+    {
+      "change": "Set both rows of K to the same vector, e.g. K = [[1,0],[1,0]], and leave Q = [[1,0],[0,1]].",
+      "observe": "Every scaled score in a row becomes equal, so each attention weight is 0.5 and each output row is the average of the two value rows.",
+      "why": "Identical keys have identical compatibility with any query, so softmax over equal scores is uniform. This is an analytically exact edge case: no decimal guessing is needed."
+    },
+    {
+      "change": "Set the first row of Q to [0,0] (a zero query) while keeping K = [[1,0],[0,1]] and V = [[1,0],[0,1]].",
+      "observe": "The first row of scaled scores is [0,0], so its weights are [0.5,0.5] and its output row is [0.5,0.5], the mean of the value rows.",
+      "why": "A zero query has zero dot product with every key, so all scores are 0 and softmax gives uniform weights. This shows that 'no preference' still produces a definite weighted average."
+    },
+    {
+      "change": "Keep the fixed 2x2 shapes but edit existing Q, K, and V values: for example, scale the first query row of Q to [2,0] while leaving K = [[1,0],[0,1]] and V = [[1,0],[0,1]].",
+      "observe": "The first row of raw and scaled scores changes, so the first row of attention weights becomes nonuniform; the weighted output row changes accordingly. The second query row and its output are unchanged.",
+      "why": "Changing query or key magnitudes changes compatibility scores and therefore the softmax distribution, while the weighted output remains a convex combination of the same value rows. This lesson uses fixed tiny matrices, so d_k and the matrix shapes cannot be resized here; dimension scaling is derived from the actual feature columns of the supplied K."
+    }
+  ],
+  "grounding": {
+    "paper_title": "Attention Is All You Need",
+    "source_url": "https://arxiv.org/html/1706.03762v7",
+    "source_claims": [
+      {
+        "id": "weighted_sum",
+        "claim": "The output is a weighted sum of values, with weights from a query-key compatibility function.",
+        "locator": "Section 3.2, first paragraph",
+        "quote": "The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key."
+      },
+      {
+        "id": "scaled_dot_product",
+        "claim": "Queries and keys have dimension d_k; dot products are divided by sqrt(d_k) and softmaxed to get weights.",
+        "locator": "Section 3.2.1, equation (1)",
+        "quote": "We compute the dot products of the query with all keys, divide each by sqrt(d_k), and apply a softmax function to obtain the weights on the values."
+      },
+      {
+        "id": "packed_matrices",
+        "claim": "Queries, keys, and values are packed into matrices Q, K, and V.",
+        "locator": "Section 3.2.1",
+        "quote": "In practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q."
+      },
+      {
+        "id": "softmax_rows",
+        "claim": "The supplied equation transcription is Attention(Q,K,V) = softmax(Q*K^T/sqrt(d_k))*V with softmax applied to each row.",
+        "locator": "Section 3.2.1, equation (1), supplied equation transcription",
+        "quote": "Attention(Q,K,V) = softmax(Q*K^T/sqrt(d_k))*V; softmax is applied to each row."
+      },
+      {
+        "id": "dk_dimension",
+        "claim": "The input consists of queries and keys of dimension d_k, and values of dimension d_v.",
+        "locator": "Section 3.2.1",
+        "quote": "The input consists of queries and keys of dimension d_k, and values of dimension d_v."
+      }
+    ],
+    "teaching_simplifications": [
+      "Q, K, and V are supplied teaching inputs, not learned linear projections; the real model derives them from embeddings with learned weight matrices.",
+      "The demo uses fixed 2x2 matrices with two queries and two keys, far smaller than real attention layers; their shapes and d_k cannot be resized in this lesson.",
+      "The raw (unscaled) score matrix is shown for comparison but is not itself part of equation (1).",
+      "Row sums are displayed as a numerical sanity check that softmax rows total 1."
+    ]
+  },
+  "limitations": [
+    "The demo does not train or learn Q, K, V; it only evaluates the attention formula on hand-supplied matrices.",
+    "The matrices are fixed tiny 2x2 teaching inputs; their shapes and d_k cannot be resized in this lesson.",
+    "Even with two keys, large score differences can produce strongly concentrated weights. This tiny example illustrates the attention formula without modeling a trained attention layer.",
+    "No masking, multi-head splitting, or positional encoding is modeled, even though the full Transformer uses them.",
+    "The displayed row sums are a numerical check, not a claim about the source text."
+  ],
+  "schema_version": 2,
+  "terms": [
+    {
+      "meaning": "A vector representing what one position is looking for; each row of Q is one query.",
+      "symbol": "query"
+    },
+    {
+      "meaning": "A vector representing what one position offers for matching; each row of K is one key.",
+      "symbol": "key"
+    },
+    {
+      "meaning": "The vector that gets averaged; each row of V is the value at one key position.",
+      "symbol": "value"
+    },
+    {
+      "meaning": "The number of feature columns shared by queries and keys; read here as ncols(K).",
+      "symbol": "d_k"
+    },
+    {
+      "meaning": "Row-wise normalization that turns scores into nonnegative weights summing to 1.",
+      "symbol": "softmax"
+    },
+    {
+      "meaning": "The matrix of attention weights, one row per query, one column per key.",
+      "symbol": "attention weights"
+    }
+  ],
+  "title": "Scaled Dot-Product Attention with Tiny Q, K, V",
+  "visualizations": [
+    {
+      "column_labels": [
+        "key 1",
+        "key 2"
+      ],
+      "id": "weights_heatmap",
+      "kind": "heatmap",
+      "row_labels": [
+        "query 1",
+        "query 2"
+      ],
+      "source": "attn_weights",
+      "title": "Attention weights (each row sums to 1)",
+      "value_label": "weight",
+      "x_label": "key position",
+      "y_label": "query position"
+    },
+    {
+      "column_labels": [
+        "key 1",
+        "key 2"
+      ],
+      "id": "scores_heatmap",
+      "kind": "heatmap",
+      "row_labels": [
+        "query 1",
+        "query 2"
+      ],
+      "source": "scaled_scores",
+      "title": "Scaled scores Q·Kᵀ/√d_k",
+      "value_label": "score",
+      "x_label": "key position",
+      "y_label": "query position"
+    }
+  ],
+  "why_it_matters": "Attention is the core operation of the Transformer: it lets each position gather information from all other positions in proportion to query-key compatibility. Understanding the score → scale → softmax → weighted-sum pipeline explains why the 1/√d_k factor exists and why attention weights are always a probability distribution over positions."
+}
