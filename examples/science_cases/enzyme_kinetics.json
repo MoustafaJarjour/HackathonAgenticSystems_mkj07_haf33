@@ -2,5 +2,7 @@
   "source_url": "https://www.chem.uwec.edu/Chem352_F18/pages/readings/media/Michaelis_%26_Menton_1913.pdf",
   "focus": "For this initial-rate model, v = Vmax*S/(Km+S). The substrate concentration S and Km use the same concentration unit.",
   "audience": "Undergraduate learner",
-  "excerpt": "The Kinetics of Invertase Action (1913), Johnson and Goody translation. Equations (3)-(4), PDF page 11.\nwhere C is the proportionality constant.\nEquation transcription: Equation (3) transcribed: nu = C*Phi*[S]/([S]+k). Modern teaching notation: v = Vmax*S/(Km+S)."
+  "excerpt": "The Kinetics of Invertase Action (1913), Johnson and Goody translation. Equations (3)-(4), PDF page 11.\nwhere C is the proportionality constant.\nEquation transcription: Equation (3) transcribed: nu = C*Phi*[S]/([S]+k). Modern teaching notation: v = Vmax*S/(Km+S).",
+  "paper_title": "The Kinetics of Invertase Action (1913), Johnson and Goody translation",
+  "source_locator": "Equations (3)-(4), PDF page 11"
 }

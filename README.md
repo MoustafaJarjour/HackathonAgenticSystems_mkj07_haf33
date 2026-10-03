@@ -37,7 +37,7 @@ python -m src.renderer --spec smoke-out/lesson.json --output review-out/saved/in
 
 The generic demo intercepts the model request and uses synthetic data. The source-backed developer previews are authored fixtures, rendered from saved JSON and checked against independent expectations. Neither proves fresh model-generation quality. See [scientific acceptance fixtures](tests/science/README.md) for sources, assumptions, numerical derivations, and invalid domains. Optional `node tests/runtime_smoke.cjs` checks a simulated DOM; it does not establish Chromium rendering.
 
-The shared `src/math_runtime.js` is used by the page and the pip-installed QuickJS checker. Numerical cases compare finite values and exact shapes with absolute/relative tolerances. Source-quote occurrence and valid evidence references are structural checks; scientific interpretation also needs independent review.
+The shared `src/math_runtime.js` is used by the page and the pip-installed QuickJS checker. Generation executes default states, numerical cases, control-effect probes, and legal line-sweep samples before promoting output. Numerical cases compare finite values and exact shapes with absolute/relative tolerances. Failed cases feed targeted component replacement; their expectations are preserved during repair. Source-quote occurrence and valid evidence references are structural checks; scientific interpretation also needs independent review. The CLI records browser and independent-science review as skipped because it does not perform those reviews itself.
 
 ## Scope and limits
 
@@ -45,7 +45,7 @@ The shared `src/math_runtime.js` is used by the page and the pip-installed Quick
 - Computations use whitelisted arithmetic and functions, with at most 64 numeric cells per value, expression depth 32, 256 syntax nodes, and 1,500 expression characters. No expression-string evaluation, arbitrary generated HTML, or generated JavaScript is used.
 - `normalize` is **L2 normalization**. Probability weights use `weights/sum(weights)` with a positive total. `xlogx(0)` is exactly zero; negative inputs are rejected. Attention scaling uses actual query/key column count.
 - The expression language has no arbitrary indexing, conditionals, or loops. A short recurrence can be explicitly unrolled; a short trajectory does not establish chaos or reproduce a full numerical algorithm. Unsupported mechanisms must fail honestly rather than be replaced by unrelated calculations.
-- API attempts, including retries, are capped at 10; completion-token reservations are capped at 30,000; a 570-second watchdog leaves room under the assignment's 600-second cap. Missing API usage remains unknown in the trace.
+- API attempts, including retries, are capped at 10; completion-token reservations are capped at 30,000. New optional API work stops at 540 seconds; a 570-second watchdog leaves room under the assignment's 600-second cap. Missing API usage remains unknown in the trace.
 - Tiny teaching examples do not reproduce original experimental results. Four reviewed mechanisms do not establish coverage of every paper or hidden assessment case.
 
 ## Reuse and sources

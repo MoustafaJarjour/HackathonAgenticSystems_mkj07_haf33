@@ -2,5 +2,7 @@
   "source_url": "https://arxiv.org/html/1706.03762v7",
   "focus": "Queries score keys using dot products. Divide the scores by the square root of the key dimension, apply softmax to each row, then combine values using those weights.",
   "audience": "Undergraduate learner",
-  "excerpt": "Attention Is All You Need. Section 3.2.1, equation (1).\nThe output is computed as a weighted sum of the values\nEquation transcription: Attention(Q,K,V) = softmax(Q*K^T/sqrt(d_k))*V; softmax is applied to each row."
+  "excerpt": "Attention Is All You Need. Section 3.2.1, equation (1).\nThe output is computed as a weighted sum of the values\nEquation transcription: Attention(Q,K,V) = softmax(Q*K^T/sqrt(d_k))*V; softmax is applied to each row.",
+  "paper_title": "Attention Is All You Need",
+  "source_locator": "Section 3.2.1, equation (1)"
 }
