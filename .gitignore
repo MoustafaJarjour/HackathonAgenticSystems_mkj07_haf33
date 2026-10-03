@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.env
+out/
+smoke-out/
+planning/
+local-plans/
+docs/hackathon/
+review-out/
+.env.*
+*.pdf
+*.zip
+probe-out/

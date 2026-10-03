@@ -1,0 +1,5 @@
+{
+  "source_url": "https://arxiv.org/pdf/1312.6114",
+  "focus": "Explain the Gaussian reparameterization in Section 2.4. Show how changing the mean and standard deviation transforms fixed example noise values, and why separating noise from the parameters is useful. Do not train a model or reproduce experimental results.",
+  "audience": "Engineering undergraduate familiar with derivatives and basic probability."
+}
