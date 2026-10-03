@@ -120,7 +120,8 @@ def main():
         output.mkdir(parents=True, exist_ok=True)
         spec = saved_lesson(name)
         source = f'{fixture["source_title"]}. {fixture["locator"]}.\n{fixture["quote"]}\nEquation transcription: {fixture["relationship"]}'
-        case = {"source_url": fixture["source_url"], "focus": TEACHING[name][1], "audience": "Undergraduate learner", "excerpt": source}
+        case = {"source_url": fixture["source_url"], "focus": TEACHING[name][1], "audience": "Undergraduate learner", "excerpt": source,
+                "paper_title": fixture["source_title"], "source_locator": fixture["locator"]}
         (output / "case.json").write_text(json.dumps(case, indent=2, ensure_ascii=False), encoding="utf-8")
         if args.cases_output:
             args.cases_output.mkdir(parents=True, exist_ok=True)

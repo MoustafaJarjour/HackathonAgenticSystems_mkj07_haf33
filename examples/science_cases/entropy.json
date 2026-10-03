@@ -2,5 +2,7 @@
   "source_url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf",
   "focus": "Divide nonnegative weights by their sum to obtain probabilities. Entropy measures the uncertainty of that distribution in bits.",
   "audience": "Undergraduate learner",
-  "excerpt": "A Mathematical Theory of Communication. Section 6, Theorem 2 and entropy properties 1-2.\nThus only when we are certain of the outcome does H vanish.\nEquation transcription: H = -sum(p_i * log2(p_i)); contribution at p_i = 0 is 0."
+  "excerpt": "A Mathematical Theory of Communication. Section 6, Theorem 2 and entropy properties 1-2.\nThus only when we are certain of the outcome does H vanish.\nEquation transcription: H = -sum(p_i * log2(p_i)); contribution at p_i = 0 is 0.",
+  "paper_title": "A Mathematical Theory of Communication",
+  "source_locator": "Section 6, Theorem 2 and entropy properties 1-2"
 }
