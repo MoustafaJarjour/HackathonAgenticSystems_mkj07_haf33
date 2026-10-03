@@ -137,7 +137,10 @@ class OpenRouterClient:
             timeout=120.0,
         )
 
-    def complete(self, messages: list[dict], max_tokens: int = 8000, schema: dict | None = None) -> str:
+    def complete(self, messages: list[dict], max_tokens: int = 8000, schema: dict | None = None,
+                 *, reasoning_enabled: bool = False) -> str:
+        if type(reasoning_enabled) is not bool:
+            raise ValueError("reasoning_enabled must be a boolean.")
         payload = {
             "model": self.model,
             "messages": messages,
@@ -145,8 +148,12 @@ class OpenRouterClient:
             "temperature": 0.2,
             "response_format": {"type": "json_object"},
             "provider": {"require_parameters": True},
-            "reasoning": {"effort": "low", "exclude": True},
+            # This model's low effort still spent the full completion cap on
+            # reasoning in live runs. Its catalog marks reasoning optional.
+            "reasoning": {"enabled": False, "exclude": True},
         }
+        if reasoning_enabled:
+            payload["reasoning"] = {"effort": "low", "exclude": True}
         if schema is not None:
             payload["response_format"] = {"type": "json_schema", "json_schema": {
                 "name": "lesson", "strict": True, "schema": provider_schema(schema)}}
@@ -158,7 +165,7 @@ class OpenRouterClient:
             self.trace.event(
                 "openrouter", "request", "started", request_number=number,
                 model=self.model, retry=attempt, max_tokens=max_tokens,
-                format=payload["response_format"]["type"], reasoning_effort="low",
+                format=payload["response_format"]["type"], reasoning_enabled=reasoning_enabled,
                 reserved_completion_tokens=self.budget.reserved_completion_tokens,
             )
             response: httpx.Response | None = None
@@ -227,16 +234,20 @@ class OpenRouterClient:
                 raise OpenRouterError("OpenRouter returned no completion choices.")
             choice = choices[0]
             finish_reason = choice.get("finish_reason")
+            message = choice.get("message")
+            content = message.get("content") if isinstance(message, dict) else None
+            reasoning_count, completion_count = usage.get("reasoning_tokens"), usage.get("completion_tokens")
             self.trace.event("openrouter", "completion", "received", request_number=number,
-                             finish_reason=finish_reason)
+                             finish_reason=finish_reason,
+                             output_characters=len(content) if isinstance(content, str) else 0,
+                             usage_consistent=(reasoning_count <= completion_count
+                                               if type(reasoning_count) is int and type(completion_count) is int else None))
             if choice.get("finish_reason") == "length":
                 raise TruncatedCompletion("The model reached its token cap; change output size before another attempt.")
             if finish_reason not in ("stop", "end_turn"):
                 raise OpenRouterError("OpenRouter completion did not finish normally.")
             if isinstance(resolved_model, str) and resolved_model != self.model:
                 raise OpenRouterError("OpenRouter returned a different model from the requested ID.")
-            message = choice.get("message")
-            content = message.get("content") if isinstance(message, dict) else None
             if not isinstance(content, str) or not content.strip():
                 raise OpenRouterError("OpenRouter returned no usable JSON text.")
             return content

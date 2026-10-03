@@ -12,7 +12,7 @@ from pathlib import Path
 
 from src.models import SpecError, load_case
 from src.openrouter_client import Budget, BudgetError, OpenRouterClient, OpenRouterError, TruncatedCompletion
-from src.planner import generate, repair, select_context
+from src.planner import generate, repair, select_context, can_repair
 from src.renderer import render
 from src.source import SourceError, obtain_source
 from src.trace import Trace
@@ -61,11 +61,9 @@ def main(argv=None) -> int:
             trace.event("planning", "generate" if attempt == 0 else "revise", "started", attempt=attempt + 1)
             try:
                 stage = "generation"
-                repairable = (isinstance(spec, dict) and all(isinstance(spec.get(field), list)
-                              for field in ("controls", "computations", "visualizations", "checks"))
-                              and all(isinstance(item, dict) and "id" in item for field in
-                                      ("controls", "computations", "visualizations") for item in spec[field]))
-                if attempt and repairable:
+                repairable = can_repair(spec)
+                targeted_repair = bool(attempt and repairable)
+                if targeted_repair:
                     spec = repair(client, case, context, spec, errors, compact=compact)
                     trace.event("planning", "component_replacements", "applied", attempt=attempt + 1,
                                 preserved_numerical_cases=True)
@@ -98,10 +96,15 @@ def main(argv=None) -> int:
                 break
             except TruncatedCompletion as exc:
                 errors = [{"name": "completion_length", "stage": "generation", "status": "failed", "details": str(exc)}]
+                # A compact full generation already changed the output strategy.
+                # Repeating it would spend another cap without a new recovery.
+                recover_length = attempt < 2 and (targeted_repair or not compact)
                 compact = True
-                trace.event("planning", "length_recovery", "scheduled" if attempt < 2 else "failed",
-                            strategy="Reduce package/replacement size, preserve mechanism and existing cases.")
-                if attempt == 2:
+                trace.event("planning", "length_recovery", "scheduled" if recover_length else "failed",
+                            strategy="Reduce package/replacement size, preserve mechanism and existing cases.",
+                            reason="A smaller changed request remains available." if recover_length else
+                                   "Compact full generation was already tried or no repair attempts remain.")
+                if not recover_length:
                     raise
             except SpecError as exc:
                 if stage != "runtime" or not errors:
