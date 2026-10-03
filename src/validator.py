@@ -71,8 +71,11 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
         visible.add(v["source"])
         if v["kind"] == "line":
             control = controls.get(v.get("sweep_control"))
-            require(control is not None and control["kind"] != "array", "Line plot needs a scalar sweep_control.")
-            require(control["id"] in dependencies[v["source"]], "Line source must depend on swept control.")
+            require(control is not None and control["kind"] != "array",
+                    f"{v['id']}: line plot needs an existing scalar sweep_control.")
+            require(control["id"] in dependencies[v["source"]],
+                    f"{v['id']}: line source '{v['source']}' must be a scalar computation depending on "
+                    f"swept control '{control['id']}'. Bind the current-value formula; the renderer samples it.")
     used = set().union(*(dependencies[name] for name in visible))
     require(set(controls) <= used, "Every control must affect a visual or shown calculation.")
     grounding = spec["grounding"]

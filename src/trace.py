@@ -39,7 +39,8 @@ class Trace:
                         str(key) in {"reasoning_tokens", "observed_reasoning_tokens"}
                         and (type(item) is int or item is None)
                         or str(key) == "reasoning_effort" and isinstance(item, str)
-                        and item in {"none", "minimal", "low", "medium", "high"})
+                        and item in {"none", "minimal", "low", "medium", "high"}
+                        or str(key) == "reasoning_enabled" and type(item) is bool)
                     else self._redact(item)
                 )
                 for key, item in value.items()

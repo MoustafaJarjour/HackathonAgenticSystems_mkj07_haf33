@@ -1,0 +1,295 @@
+{
+  "schema_version": 2,
+  "title": "From Weights to Uncertainty: Shannon Entropy in Bits",
+  "concept_summary": "Nonnegative weights are converted into a probability distribution by dividing each weight by the total weight. Shannon entropy H = -sum(p_i log2 p_i) measures the average uncertainty of that distribution in bits, with the convention that a zero-probability outcome contributes zero.",
+  "why_it_matters": "Entropy quantifies how many bits are needed on average to describe the outcome of a random source. It is the foundation of data compression and channel capacity: a source with entropy H bits per symbol cannot be compressed below H bits per symbol on average, and a uniform distribution over n outcomes has the maximum entropy log2(n).",
+  "explanation_steps": [
+    {
+      "heading": "Normalize weights into probabilities",
+      "body": "Start with nonnegative weights w_i. Their sum W = sum(w_i) is positive. The normalized probabilities are p_i = w_i / W. This makes the p_i nonnegative and sum(p_i) = 1, so they form a valid probability distribution.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "entropy_formula",
+        "zero_contribution"
+      ]
+    },
+    {
+      "heading": "Entropy as average surprise",
+      "body": "For each outcome with probability p_i, the information content is -log2(p_i) bits. Shannon entropy is the probability-weighted average of these information contents: H = -sum(p_i log2 p_i). A certain outcome (p_i = 1) gives H = 0; a uniform distribution over n outcomes gives H = log2(n), the maximum for that n.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "entropy_formula",
+        "certainty_zero",
+        "zero_contribution"
+      ]
+    },
+    {
+      "heading": "Why the zero convention matters",
+      "body": "When p_i = 0, the term p_i log2(p_i) is undefined as a real number, but its limiting value is 0. Shannon's formula adopts the convention that a zero-probability outcome contributes 0 to the sum. This keeps H finite and continuous as probabilities approach zero.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "zero_contribution"
+      ]
+    }
+  ],
+  "terms": [
+    {
+      "symbol": "w_i",
+      "meaning": "Nonnegative weight for outcome i. Weights need not sum to 1."
+    },
+    {
+      "symbol": "W",
+      "meaning": "Total weight, W = sum(w_i). Must be positive for normalization."
+    },
+    {
+      "symbol": "p_i",
+      "meaning": "Probability of outcome i, computed as p_i = w_i / W."
+    },
+    {
+      "symbol": "H",
+      "meaning": "Shannon entropy in bits, H = -sum(p_i log2 p_i), with 0 log2 0 treated as 0."
+    },
+    {
+      "symbol": "log2",
+      "meaning": "Base-2 logarithm, so entropy is measured in bits."
+    }
+  ],
+  "equations": [
+    {
+      "expression": "p_i = w_i / sum(w)",
+      "explanation": "Normalize nonnegative weights by their total to obtain a probability distribution.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "entropy_formula"
+      ]
+    },
+    {
+      "expression": "H = -sum(p_i * log2(p_i))",
+      "explanation": "Shannon entropy of the distribution p, measured in bits.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "entropy_formula"
+      ]
+    },
+    {
+      "expression": "xlogx(p_i) = p_i * log2(p_i), with xlogx(0) = 0",
+      "explanation": "Convention that a zero-probability outcome contributes zero to the entropy sum.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "zero_contribution"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "weights",
+      "label": "Weights",
+      "meaning": "Nonnegative weights for three outcomes. They are normalized to probabilities by dividing by their sum.",
+      "kind": "array",
+      "default": [
+        1,
+        1,
+        1
+      ],
+      "min": 0,
+      "max": 100,
+      "min_items": 3,
+      "max_items": 3
+    },
+    {
+      "id": "scale",
+      "label": "Common scale factor",
+      "meaning": "Multiplies all weights by the same positive factor. Normalization removes this factor, so probabilities and entropy are unchanged.",
+      "kind": "range",
+      "default": 1,
+      "min": 0.1,
+      "max": 10,
+      "step": 0.1
+    }
+  ],
+  "computations": [
+    {
+      "id": "scaled_weights",
+      "label": "Scaled weights",
+      "expression": "weights * scale",
+      "unit": "",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "total_weight",
+      "label": "Total weight",
+      "expression": "sum(scaled_weights)",
+      "unit": "",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "entropy_formula"
+      ]
+    },
+    {
+      "id": "probabilities",
+      "label": "Probabilities",
+      "expression": "scaled_weights / total_weight",
+      "unit": "",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "entropy_formula"
+      ]
+    },
+    {
+      "id": "entropy",
+      "label": "Entropy H",
+      "expression": "-sum(xlogx(probabilities))",
+      "unit": "bits",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "entropy_formula",
+        "zero_contribution"
+      ]
+    },
+    {
+      "id": "max_entropy",
+      "label": "Maximum entropy for 3 outcomes",
+      "expression": "log2(length(probabilities))",
+      "unit": "bits",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    }
+  ],
+  "visualizations": [
+    {
+      "id": "prob_bars",
+      "kind": "bars",
+      "title": "Normalized probability distribution",
+      "source": "probabilities",
+      "x_label": "Outcome index",
+      "y_label": "Probability",
+      "labels": [
+        "Outcome 1",
+        "Outcome 2",
+        "Outcome 3"
+      ],
+      "value_label": "p_i"
+    }
+  ],
+  "explorations": [
+    {
+      "change": "Set the weights to [1, 1, 1] and then to [1, 0, 0].",
+      "observe": "For [1, 1, 1], probabilities are [1/3, 1/3, 1/3] and H = log2(3) ≈ 1.585 bits. For [1, 0, 0], probabilities are [1, 0, 0] and H = 0 bits.",
+      "why": "This shows the two extremes: maximum uncertainty for a uniform distribution over three outcomes, and zero uncertainty when the outcome is certain."
+    },
+    {
+      "change": "Keep the weights at [1, 1, 1] and vary the common scale factor from 0.1 to 10.",
+      "observe": "The scaled weights change, but the probabilities remain [1/3, 1/3, 1/3] and H remains log2(3) ≈ 1.585 bits.",
+      "why": "Normalization divides by the total weight, so multiplying all weights by the same positive constant cancels out. Entropy depends only on the relative proportions of the weights."
+    }
+  ],
+  "limitations": [
+    "The demo uses exactly three outcomes to keep the visualization and calculations compact; the same formula applies to any finite number of outcomes.",
+    "The entropy formula assumes the probabilities are normalized to sum to 1. If the total weight is zero, normalization is undefined and entropy cannot be computed.",
+    "The convention 0 log2 0 = 0 is a limiting value, not a direct evaluation of the expression at zero.",
+    "This lesson does not derive the source coding theorem or channel capacity; it only illustrates the entropy formula and its basic properties."
+  ],
+  "grounding": {
+    "paper_title": "A Mathematical Theory of Communication",
+    "source_url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf",
+    "source_claims": [
+      {
+        "id": "entropy_formula",
+        "claim": "Shannon entropy is H = -sum(p_i log2 p_i), where p_i are probabilities.",
+        "locator": "Section 6, Theorem 2 and entropy properties 1-2",
+        "quote": "H = -sum(p_i * log2(p_i))"
+      },
+      {
+        "id": "certainty_zero",
+        "claim": "Entropy vanishes when the outcome is certain.",
+        "locator": "Section 6, entropy property 1",
+        "quote": "Thus only when we are certain of the outcome does H vanish."
+      },
+      {
+        "id": "zero_contribution",
+        "claim": "A zero-probability outcome contributes zero to the entropy sum.",
+        "locator": "Section 6, entropy property 2",
+        "quote": "contribution at p_i = 0 is 0"
+      }
+    ],
+    "teaching_simplifications": [
+      "The common scale factor control is added to demonstrate that normalization removes a common positive factor; it is not part of Shannon's original presentation.",
+      "The maximum entropy computation log2(length(probabilities)) is a standard consequence of the entropy formula for a uniform distribution, but it is not stated as a separate equation in the supplied source excerpt.",
+      "The demo uses three outcomes and a bars visualization to keep the lesson compact; Shannon's theory applies to any finite number of outcomes."
+    ]
+  },
+  "checks": [
+    {
+      "id": "uniform",
+      "name": "Uniform weights",
+      "state": {
+        "weights": [
+          1,
+          1,
+          1
+        ],
+        "scale": 1
+      },
+      "expected": {
+        "probabilities": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "entropy": 1.584962500721156
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    },
+    {
+      "id": "certain",
+      "name": "Certain outcome",
+      "state": {
+        "weights": [
+          1,
+          0,
+          0
+        ],
+        "scale": 1
+      },
+      "expected": {
+        "probabilities": [
+          1,
+          0,
+          0
+        ],
+        "entropy": 0
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    },
+    {
+      "id": "scaled",
+      "name": "Common scale does not change entropy",
+      "state": {
+        "weights": [
+          1,
+          1,
+          1
+        ],
+        "scale": 5
+      },
+      "expected": {
+        "probabilities": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "entropy": 1.584962500721156
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    }
+  ]
+}

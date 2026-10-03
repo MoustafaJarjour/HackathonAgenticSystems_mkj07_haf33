@@ -69,6 +69,20 @@ class GenerationGates(unittest.TestCase):
         self.assertEqual(events[-1]["metadata"]["observed_completion_tokens"], 100)
         self.assertTrue(any(e["action"] == "length_recovery" for e in events))
 
+    def test_missing_case_output_regenerates_and_preserves_the_expectation(self):
+        wrong = lesson()
+        wrong["checks"][0]["expected"] = {"missing_output": 5}
+        regenerated = copy.deepcopy(wrong)
+        extra = copy.deepcopy(regenerated["computations"][0])
+        extra["id"] = "missing_output"
+        regenerated["computations"].append(extra)
+        code, events, payloads = run_fixture(self.output, [completion(wrong), completion(regenerated)])
+        self.assertEqual(code, 0)
+        self.assertEqual([payload["max_tokens"] for payload in payloads], [8000, 8000])
+        self.assertTrue(any(event["action"] == "full_regeneration" for event in events))
+        saved = json.loads((self.output / "lesson.json").read_text())
+        self.assertEqual(saved["checks"], wrong["checks"])
+
     def test_strict_schema_rejection_records_deliberate_json_fallback(self):
         budget = Budget(time.monotonic())
         trace = Trace(Path(self.temp.name) / "fallback.jsonl")
@@ -101,6 +115,25 @@ class GenerationGates(unittest.TestCase):
                 client.close()
         self.assertEqual(budget.requests, 1)
 
+    def test_generation_disables_optional_reasoning_without_unsupported_effort(self):
+        # The live exact-model trace exhausted the cap while thinking. Lock down
+        # the request setting; only a live run can establish provider behavior.
+        budget = Budget(time.monotonic())
+        trace = Trace(Path(self.temp.name) / "disabled-thinking.jsonl")
+        payloads = []
+        def handler(request):
+            payloads.append(json.loads(request.content))
+            return httpx.Response(200, json=completion(lesson()))
+        with mock_http(handler):
+            client = OpenRouterClient("deepseek/deepseek-v4.1-flash", trace, budget, api_key="dummy")
+            try:
+                client.complete([], max_tokens=8000, schema=LESSON_SCHEMA)
+            finally:
+                client.close()
+        self.assertEqual(payloads[0]["reasoning"], {"enabled": False, "exclude": True})
+        self.assertEqual(payloads[0]["model"], "deepseek/deepseek-v4.1-flash")
+        self.assertEqual(budget.requests, 1)
+
     def test_reasoning_count_is_not_added_twice_and_private_text_is_redacted(self):
         budget = Budget(time.monotonic())
         budget.begin_attempt(100)
@@ -110,10 +143,11 @@ class GenerationGates(unittest.TestCase):
         self.assertEqual(budget.reasoning_tokens, 5)
         trace = Trace(Path(self.temp.name) / "reasoning.jsonl", secret="test-secret")
         trace.event("test", "redaction", "ok", reasoning_tokens=5, reasoning="private text",
-                    reasoning_effort="low", content="private content", label="test-secret")
+                    reasoning_effort="low", reasoning_enabled=False, content="private content", label="test-secret")
         data = json.loads(trace.path.read_text())["metadata"]
         self.assertEqual(data["reasoning_tokens"], 5)
         self.assertEqual(data["reasoning_effort"], "low")
+        self.assertIs(data["reasoning_enabled"], False)
         self.assertEqual(data["reasoning"], "[REDACTED]")
         self.assertNotIn("test-secret", trace.path.read_text())
 

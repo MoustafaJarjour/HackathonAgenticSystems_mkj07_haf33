@@ -31,7 +31,9 @@ def compile_expression(expression: str, names: set[str]) -> tuple[list, set[str]
             if abs(node.value) > 1e6 or not math.isfinite(node.value):
                 raise SpecError("Expression constant is out of bounds.")
             return ["num", node.value]
-        if isinstance(node, ast.Name) and node.id in names:
+        if isinstance(node, ast.Name):
+            if node.id not in names:
+                raise SpecError(f"Unknown case-sensitive variable '{node.id}'; use a control or earlier computation id.")
             references.add(node.id)
             return ["var", node.id]
         if isinstance(node, ast.List) and 1 <= len(node.elts) <= 64:
@@ -56,7 +58,10 @@ def compile_computations(spec: dict) -> tuple[dict, dict]:
         name = computation["id"]
         if name in names:
             raise SpecError("Control/computation identifiers must be unique.")
-        node, refs = compile_expression(computation["expression"], names)
+        try:
+            node, refs = compile_expression(computation["expression"], names)
+        except SpecError as exc:
+            raise SpecError(f"Computation '{name}': {exc}") from exc
         compiled[name] = node
         dependencies[name] = set().union(*(dependencies.get(ref, {ref}) for ref in refs))
         names.add(name)

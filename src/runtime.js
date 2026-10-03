@@ -4,7 +4,7 @@
   const {spec, compiled} = JSON.parse(document.getElementById("lesson-data").textContent);
   const MAX_OPERATIONS = 100000;
   const SVG_NS = "http://www.w3.org/2000/svg";
-  const accent = "#086b84", muted = "#596b7e";
+  const accent = "var(--accent)", muted = "var(--muted)";
   const fail = message => { throw new Error(message); };
   const budget = () => ({remaining: MAX_OPERATIONS});
   function number(x) { if (typeof x !== "number" || !Number.isFinite(x)) fail("A calculation produced a non-finite number or invalid value."); return x; }
@@ -48,7 +48,7 @@
     svg.append(svgElement("path", {d:`M${left},${top}V${top+height}H${left+width}`, fill:"none", stroke:muted}));
     for (let i=0; i<=4; i++) {
       const t=i/4, value=(1-t)*yDomain[0]+t*yDomain[1];
-      svg.append(svgElement("line", {x1:left,y1:y(value),x2:left+width,y2:y(value),stroke:"#e5ecf2"}));
+      svg.append(svgElement("line", {x1:left,y1:y(value),x2:left+width,y2:y(value),stroke:"var(--line)"}));
       svg.append(svgElement("text", {x:left-9,y:y(value)+4,"text-anchor":"end","font-size":11,fill:muted}, formatted(value)));
       if (!categorical) {
         const xv=(1-t)*xDomain[0]+t*xDomain[1];
@@ -92,8 +92,9 @@
     values.forEach((value,i) => {
       const top=Math.min(base,a.y(value)), height=Math.abs(base-a.y(value));
       const rect=svgElement("rect",{x:a.left+i*cell+cell*.1,y:top,width:cell*.8,height,fill:accent});
-      rect.append(svgElement("title",{},`Index ${i}: ${formatted(value)}`)); svg.append(rect);
-      svg.append(svgElement("text",{x:a.left+(i+.5)*cell,y:a.top+a.height+22,"text-anchor":"middle","font-size":11,fill:muted},i));
+      const label=vis.labels?.[i]??String(i+1);
+      rect.append(svgElement("title",{},`${label}: ${formatted(value)}`)); svg.append(rect);
+      svg.append(svgElement("text",{x:a.left+(i+.5)*cell,y:a.top+a.height+22,"text-anchor":"middle","font-size":11,fill:muted},label));
       if(values.length<=12) svg.append(svgElement("text",{x:a.left+(i+.5)*cell,y:value>=0?top-5:top+height+14,"text-anchor":"middle","font-size":11,fill:accent},formatted(value)));
     });
     return svg;
@@ -102,30 +103,68 @@
     const values=matrix(outputs[vis.source]), flat=values.flat(), [lo,hi]=domain(flat), svg=plotRoot(vis);
     const left=85, top=25, width=625, height=245, cellWidth=width/values[0].length, cellHeight=height/values.length;
     values.forEach((row,i) => {
-      svg.append(svgElement("text",{x:left-12,y:top+(i+.5)*cellHeight+4,"text-anchor":"end","font-size":11,fill:muted},i));
+      const rowLabel=vis.row_labels?.[i]??String(i+1);
+      svg.append(svgElement("text",{x:left-12,y:top+(i+.5)*cellHeight+4,"text-anchor":"end","font-size":11,fill:muted},rowLabel));
       row.forEach((value,j) => {
         const t=(value-lo)/(hi-lo), fill=`hsl(192 66% ${94-t*61}%)`;
         const rect=svgElement("rect",{x:left+j*cellWidth,y:top+i*cellHeight,width:cellWidth,height:cellHeight,fill,stroke:"white","stroke-width":1});
-        rect.append(svgElement("title",{},`Row ${i}, column ${j}: ${formatted(value)}`));svg.append(rect);
+        rect.append(svgElement("title",{},`Row ${rowLabel}, column ${vis.column_labels?.[j]??j+1}: ${formatted(value)}`));svg.append(rect);
         if(values.length<=8&&row.length<=8) svg.append(svgElement("text",{x:left+(j+.5)*cellWidth,y:top+(i+.5)*cellHeight+4,"text-anchor":"middle","font-size":12,fill:t>.65?"white":"#203046"},formatted(value)));
       });
     });
-    values[0].forEach((_,j) => svg.append(svgElement("text",{x:left+(j+.5)*cellWidth,y:top+height+18,"text-anchor":"middle","font-size":11,fill:muted},j)));
+    values[0].forEach((_,j) => svg.append(svgElement("text",{x:left+(j+.5)*cellWidth,y:top+height+18,"text-anchor":"middle","font-size":11,fill:muted},vis.column_labels?.[j]??j+1)));
     svg.append(svgElement("text",{x:left+width/2,y:320,"text-anchor":"middle","font-size":13,fill:muted},vis.x_label));
     svg.append(svgElement("text",{x:20,y:top+height/2,transform:`rotate(-90 20 ${top+height/2})`,"text-anchor":"middle","font-size":13,fill:muted},vis.y_label));
     svg.append(svgElement("text",{x:785,y:30,"text-anchor":"end","font-size":10,fill:muted},`High ${formatted(hi)}`));
     svg.append(svgElement("text",{x:785,y:48,"text-anchor":"end","font-size":10,fill:muted},`Low ${formatted(lo)}`));
     return svg;
   }
+  function readNumber(input, label) {
+    input.removeAttribute("aria-invalid");
+    if(input.value.trim()==="" || !Number.isFinite(Number(input.value))) {
+      input.setAttribute("aria-invalid", "true");
+      fail(`${label}: enter a finite number in every field.`);
+    }
+    return Number(input.value);
+  }
+  function arrayInputs(control) {
+    return [...document.getElementById(`cells-${control.id}`).querySelectorAll("[data-array-cell]")];
+  }
+  function resizeVector(control, delta) {
+    const cells=document.getElementById(`cells-${control.id}`), inputs=arrayInputs(control);
+    const minimum=control.min_items??control.default.length, maximum=control.max_items??control.default.length;
+    const length=inputs.length+delta;
+    if(length<minimum || length>maximum) return;
+    if(delta<0) cells.lastElementChild.remove();
+    else {
+      const label=document.createElement("label"), index=document.createElement("span"), input=document.createElement("input");
+      label.className="array-cell";index.textContent=String(length);
+      input.type="number";input.step="any";input.value="0";
+      input.setAttribute("data-array-cell", "");
+      input.setAttribute("aria-label", `${control.label}, entry ${length}`);
+      input.setAttribute("aria-describedby", `meaning-${control.id}`);
+      label.append(index,input);cells.append(label);
+    }
+    document.getElementById(`shape-${control.id}`).textContent=`${length} entries`;
+    document.getElementById(`remove-${control.id}`).disabled=length<=minimum;
+    document.getElementById(`add-${control.id}`).disabled=length>=maximum;
+    update();
+  }
   function readControls() {
     const values=Object.create(null);
     for(const control of spec.controls) {
       const input=document.getElementById(`control-${control.id}`);
       if(control.kind==="array") {
-        try {values[control.id]=JSON.parse(input.value);} catch {fail(`${control.label}: invalid JSON array.`);}
+        const entries=arrayInputs(control).map(cell=>readNumber(cell,control.label));
+        if(Array.isArray(control.default[0])) {
+          const columns=control.default[0].length;
+          if(entries.length!==control.default.length*columns) fail(`${control.label}: matrix shape must remain fixed.`);
+          values[control.id]=Array.from({length:control.default.length},(_,row)=>entries.slice(row*columns,(row+1)*columns));
+        } else values[control.id]=entries;
+      } else if(control.kind==="toggle") {
+        values[control.id]=input.checked?1:0;
       } else {
-        if(input.value.trim()==="") fail(`${control.label}: enter a number.`);
-        values[control.id]=Number(input.value);
+        values[control.id]=readNumber(input,control.label);
       }
     }
     return controlValues(values);
@@ -144,7 +183,7 @@
           }
         } catch(error) {fail(`${vis.title}: ${error.message}`);}
       });
-      for(const control of spec.controls) document.getElementById(`value-${control.id}`).textContent=control.kind==="array"?"":formatted(values[control.id]);
+      for(const control of spec.controls) document.getElementById(`value-${control.id}`).textContent=control.kind==="array"?"":control.kind==="toggle"?(values[control.id]===1?"On · 1":"Off · 0"):formatted(values[control.id]);
       for(const item of spec.computations) if(item.show) document.getElementById(`calculation-${item.id}`).textContent=formatted(outputs[item.id]);
       spec.visualizations.forEach((vis,i) => document.getElementById(`visualization-${vis.id}`).replaceChildren(plots[i]));
       status.textContent="Calculations and visualizations updated.";status.className="";
@@ -152,6 +191,7 @@
       return {ok:true,outputs};
     } catch(error) {
       status.textContent=`Cannot calculate: ${error.message}`;status.className="error";
+      for(const control of spec.controls) document.getElementById(`value-${control.id}`).textContent="";
       for(const item of spec.computations) if(item.show) document.getElementById(`calculation-${item.id}`).textContent="—";
       for(const vis of spec.visualizations) {
         const target=document.getElementById(`visualization-${vis.id}`);
@@ -163,6 +203,19 @@
   }
   // Pure compute and update hooks support lightweight Chromium smoke tests.
   window.PTP=Object.freeze({compute:overrides=>compute(overrides),update});
-  for(const control of spec.controls) document.getElementById(`control-${control.id}`).addEventListener("input",update);
+  for(const control of spec.controls) {
+    document.getElementById(`control-${control.id}`).addEventListener("input",update);
+    if(control.kind==="array"&&!Array.isArray(control.default[0])&&(control.min_items??control.default.length)<(control.max_items??control.default.length)) {
+      document.getElementById(`add-${control.id}`).addEventListener("click",()=>resizeVector(control,1));
+      document.getElementById(`remove-${control.id}`).addEventListener("click",()=>resizeVector(control,-1));
+    }
+  }
+  const themeToggle=document.getElementById("theme-toggle");
+  if(themeToggle) themeToggle.addEventListener("click",()=>{
+    const light=document.documentElement.dataset.theme!=="light";
+    document.documentElement.dataset.theme=light?"light":"dark";
+    themeToggle.textContent=light?"Dark theme":"Light theme";
+    themeToggle.setAttribute("aria-pressed", String(light));
+  });
   update();
 })();
