@@ -1,158 +1,22 @@
-/* Fixed, bounded expression interpreter and SVG primitives.
- * Extension points: add a checked operator here and in expressions.py together;
- * add a visualization primitive here and its schema rule in models.py together.
- * Do not evaluate model-generated JavaScript or expression strings.
- */
+/* Browser controls and SVG views. Mathematics lives in math_runtime.js. */
 (() => {
   "use strict";
   const {spec, compiled} = JSON.parse(document.getElementById("lesson-data").textContent);
-  const MAX_LEAVES = 64, MAX_DEPTH = 32, MAX_OPERATIONS = 100000;
+  const MAX_OPERATIONS = 100000;
   const SVG_NS = "http://www.w3.org/2000/svg";
   const accent = "#086b84", muted = "#596b7e";
   const fail = message => { throw new Error(message); };
   const budget = () => ({remaining: MAX_OPERATIONS});
-  function tick(b) { if (--b.remaining < 0) fail("Calculation operation budget exceeded."); }
   function number(x) { if (typeof x !== "number" || !Number.isFinite(x)) fail("A calculation produced a non-finite number or invalid value."); return x; }
-  function checkValue(value, depth = 0, count = {leaves: 0}) {
-    if (depth > MAX_DEPTH) fail("Array nesting is too deep.");
-    if (Array.isArray(value)) {
-      if (value.length < 1 || value.length > MAX_LEAVES) fail("Arrays must contain between 1 and 64 elements.");
-      const children = value.map(item => checkValue(item, depth + 1, count));
-      if (children.some(shape => JSON.stringify(shape) !== JSON.stringify(children[0]))) fail("Arrays must have a rectangular shape.");
-      return [value.length, ...children[0]];
-    }
-    number(value);
-    if (++count.leaves > MAX_LEAVES) fail("Each array is limited to 64 numeric values.");
-    return [];
-  }
-  function vector(value) {
-    if (!Array.isArray(value) || !value.length || value.some(x => typeof x !== "number")) fail("This operation requires a numeric vector.");
-    return value;
-  }
-  function matrix(value) {
-    if (!Array.isArray(value) || !value.length || !Array.isArray(value[0])) fail("This operation requires a numeric matrix.");
-    value.forEach(vector);
-    if (value.some(row => row.length !== value[0].length)) fail("Matrix rows must have equal lengths.");
-    return value;
-  }
-  function unary(value, fn, b) {
-    tick(b);
-    return Array.isArray(value) ? value.map(x => unary(x, fn, b)) : number(fn(number(value)));
-  }
-  function binary(a, c, fn, b) {
-    tick(b);
-    if (Array.isArray(a) && Array.isArray(c)) {
-      if (a.length !== c.length) fail("Array operations require equal shapes, or a scalar to broadcast.");
-      // Reject differently nested shapes rather than broadcasting each subarray.
-      if (a.some((x, i) => Array.isArray(x) !== Array.isArray(c[i]))) fail("Array operations require equal shapes.");
-      return a.map((x, i) => binary(x, c[i], fn, b));
-    }
-    if (Array.isArray(a)) return a.map(x => binary(x, c, fn, b));
-    if (Array.isArray(c)) return c.map(x => binary(a, x, fn, b));
-    return number(fn(number(a), number(c)));
-  }
-  const arithmetic = {add: (a,b) => a+b, sub: (a,b) => a-b, mul: (a,b) => a*b, div: (a,b) => a/b, pow: (a,b) => a**b};
-  const elementwise = {sin: Math.sin, cos: Math.cos, exp: Math.exp, log: Math.log, log2: Math.log2, sqrt: Math.sqrt, abs: Math.abs};
-  function softmax(xs, b) {
-    vector(xs);
-    const largest = Math.max(...xs);
-    const weights = xs.map(x => {tick(b); return Math.exp(x - largest);});
-    const total = weights.reduce((a,c) => a+c, 0);
-    return weights.map(x => {tick(b); return x / total;});
-  }
-  function call(name, args, b) {
-    const arity = expected => { if (args.length !== expected) fail(`${name} requires ${expected} argument(s).`); };
-    if (Object.hasOwn(elementwise, name)) {arity(1); return unary(args[0], elementwise[name], b);}
-    switch (name) {
-      case "minimum": case "maximum":
-        arity(2); return binary(args[0], args[1], name === "minimum" ? Math.min : Math.max, b);
-      case "sum": case "mean": {
-        arity(1); const xs = vector(args[0]);
-        const total = xs.reduce((a,c) => {tick(b); return a+c;}, 0);
-        return number(name === "mean" ? total / xs.length : total);
-      }
-      case "norm": case "normalize": {
-        arity(1); const xs = vector(args[0]); xs.forEach(() => tick(b));
-        const magnitude = number(Math.hypot(...xs));
-        if (name === "norm") return magnitude;
-        if (magnitude === 0) fail("Cannot normalize a zero vector.");
-        return unary(xs, x => x / magnitude, b);
-      }
-      case "dot": {
-        arity(2); const a = vector(args[0]), c = vector(args[1]);
-        if (a.length !== c.length) fail("dot requires vectors of equal length.");
-        return number(a.reduce((total, x, i) => {tick(b); return total + x * c[i];}, 0));
-      }
-      case "matmul": {
-        arity(2); const a = matrix(args[0]), c = matrix(args[1]);
-        if (a[0].length !== c.length) fail("Matrix dimensions do not match for matmul.");
-        if (a.length * c[0].length > MAX_LEAVES) fail("Matrix product exceeds 64 numeric values.");
-        return a.map(row => c[0].map((_, j) => number(row.reduce((total, x, k) => {tick(b); return total + x * c[k][j];}, 0))));
-      }
-      case "transpose": {
-        arity(1); const a = matrix(args[0]);
-        return a[0].map((_, j) => a.map(row => {tick(b); return row[j];}));
-      }
-      case "softmax": {
-        arity(1);
-        if (Array.isArray(args[0]) && Array.isArray(args[0][0])) return matrix(args[0]).map(row => softmax(row, b));
-        return softmax(args[0], b);
-      }
-      case "linspace": {
-        arity(3); const start = number(args[0]), end = number(args[1]), n = number(args[2]);
-        if (!Number.isInteger(n) || n < 2 || n > MAX_LEAVES) fail("linspace count must be an integer between 2 and 64.");
-        return Array.from({length:n}, (_, i) => {tick(b); const t = i / (n - 1); return number((1-t)*start + t*end);});
-      }
-      case "clip": {
-        arity(3); const lo = number(args[1]), hi = number(args[2]);
-        if (lo > hi) fail("clip lower bound exceeds its upper bound.");
-        return unary(args[0], x => Math.min(hi, Math.max(lo, x)), b);
-      }
-      default: fail(`Unsupported operation: ${name}`);
-    }
-  }
-  function evaluate(node, env, b, depth = 0) {
-    tick(b);
-    if (depth > MAX_DEPTH) fail("Expression nesting is too deep.");
-    if (!Array.isArray(node)) fail("Invalid expression tree.");
-    const next = n => evaluate(n, env, b, depth + 1);
-    switch (node[0]) {
-      case "num": return number(node[1]);
-      case "var": if (!Object.hasOwn(env, node[1])) fail(`Unknown variable: ${node[1]}`); return env[node[1]];
-      case "list": return node[1].map(next);
-      case "neg": return unary(next(node[1]), x => -x, b);
-      case "pos": return next(node[1]);
-      case "call": return call(node[1], node[2].map(next), b);
-      default:
-        if (Object.hasOwn(arithmetic, node[0])) return binary(next(node[1]), next(node[2]), arithmetic[node[0]], b);
-        fail(`Unsupported expression node: ${node[0]}`);
-    }
-  }
+  function vector(value) { if (!Array.isArray(value) || !value.length || value.some(x => typeof x !== "number")) fail("This view requires a numeric vector."); return value; }
+  function matrix(value) { if (!Array.isArray(value) || !value.length || !Array.isArray(value[0]) || value.some(row => !Array.isArray(row) || row.length !== value[0].length)) fail("This view requires a rectangular numeric matrix."); value.forEach(vector); return value; }
   function controlValues(overrides = {}) {
-    const values = Object.create(null);
-    for (const control of spec.controls) {
-      const value = Object.hasOwn(overrides, control.id) ? overrides[control.id] : control.default;
-      if (control.kind === "array") {
-        if (!Array.isArray(value)) fail(`${control.label}: enter a JSON array.`);
-        checkValue(value);
-      } else {
-        number(value);
-        if (control.min !== undefined && value < control.min || control.max !== undefined && value > control.max) fail(`${control.label}: value is outside the allowed bounds.`);
-      }
-      values[control.id] = value;
-    }
-    return values;
+    const state = Object.fromEntries(spec.controls.map(c => [c.id, c.default]));
+    Object.assign(state, overrides);
+    return globalThis.PTPMath.validateState(spec, state);
   }
   function compute(overrides = {}, b = budget()) {
-    const env = controlValues(overrides), outputs = Object.create(null);
-    for (const computation of spec.computations) {
-      try {
-        const value = evaluate(compiled[computation.id], env, b);
-        checkValue(value);
-        env[computation.id] = value; outputs[computation.id] = value;
-      } catch (error) { fail(`${computation.label}: ${error.message}`); }
-    }
-    return outputs;
+    return globalThis.PTPMath.compute(spec, compiled, controlValues(overrides), {maxOperations:b.remaining});
   }
   function formatted(value) {
     if (Array.isArray(value)) return "[" + value.map(formatted).join(Array.isArray(value[0]) ? ",\n " : ", ") + "]";
