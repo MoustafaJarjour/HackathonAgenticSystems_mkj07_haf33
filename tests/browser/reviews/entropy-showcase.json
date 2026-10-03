@@ -1,0 +1,8214 @@
+{
+  "artifact_commit": "17c2dbded568be3ccc0feba4bdbd52a0135843b5",
+  "package": "examples/generated/entropy-showcase",
+  "review_date": "2026-10-03",
+  "reviewer": "P2",
+  "acceptance": "accepted_for_stated_science_and_browser_scope_with_minor_wording",
+  "generation_mode": "fresh_cli_generation",
+  "fresh_cli_generation": true,
+  "scope": "Independent science, numerical core, exact served Chromium output, controls, errors/recovery, console and visual review of the published package. Entropy is a fresh CLI candidate; final attention/enzyme pages are separately traced saved-candidate model repairs with their original generation traces included.",
+  "artifact_hashes": {
+    "index.html": {
+      "git_blob_sha256": "735096b0db42773c0d979c05f47e5b7a110606919bf7a2e8357826e31d3eb487",
+      "checkout_sha256": "cabf213eee302dcaf498f52a3184d75f2919c272c1269a57b46e2585410ba4b2",
+      "git_blob_bytes": 59030,
+      "checkout_bytes": 59553,
+      "checkout_lf_normalized_equals_git_blob": true,
+      "raw_bytes_equal_git_blob": false
+    },
+    "input.json": {
+      "git_blob_sha256": "feacd58e7a0d6a98b61dc6f7a49a6221a448bcff2d865e6f0c398a4424d7926a",
+      "checkout_sha256": "933a0185739ff4dc43a81296f2b2b4895de4fe9f0fa5e01f406a95444ff18585",
+      "git_blob_bytes": 2363,
+      "checkout_bytes": 2370,
+      "checkout_lf_normalized_equals_git_blob": true,
+      "raw_bytes_equal_git_blob": false
+    },
+    "lesson.json": {
+      "git_blob_sha256": "45f2c764a01a616d3c932defb6af86882dacc223331781a68a036a15e73017d7",
+      "checkout_sha256": "fb8d8b704b0045b4ec50a0bbabe7f255d50ffa2999b72572e209471bbdc44e97",
+      "git_blob_bytes": 11616,
+      "checkout_bytes": 11932,
+      "checkout_lf_normalized_equals_git_blob": true,
+      "raw_bytes_equal_git_blob": false
+    },
+    "trace.jsonl": {
+      "git_blob_sha256": "897defbbe57eb0c91a3a2b09ca5cb1ec4e69fbbd888b102bcd07b786f6502579",
+      "checkout_sha256": "1da6adb72bb215d5fab31cc769745788b02097d9f7b80417a8764d23031f3c8e",
+      "git_blob_bytes": 13038,
+      "checkout_bytes": 13069,
+      "checkout_lf_normalized_equals_git_blob": true,
+      "raw_bytes_equal_git_blob": false
+    }
+  },
+  "hash_note": "Git blob LF hashes and raw Windows checkout CRLF hashes differ where text checkout conversion applies. Normalized checkout equality is verified explicitly.",
+  "generated_files_unchanged": true,
+  "identity": {
+    "saved_spec_equals_embedded_spec": true,
+    "embedded_compiled_equals_current_compiler": true,
+    "embedded_runtime_equals_current_math_plus_ui": true,
+    "embedded_core_verbatim_current": true,
+    "embedded_ui_verbatim_current": true
+  },
+  "controls": [
+    {
+      "id": "weights",
+      "label": "Outcome weights w",
+      "meaning": "Editable nonnegative weights; resize from 2 to 6 outcomes, appending zeros. Probabilities are w_i/sum(w).",
+      "kind": "array",
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": 0,
+      "max": 1000000,
+      "min_items": 2,
+      "max_items": 6
+    },
+    {
+      "id": "scale",
+      "label": "Common scale factor c",
+      "meaning": "Positive factor multiplying every weight; probabilities and H are unchanged, scaled weights and total grow by c.",
+      "kind": "range",
+      "default": 1,
+      "min": 0.1,
+      "max": 10,
+      "step": 0.1
+    }
+  ],
+  "computations": [
+    {
+      "id": "total",
+      "label": "Total of weights",
+      "expression": "sum(weights)",
+      "unit": "weight units",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "probs",
+      "label": "Probabilities p_i",
+      "expression": "weights / sum(weights)",
+      "unit": "probability",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "scaled_weights",
+      "label": "Scaled weights c*w_i",
+      "expression": "scale * weights",
+      "unit": "weight units",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "scaled_total",
+      "label": "Scaled total c*sum(w)",
+      "expression": "scale * sum(weights)",
+      "unit": "weight units",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "entropy",
+      "label": "Entropy H in bits",
+      "expression": "-sum(xlogx(weights / sum(weights)))",
+      "unit": "bits",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "theorem2"
+      ]
+    },
+    {
+      "id": "max_entropy",
+      "label": "Maximum log2(n)",
+      "expression": "log2(length(weights))",
+      "unit": "bits",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "uniform_max"
+      ]
+    }
+  ],
+  "numerical_core": {
+    "method": "Independent Python arithmetic compared with exact embedded LessonSpec/compiled AST and verbatim embedded math core; no API calls or generated-file changes.",
+    "python_version": "3.12.10",
+    "tolerance": {
+      "atol": 1e-12,
+      "rtol": 1e-12
+    },
+    "observations": [
+      {
+        "id": "default",
+        "state": {
+          "weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 4,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaled_total": 4,
+          "entropy": 2.0,
+          "max_entropy": 2.0
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 4,
+            "probs": [
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "scaled_weights": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scaled_total": 4,
+            "entropy": 2,
+            "max_entropy": 2
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "uniform_size_2",
+        "state": {
+          "weights": [
+            1,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 2,
+          "probs": [
+            0.5,
+            0.5
+          ],
+          "scaled_weights": [
+            1,
+            1
+          ],
+          "scaled_total": 2,
+          "entropy": 1.0,
+          "max_entropy": 1.0
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 2,
+            "probs": [
+              0.5,
+              0.5
+            ],
+            "scaled_weights": [
+              1,
+              1
+            ],
+            "scaled_total": 2,
+            "entropy": 1,
+            "max_entropy": 1
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "uniform_size_3",
+        "state": {
+          "weights": [
+            1,
+            1,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 3,
+          "probs": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            1
+          ],
+          "scaled_total": 3,
+          "entropy": 1.584962500721156,
+          "max_entropy": 1.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 3,
+            "probs": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "scaled_weights": [
+              1,
+              1,
+              1
+            ],
+            "scaled_total": 3,
+            "entropy": 1.584962500721156,
+            "max_entropy": 1.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "uniform_size_4",
+        "state": {
+          "weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 4,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaled_total": 4,
+          "entropy": 2.0,
+          "max_entropy": 2.0
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 4,
+            "probs": [
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "scaled_weights": [
+              1,
+              1,
+              1,
+              1
+            ],
+            "scaled_total": 4,
+            "entropy": 2,
+            "max_entropy": 2
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "uniform_size_5",
+        "state": {
+          "weights": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 5,
+          "probs": [
+            0.2,
+            0.2,
+            0.2,
+            0.2,
+            0.2
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaled_total": 5,
+          "entropy": 2.321928094887362,
+          "max_entropy": 2.321928094887362
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 5,
+            "probs": [
+              0.2,
+              0.2,
+              0.2,
+              0.2,
+              0.2
+            ],
+            "scaled_weights": [
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "scaled_total": 5,
+            "entropy": 2.321928094887362,
+            "max_entropy": 2.321928094887362
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "uniform_size_6",
+        "state": {
+          "weights": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 6,
+          "probs": [
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "scaled_total": 6,
+          "entropy": 2.584962500721156,
+          "max_entropy": 2.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 6,
+            "probs": [
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666
+            ],
+            "scaled_weights": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "scaled_total": 6,
+            "entropy": 2.584962500721156,
+            "max_entropy": 2.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "zero_append_size_5",
+        "state": {
+          "weights": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 4,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.0
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "scaled_total": 4,
+          "entropy": 2.0,
+          "max_entropy": 2.321928094887362
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 4,
+            "probs": [
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0
+            ],
+            "scaled_weights": [
+              1,
+              1,
+              1,
+              1,
+              0
+            ],
+            "scaled_total": 4,
+            "entropy": 2,
+            "max_entropy": 2.321928094887362
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "zero_append_size_6",
+        "state": {
+          "weights": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 4,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "scaled_total": 4,
+          "entropy": 2.0,
+          "max_entropy": 2.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 4,
+            "probs": [
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0,
+              0
+            ],
+            "scaled_weights": [
+              1,
+              1,
+              1,
+              1,
+              0,
+              0
+            ],
+            "scaled_total": 4,
+            "entropy": 2,
+            "max_entropy": 2.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "uneven_scale_0.1",
+        "state": {
+          "weights": [
+            1,
+            3,
+            0
+          ],
+          "scale": 0.1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 4,
+          "probs": [
+            0.25,
+            0.75,
+            0.0
+          ],
+          "scaled_weights": [
+            0.1,
+            0.30000000000000004,
+            0.0
+          ],
+          "scaled_total": 0.4,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 4,
+            "probs": [
+              0.25,
+              0.75,
+              0
+            ],
+            "scaled_weights": [
+              0.1,
+              0.30000000000000004,
+              0
+            ],
+            "scaled_total": 0.4,
+            "entropy": 0.8112781244591328,
+            "max_entropy": 1.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "uneven_scale_1",
+        "state": {
+          "weights": [
+            1,
+            3,
+            0
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 4,
+          "probs": [
+            0.25,
+            0.75,
+            0.0
+          ],
+          "scaled_weights": [
+            1,
+            3,
+            0
+          ],
+          "scaled_total": 4,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 4,
+            "probs": [
+              0.25,
+              0.75,
+              0
+            ],
+            "scaled_weights": [
+              1,
+              3,
+              0
+            ],
+            "scaled_total": 4,
+            "entropy": 0.8112781244591328,
+            "max_entropy": 1.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "uneven_scale_10",
+        "state": {
+          "weights": [
+            1,
+            3,
+            0
+          ],
+          "scale": 10
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 4,
+          "probs": [
+            0.25,
+            0.75,
+            0.0
+          ],
+          "scaled_weights": [
+            10,
+            30,
+            0
+          ],
+          "scaled_total": 40,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 4,
+            "probs": [
+              0.25,
+              0.75,
+              0
+            ],
+            "scaled_weights": [
+              10,
+              30,
+              0
+            ],
+            "scaled_total": 40,
+            "entropy": 0.8112781244591328,
+            "max_entropy": 1.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "certainty",
+        "state": {
+          "weights": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 1,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 1,
+          "entropy": -0.0,
+          "max_entropy": 2.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 1,
+            "probs": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "scaled_weights": [
+              1,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "scaled_total": 1,
+            "entropy": 0,
+            "max_entropy": 2.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "proportional_weights",
+        "state": {
+          "weights": [
+            2,
+            6,
+            0
+          ],
+          "scale": 1
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 8,
+          "probs": [
+            0.25,
+            0.75,
+            0.0
+          ],
+          "scaled_weights": [
+            2,
+            6,
+            0
+          ],
+          "scaled_total": 8,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 8,
+            "probs": [
+              0.25,
+              0.75,
+              0
+            ],
+            "scaled_weights": [
+              2,
+              6,
+              0
+            ],
+            "scaled_total": 8,
+            "entropy": 0.8112781244591328,
+            "max_entropy": 1.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "maximum_weights",
+        "state": {
+          "weights": [
+            1000000,
+            1000000,
+            1000000,
+            1000000,
+            1000000,
+            1000000
+          ],
+          "scale": 10
+        },
+        "expected_error": false,
+        "expected": {
+          "total": 6000000,
+          "probs": [
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666
+          ],
+          "scaled_weights": [
+            10000000,
+            10000000,
+            10000000,
+            10000000,
+            10000000,
+            10000000
+          ],
+          "scaled_total": 60000000,
+          "entropy": 2.584962500721156,
+          "max_entropy": 2.584962500721156
+        },
+        "actual": {
+          "ok": true,
+          "outputs": {
+            "total": 6000000,
+            "probs": [
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666
+            ],
+            "scaled_weights": [
+              10000000,
+              10000000,
+              10000000,
+              10000000,
+              10000000,
+              10000000
+            ],
+            "scaled_total": 60000000,
+            "entropy": 2.584962500721156,
+            "max_entropy": 2.584962500721156
+          }
+        },
+        "pass": true
+      },
+      {
+        "id": "zero_total",
+        "state": {
+          "weights": [
+            0,
+            0
+          ],
+          "scale": 1
+        },
+        "expected_error": true,
+        "expected": null,
+        "actual": {
+          "ok": false,
+          "error": "Probabilities p_i: A calculation produced a non-finite number or invalid value."
+        },
+        "pass": true
+      },
+      {
+        "id": "negative",
+        "state": {
+          "weights": [
+            -1,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": true,
+        "expected": null,
+        "actual": {
+          "ok": false,
+          "error": "Outcome weights w: array value is outside the allowed bounds."
+        },
+        "pass": true
+      },
+      {
+        "id": "over_limit",
+        "state": {
+          "weights": [
+            1000001,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": true,
+        "expected": null,
+        "actual": {
+          "ok": false,
+          "error": "Outcome weights w: array value is outside the allowed bounds."
+        },
+        "pass": true
+      },
+      {
+        "id": "short",
+        "state": {
+          "weights": [
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": true,
+        "expected": null,
+        "actual": {
+          "ok": false,
+          "error": "Outcome weights w: vector length is outside the allowed bounds."
+        },
+        "pass": true
+      },
+      {
+        "id": "long",
+        "state": {
+          "weights": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "scale": 1
+        },
+        "expected_error": true,
+        "expected": null,
+        "actual": {
+          "ok": false,
+          "error": "Outcome weights w: vector length is outside the allowed bounds."
+        },
+        "pass": true
+      },
+      {
+        "id": "nested_wrong_shape",
+        "state": {
+          "weights": [
+            [
+              1,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "scale": 1
+        },
+        "expected_error": true,
+        "expected": null,
+        "actual": {
+          "ok": false,
+          "error": "Outcome weights w: vector length is outside the allowed bounds."
+        },
+        "pass": true
+      },
+      {
+        "id": "invalid_scale_0",
+        "state": {
+          "weights": [
+            1,
+            1
+          ],
+          "scale": 0
+        },
+        "expected_error": true,
+        "expected": null,
+        "actual": {
+          "ok": false,
+          "error": "Common scale factor c: value is outside the allowed bounds."
+        },
+        "pass": true
+      },
+      {
+        "id": "invalid_scale_10.1",
+        "state": {
+          "weights": [
+            1,
+            1
+          ],
+          "scale": 10.1
+        },
+        "expected_error": true,
+        "expected": null,
+        "actual": {
+          "ok": false,
+          "error": "Common scale factor c: value is outside the allowed bounds."
+        },
+        "pass": true
+      }
+    ]
+  },
+  "source_fidelity": {
+    "source": {
+      "case": "entropy-showcase",
+      "url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf",
+      "locator": "Section 6, Theorem 2 and properties 1-2, printed pages 10-11",
+      "verified": "Primary PDF: probability entropy, certainty criterion and fixed-n uniform maximum. Base-2 formula is identified as a transcription. Weight normalization, zero-term continuity, resize interface and common scale are explicitly teaching additions."
+    },
+    "status": "accepted_with_minor_wording_finding",
+    "review_methods": [
+      "Read exact saved JSON with UTF-8; inspected equations, controls, complete checks, explorations, limitations and provenance.",
+      "Opened and located relevant passages in all three primary sources.",
+      "Independently derived expectations with normalization/log2, two-key logistic softmax, and rational initial-rate arithmetic; no API calls or handwritten replacement page."
+    ],
+    "resolved_previous_findings": [
+      "Actual array permits 2-6 outcomes; count derives from vector length, not an unrelated scalar control.",
+      "Normalization and zero-limit convention are labeled teaching constructions.",
+      "Uniform maximum is correctly attributed; certainty and maximum claims have correct source locators.",
+      "Common scaling displays raw/total changes alongside invariant probabilities and entropy.",
+      "Compression/channel claims are contextual; no unsupported exact marginal-entropy compression-rate promise remains."
+    ],
+    "independent_expectations": [
+      {
+        "weights": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scale": 1,
+        "H": 2,
+        "Hmax": 2,
+        "scaled_total": 4
+      },
+      {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "scale": 1,
+        "H": 2,
+        "Hmax": 2.321928094887362,
+        "scaled_total": 4
+      },
+      {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          0,
+          0
+        ],
+        "scale": 0.1,
+        "H": 2,
+        "Hmax": 2.584962500721156,
+        "scaled_total": 0.4
+      },
+      {
+        "weights": [
+          1,
+          3
+        ],
+        "scale": 10,
+        "probabilities": [
+          0.25,
+          0.75
+        ],
+        "H": 0.8112781244591328,
+        "Hmax": 1,
+        "scaled_weights": [
+          10,
+          30
+        ],
+        "scaled_total": 40
+      }
+    ],
+    "limitations": [
+      "Hmax counts all listed outcomes, including zero-probability outcomes, and denotes the achievable ceiling over that declared outcome set.",
+      "All-zero weights remain invalid because normalization has zero denominator.",
+      "Science review alone does not certify UI resize preservation or invalid-edit recovery."
+    ]
+  },
+  "trace_lineage": {
+    "hashes": {
+      "index.html": {
+        "git_blob_sha256": "735096b0db42773c0d979c05f47e5b7a110606919bf7a2e8357826e31d3eb487",
+        "checkout_sha256": "cabf213eee302dcaf498f52a3184d75f2919c272c1269a57b46e2585410ba4b2",
+        "git_blob_bytes": 59030,
+        "checkout_bytes": 59553,
+        "checkout_lf_normalized_equals_git_blob": true,
+        "raw_bytes_equal_git_blob": false
+      },
+      "input.json": {
+        "git_blob_sha256": "feacd58e7a0d6a98b61dc6f7a49a6221a448bcff2d865e6f0c398a4424d7926a",
+        "checkout_sha256": "933a0185739ff4dc43a81296f2b2b4895de4fe9f0fa5e01f406a95444ff18585",
+        "git_blob_bytes": 2363,
+        "checkout_bytes": 2370,
+        "checkout_lf_normalized_equals_git_blob": true,
+        "raw_bytes_equal_git_blob": false
+      },
+      "lesson.json": {
+        "git_blob_sha256": "45f2c764a01a616d3c932defb6af86882dacc223331781a68a036a15e73017d7",
+        "checkout_sha256": "fb8d8b704b0045b4ec50a0bbabe7f255d50ffa2999b72572e209471bbdc44e97",
+        "git_blob_bytes": 11616,
+        "checkout_bytes": 11932,
+        "checkout_lf_normalized_equals_git_blob": true,
+        "raw_bytes_equal_git_blob": false
+      },
+      "trace.jsonl": {
+        "git_blob_sha256": "897defbbe57eb0c91a3a2b09ca5cb1ec4e69fbbd888b102bcd07b786f6502579",
+        "checkout_sha256": "1da6adb72bb215d5fab31cc769745788b02097d9f7b80417a8764d23031f3c8e",
+        "git_blob_bytes": 13038,
+        "checkout_bytes": 13069,
+        "checkout_lf_normalized_equals_git_blob": true,
+        "raw_bytes_equal_git_blob": false
+      }
+    },
+    "git_diff_exit_code": 0,
+    "git_diff_empty": true,
+    "all_normalized_checkout_bytes_equal_published_git_blobs": true,
+    "stages": [
+      {
+        "file": "trace.jsonl",
+        "mode": "fresh_cli_generation",
+        "fresh_cli_generation": true,
+        "start": {
+          "timestamp": "2026-10-03T12:14:11.334791+00:00",
+          "stage": "run",
+          "action": "start",
+          "result": "ok",
+          "metadata": {
+            "model": "deepseek/deepseek-v4.1-flash",
+            "schema_version": 2,
+            "limits": {
+              "requests": 10,
+              "completion_tokens": 30000,
+              "soft_seconds": 540,
+              "seconds": 570
+            },
+            "success_criteria": "schema/source structure, exact JS numerical cases, control probes, offline HTML structure",
+            "browser_executed": false,
+            "independent_science_verified": false
+          }
+        },
+        "finish": {
+          "timestamp": "2026-10-03T12:14:42.869331+00:00",
+          "stage": "run",
+          "action": "finish",
+          "result": "success",
+          "metadata": {
+            "requests": 2,
+            "request_limit": 10,
+            "observed_prompt_tokens": 11864,
+            "observed_completion_tokens": 2989,
+            "observed_total_tokens": 14853,
+            "observed_reasoning_tokens": 0,
+            "usage_is_complete": true,
+            "attempts_missing_usage": {
+              "prompt_tokens": 0,
+              "completion_tokens": 0,
+              "total_tokens": 0
+            },
+            "reserved_completion_tokens": 11500,
+            "completion_token_limit": 30000,
+            "elapsed_seconds": 31.632,
+            "remaining_seconds": 538.368
+          }
+        },
+        "requests": [
+          {
+            "timestamp": "2026-10-03T12:14:11.359115+00:00",
+            "stage": "openrouter",
+            "action": "request",
+            "result": "started",
+            "metadata": {
+              "request_number": 1,
+              "model": "deepseek/deepseek-v4.1-flash",
+              "retry": 0,
+              "max_tokens": 8000,
+              "format": "json_schema",
+              "reasoning_enabled": false,
+              "reserved_completion_tokens": 8000
+            }
+          },
+          {
+            "timestamp": "2026-10-03T12:14:39.137775+00:00",
+            "stage": "openrouter",
+            "action": "request",
+            "result": "started",
+            "metadata": {
+              "request_number": 2,
+              "model": "deepseek/deepseek-v4.1-flash",
+              "retry": 0,
+              "max_tokens": 3500,
+              "format": "json_schema",
+              "reasoning_enabled": false,
+              "reserved_completion_tokens": 11500
+            }
+          }
+        ],
+        "responses": [
+          {
+            "timestamp": "2026-10-03T12:14:39.083052+00:00",
+            "stage": "openrouter",
+            "action": "response",
+            "result": "received",
+            "metadata": {
+              "request_number": 1,
+              "status_code": 200,
+              "response_id": "gen-1791029651-BosU33RYLhag5ieclFj6",
+              "elapsed_seconds": 27.724,
+              "usage": {
+                "prompt_tokens": 4323,
+                "completion_tokens": 2463,
+                "total_tokens": 6786,
+                "reasoning_tokens": 0
+              },
+              "resolved_model": "deepseek/deepseek-v4.1-flash"
+            }
+          },
+          {
+            "timestamp": "2026-10-03T12:14:42.800219+00:00",
+            "stage": "openrouter",
+            "action": "response",
+            "result": "received",
+            "metadata": {
+              "request_number": 2,
+              "status_code": 200,
+              "response_id": "gen-1791029679-DLRc9ymJagpEjjjxByvJ",
+              "elapsed_seconds": 3.662,
+              "usage": {
+                "prompt_tokens": 7541,
+                "completion_tokens": 526,
+                "total_tokens": 8067,
+                "reasoning_tokens": 0
+              },
+              "resolved_model": "deepseek/deepseek-v4.1-flash"
+            }
+          }
+        ],
+        "usage_sums_match_finish": true,
+        "model_reviews_or_repairs": [
+          {
+            "timestamp": "2026-10-03T12:14:39.137187+00:00",
+            "stage": "planning",
+            "action": "source_semantics_review",
+            "result": "started",
+            "metadata": {
+              "independent_science_verified": false
+            }
+          },
+          {
+            "timestamp": "2026-10-03T12:14:42.804918+00:00",
+            "stage": "planning",
+            "action": "source_semantics_review",
+            "result": "revised",
+            "metadata": {
+              "preserved_numerical_cases": true,
+              "independent_science_verified": false
+            }
+          }
+        ],
+        "failed_events": [],
+        "final_runtime_checks": [
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "default_state",
+            "after_source_review": false
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "uniform_four",
+            "after_source_review": false
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "certainty_case",
+            "after_source_review": false
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "scale_invariance",
+            "after_source_review": false
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "control_effect:weights",
+            "after_source_review": false
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "control_effect:scale",
+            "after_source_review": false
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "default_state",
+            "after_source_review": true
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "uniform_four",
+            "after_source_review": true
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "certainty_case",
+            "after_source_review": true
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "scale_invariance",
+            "after_source_review": true
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "control_effect:weights",
+            "after_source_review": true
+          },
+          {
+            "action": "runtime_case",
+            "result": "passed",
+            "check_name": "control_effect:scale",
+            "after_source_review": true
+          }
+        ],
+        "html_checks": [
+          {
+            "timestamp": "2026-10-03T12:14:42.868024+00:00",
+            "stage": "validation",
+            "action": "html_checks",
+            "result": "passed",
+            "metadata": {
+              "checks": [
+                {
+                  "name": "nonempty_html",
+                  "stage": "html",
+                  "status": "passed",
+                  "details": "Offline HTML structure passed."
+                },
+                {
+                  "name": "required_sections",
+                  "stage": "html",
+                  "status": "passed",
+                  "details": "Offline HTML structure passed."
+                },
+                {
+                  "name": "control_ids",
+                  "stage": "html",
+                  "status": "passed",
+                  "details": "Offline HTML structure passed."
+                },
+                {
+                  "name": "balanced_tags",
+                  "stage": "html",
+                  "status": "passed",
+                  "details": "Offline HTML structure passed."
+                },
+                {
+                  "name": "offline_resources",
+                  "stage": "html",
+                  "status": "passed",
+                  "details": "Offline HTML structure passed."
+                }
+              ],
+              "browser_executed": false,
+              "scientific_fidelity_verified": false
+            }
+          }
+        ],
+        "independent_science_and_browser_are_cli_skipped_or_false": true
+      }
+    ],
+    "repair_ancestry": [],
+    "aggregate_all_saved_stages": {
+      "requests": 2,
+      "observed_prompt_tokens": 11864,
+      "observed_completion_tokens": 2989,
+      "observed_total_tokens": 14853,
+      "observed_reasoning_tokens": 0,
+      "reserved_completion_tokens": 11500,
+      "elapsed_seconds": 31.632,
+      "wall_clock_first_start_to_final_finish_seconds": 31.535
+    },
+    "aggregate_is_single_run_budget": false,
+    "budget_note": "The per-stage run finish limits and remaining_seconds are separate run budgets. Aggregate request/token/active-time totals summarize included lineage stages; wall-clock totals include inspection delays and do not establish one full pipeline run under 570 seconds.",
+    "all_stage_finishes_success": true,
+    "all_observed_usage_sums_match_finish": true
+  },
+  "browser": {
+    "engine": "Chromium in-app browser",
+    "version": "not supplied by browser tool",
+    "served_url": "http://127.0.0.1:8083/examples/generated/entropy-showcase/index.html",
+    "method": "Native Chromium controls operated through CUA; read-only DOM observations compared against independent Python arithmetic, without calling hidden production compute functions or replacing generated pages.",
+    "display_tolerance": {
+      "atol": 5e-06,
+      "rtol": 5e-06,
+      "reason": "Readouts display six significant digits."
+    },
+    "observations": [
+      {
+        "index": 0,
+        "action": "Default four equal outcomes",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scaled_total": 4.0,
+          "entropy": 2.0,
+          "max_entropy": 2.0
+        },
+        "parsed_observed": {
+          "entropy": 2,
+          "max_entropy": 2,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "scaled_total": 4,
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2",
+            "max_entropy": "2",
+            "probs": "[0.25, 0.25, 0.25, 0.25]",
+            "scaled_total": "4",
+            "scaled_weights": "[1, 1, 1, 1]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.0625",
+                "0.125",
+                "0.1875",
+                "0.25",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.25",
+                "3",
+                "0.25",
+                "4",
+                "0.25"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "1",
+                "4",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Default four equal outcomes"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "expected_values": [
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "observed_values": [
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 1,
+        "action": "Append zero from four to five",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "1",
+            "1",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0.0
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            0.0
+          ],
+          "scaled_total": 4.0,
+          "entropy": 2.0,
+          "max_entropy": 2.321928094887362
+        },
+        "parsed_observed": {
+          "entropy": 2,
+          "max_entropy": 2.32193,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25,
+            0
+          ],
+          "scaled_total": 4,
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2",
+            "max_entropy": "2.32193",
+            "probs": "[0.25, 0.25, 0.25, 0.25, 0]",
+            "scaled_total": "4",
+            "scaled_weights": "[1, 1, 1, 1, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.0625",
+                "0.125",
+                "0.1875",
+                "0.25",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.25",
+                "3",
+                "0.25",
+                "4",
+                "0.25",
+                "5",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "1",
+                "4",
+                "1",
+                "5",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "1",
+              "1",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Append zero from four to five"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "expected_values": [
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.25,
+              0.25,
+              0.25,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 2,
+        "action": "Remove appended zero and recover four original entries",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scaled_total": 4.0,
+          "entropy": 2.0,
+          "max_entropy": 2.0
+        },
+        "parsed_observed": {
+          "entropy": 2,
+          "max_entropy": 2,
+          "probs": [
+            0.25,
+            0.25,
+            0.25,
+            0.25
+          ],
+          "scaled_total": 4,
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2",
+            "max_entropy": "2",
+            "probs": "[0.25, 0.25, 0.25, 0.25]",
+            "scaled_total": "4",
+            "scaled_weights": "[1, 1, 1, 1]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.0625",
+                "0.125",
+                "0.1875",
+                "0.25",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.25",
+                "3",
+                "0.25",
+                "4",
+                "0.25"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "1",
+                "4",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Remove appended zero and recover four original entries"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "expected_values": [
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "observed_values": [
+              0.25,
+              0.25,
+              0.25,
+              0.25
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 3,
+        "action": "Remove to 3 outcomes",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 3.0,
+          "probs": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scaled_total": 3.0,
+          "entropy": 1.584962500721156,
+          "max_entropy": 1.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 1.58496,
+          "max_entropy": 1.58496,
+          "probs": [
+            0.333333,
+            0.333333,
+            0.333333
+          ],
+          "scaled_total": 3,
+          "scaled_weights": [
+            1,
+            1,
+            1
+          ],
+          "total": 3
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "1.58496",
+            "max_entropy": "1.58496",
+            "probs": "[0.333333, 0.333333, 0.333333]",
+            "scaled_total": "3",
+            "scaled_weights": "[1, 1, 1]",
+            "total": "3"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.0833333",
+                "0.166667",
+                "0.25",
+                "0.333333",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.333333",
+                "2",
+                "0.333333",
+                "3",
+                "0.333333"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Remove to 3 outcomes"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3"
+            ],
+            "expected_values": [
+              0.3333333333333333,
+              0.3333333333333333,
+              0.3333333333333333
+            ],
+            "observed_values": [
+              0.333333,
+              0.333333,
+              0.333333
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 4,
+        "action": "Remove to 2 outcomes",
+        "state": {
+          "weights": [
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 2.0,
+          "probs": [
+            0.5,
+            0.5
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0
+          ],
+          "scaled_total": 2.0,
+          "entropy": 1.0,
+          "max_entropy": 1.0
+        },
+        "parsed_observed": {
+          "entropy": 1,
+          "max_entropy": 1,
+          "probs": [
+            0.5,
+            0.5
+          ],
+          "scaled_total": 2,
+          "scaled_weights": [
+            1,
+            1
+          ],
+          "total": 2
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "1",
+            "max_entropy": "1",
+            "probs": "[0.5, 0.5]",
+            "scaled_total": "2",
+            "scaled_weights": "[1, 1]",
+            "total": "2"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.125",
+                "0.25",
+                "0.375",
+                "0.5",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.5",
+                "2",
+                "0.5"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Remove to 2 outcomes"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2"
+            ],
+            "observed_labels": [
+              "1",
+              "2"
+            ],
+            "expected_values": [
+              0.5,
+              0.5
+            ],
+            "observed_values": [
+              0.5,
+              0.5
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2"
+            ],
+            "observed_labels": [
+              "1",
+              "2"
+            ],
+            "expected_values": [
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 5,
+        "action": "Zero append to 3 outcomes",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 2.0,
+          "probs": [
+            0.5,
+            0.5,
+            0.0
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "scaled_total": 2.0,
+          "entropy": 1.0,
+          "max_entropy": 1.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 1,
+          "max_entropy": 1.58496,
+          "probs": [
+            0.5,
+            0.5,
+            0
+          ],
+          "scaled_total": 2,
+          "scaled_weights": [
+            1,
+            1,
+            0
+          ],
+          "total": 2
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "1",
+            "max_entropy": "1.58496",
+            "probs": "[0.5, 0.5, 0]",
+            "scaled_total": "2",
+            "scaled_weights": "[1, 1, 0]",
+            "total": "2"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.125",
+                "0.25",
+                "0.375",
+                "0.5",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.5",
+                "2",
+                "0.5",
+                "3",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Zero append to 3 outcomes"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3"
+            ],
+            "expected_values": [
+              0.5,
+              0.5,
+              0.0
+            ],
+            "observed_values": [
+              0.5,
+              0.5,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 6,
+        "action": "Zero append to 4 outcomes",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 2.0,
+          "probs": [
+            0.5,
+            0.5,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 2.0,
+          "entropy": 1.0,
+          "max_entropy": 2.0
+        },
+        "parsed_observed": {
+          "entropy": 1,
+          "max_entropy": 2,
+          "probs": [
+            0.5,
+            0.5,
+            0,
+            0
+          ],
+          "scaled_total": 2,
+          "scaled_weights": [
+            1,
+            1,
+            0,
+            0
+          ],
+          "total": 2
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "1",
+            "max_entropy": "2",
+            "probs": "[0.5, 0.5, 0, 0]",
+            "scaled_total": "2",
+            "scaled_weights": "[1, 1, 0, 0]",
+            "total": "2"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.125",
+                "0.25",
+                "0.375",
+                "0.5",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.5",
+                "2",
+                "0.5",
+                "3",
+                "0",
+                "4",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "0",
+                "4",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Zero append to 4 outcomes"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "expected_values": [
+              0.5,
+              0.5,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.5,
+              0.5,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 7,
+        "action": "Zero append to 5 outcomes",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 2.0,
+          "probs": [
+            0.5,
+            0.5,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 2.0,
+          "entropy": 1.0,
+          "max_entropy": 2.321928094887362
+        },
+        "parsed_observed": {
+          "entropy": 1,
+          "max_entropy": 2.32193,
+          "probs": [
+            0.5,
+            0.5,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 2,
+          "scaled_weights": [
+            1,
+            1,
+            0,
+            0,
+            0
+          ],
+          "total": 2
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "1",
+            "max_entropy": "2.32193",
+            "probs": "[0.5, 0.5, 0, 0, 0]",
+            "scaled_total": "2",
+            "scaled_weights": "[1, 1, 0, 0, 0]",
+            "total": "2"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.125",
+                "0.25",
+                "0.375",
+                "0.5",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.5",
+                "2",
+                "0.5",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Zero append to 5 outcomes"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "expected_values": [
+              0.5,
+              0.5,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.5,
+              0.5,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 8,
+        "action": "Zero append to 6 outcomes",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 2.0,
+          "probs": [
+            0.5,
+            0.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 2.0,
+          "entropy": 1.0,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 1,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.5,
+            0.5,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 2,
+          "scaled_weights": [
+            1,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 2
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "1",
+            "max_entropy": "2.58496",
+            "probs": "[0.5, 0.5, 0, 0, 0, 0]",
+            "scaled_total": "2",
+            "scaled_weights": "[1, 1, 0, 0, 0, 0]",
+            "total": "2"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.125",
+                "0.25",
+                "0.375",
+                "0.5",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.5",
+                "2",
+                "0.5",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Zero append to 6 outcomes"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.5,
+              0.5,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.5,
+              0.5,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 9,
+        "action": "Six equal outcomes",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 6.0,
+          "probs": [
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666,
+            0.16666666666666666
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scaled_total": 6.0,
+          "entropy": 2.584962500721156,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 2.58496,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.166667,
+            0.166667,
+            0.166667,
+            0.166667,
+            0.166667,
+            0.166667
+          ],
+          "scaled_total": 6,
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "total": 6
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2.58496",
+            "max_entropy": "2.58496",
+            "probs": "[0.166667, 0.166667, 0.166667, 0.166667, 0.166667, 0.166667]",
+            "scaled_total": "6",
+            "scaled_weights": "[1, 1, 1, 1, 1, 1]",
+            "total": "6"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.0416667",
+                "0.0833333",
+                "0.125",
+                "0.166667",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.166667",
+                "2",
+                "0.166667",
+                "3",
+                "0.166667",
+                "4",
+                "0.166667",
+                "5",
+                "0.166667",
+                "6",
+                "0.166667"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "1",
+                "4",
+                "1",
+                "5",
+                "1",
+                "6",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Six equal outcomes"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666,
+              0.16666666666666666
+            ],
+            "observed_values": [
+              0.166667,
+              0.166667,
+              0.166667,
+              0.166667,
+              0.166667,
+              0.166667
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 10,
+        "action": "Edit weight cell 1",
+        "state": {
+          "weights": [
+            3.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "3",
+            "1",
+            "1",
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 8.0,
+          "probs": [
+            0.375,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125
+          ],
+          "scaled_weights": [
+            3.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scaled_total": 8.0,
+          "entropy": 2.4056390622295662,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 2.40564,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.375,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125
+          ],
+          "scaled_total": 8,
+          "scaled_weights": [
+            3,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "total": 8
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2.40564",
+            "max_entropy": "2.58496",
+            "probs": "[0.375, 0.125, 0.125, 0.125, 0.125, 0.125]",
+            "scaled_total": "8",
+            "scaled_weights": "[3, 1, 1, 1, 1, 1]",
+            "total": "8"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.09375",
+                "0.1875",
+                "0.28125",
+                "0.375",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.375",
+                "2",
+                "0.125",
+                "3",
+                "0.125",
+                "4",
+                "0.125",
+                "5",
+                "0.125",
+                "6",
+                "0.125"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.75",
+                "1.5",
+                "2.25",
+                "3",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "3",
+                "2",
+                "1",
+                "3",
+                "1",
+                "4",
+                "1",
+                "5",
+                "1",
+                "6",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "3",
+              "1",
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Edit weight cell 1"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.375,
+              0.125,
+              0.125,
+              0.125,
+              0.125,
+              0.125
+            ],
+            "observed_values": [
+              0.375,
+              0.125,
+              0.125,
+              0.125,
+              0.125,
+              0.125
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              3.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              3.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 11,
+        "action": "Edit weight cell 2",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "1",
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 8.0,
+          "probs": [
+            0.125,
+            0.375,
+            0.125,
+            0.125,
+            0.125,
+            0.125
+          ],
+          "scaled_weights": [
+            1.0,
+            3.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scaled_total": 8.0,
+          "entropy": 2.4056390622295662,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 2.40564,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.125,
+            0.375,
+            0.125,
+            0.125,
+            0.125,
+            0.125
+          ],
+          "scaled_total": 8,
+          "scaled_weights": [
+            1,
+            3,
+            1,
+            1,
+            1,
+            1
+          ],
+          "total": 8
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2.40564",
+            "max_entropy": "2.58496",
+            "probs": "[0.125, 0.375, 0.125, 0.125, 0.125, 0.125]",
+            "scaled_total": "8",
+            "scaled_weights": "[1, 3, 1, 1, 1, 1]",
+            "total": "8"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.09375",
+                "0.1875",
+                "0.28125",
+                "0.375",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.125",
+                "2",
+                "0.375",
+                "3",
+                "0.125",
+                "4",
+                "0.125",
+                "5",
+                "0.125",
+                "6",
+                "0.125"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.75",
+                "1.5",
+                "2.25",
+                "3",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "3",
+                "3",
+                "1",
+                "4",
+                "1",
+                "5",
+                "1",
+                "6",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "1",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Edit weight cell 2"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.125,
+              0.375,
+              0.125,
+              0.125,
+              0.125,
+              0.125
+            ],
+            "observed_values": [
+              0.125,
+              0.375,
+              0.125,
+              0.125,
+              0.125,
+              0.125
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 12,
+        "action": "Edit weight cell 3",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            3.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "3",
+            "1",
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 8.0,
+          "probs": [
+            0.125,
+            0.125,
+            0.375,
+            0.125,
+            0.125,
+            0.125
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            3.0,
+            1.0,
+            1.0,
+            1.0
+          ],
+          "scaled_total": 8.0,
+          "entropy": 2.4056390622295662,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 2.40564,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.125,
+            0.125,
+            0.375,
+            0.125,
+            0.125,
+            0.125
+          ],
+          "scaled_total": 8,
+          "scaled_weights": [
+            1,
+            1,
+            3,
+            1,
+            1,
+            1
+          ],
+          "total": 8
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2.40564",
+            "max_entropy": "2.58496",
+            "probs": "[0.125, 0.125, 0.375, 0.125, 0.125, 0.125]",
+            "scaled_total": "8",
+            "scaled_weights": "[1, 1, 3, 1, 1, 1]",
+            "total": "8"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.09375",
+                "0.1875",
+                "0.28125",
+                "0.375",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.125",
+                "2",
+                "0.125",
+                "3",
+                "0.375",
+                "4",
+                "0.125",
+                "5",
+                "0.125",
+                "6",
+                "0.125"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.75",
+                "1.5",
+                "2.25",
+                "3",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "3",
+                "4",
+                "1",
+                "5",
+                "1",
+                "6",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "3",
+              "1",
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Edit weight cell 3"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.125,
+              0.125,
+              0.375,
+              0.125,
+              0.125,
+              0.125
+            ],
+            "observed_values": [
+              0.125,
+              0.125,
+              0.375,
+              0.125,
+              0.125,
+              0.125
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              3.0,
+              1.0,
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 13,
+        "action": "Edit weight cell 4",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            3.0,
+            1.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "1",
+            "3",
+            "1",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 8.0,
+          "probs": [
+            0.125,
+            0.125,
+            0.125,
+            0.375,
+            0.125,
+            0.125
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0,
+            3.0,
+            1.0,
+            1.0
+          ],
+          "scaled_total": 8.0,
+          "entropy": 2.4056390622295662,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 2.40564,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.125,
+            0.125,
+            0.125,
+            0.375,
+            0.125,
+            0.125
+          ],
+          "scaled_total": 8,
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            3,
+            1,
+            1
+          ],
+          "total": 8
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2.40564",
+            "max_entropy": "2.58496",
+            "probs": "[0.125, 0.125, 0.125, 0.375, 0.125, 0.125]",
+            "scaled_total": "8",
+            "scaled_weights": "[1, 1, 1, 3, 1, 1]",
+            "total": "8"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.09375",
+                "0.1875",
+                "0.28125",
+                "0.375",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.125",
+                "2",
+                "0.125",
+                "3",
+                "0.125",
+                "4",
+                "0.375",
+                "5",
+                "0.125",
+                "6",
+                "0.125"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.75",
+                "1.5",
+                "2.25",
+                "3",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "1",
+                "4",
+                "3",
+                "5",
+                "1",
+                "6",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "1",
+              "3",
+              "1",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Edit weight cell 4"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.125,
+              0.125,
+              0.125,
+              0.375,
+              0.125,
+              0.125
+            ],
+            "observed_values": [
+              0.125,
+              0.125,
+              0.125,
+              0.375,
+              0.125,
+              0.125
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              1.0,
+              3.0,
+              1.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              1.0,
+              3.0,
+              1.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 14,
+        "action": "Edit weight cell 5",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            3.0,
+            1.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "1",
+            "1",
+            "3",
+            "1"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 8.0,
+          "probs": [
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.375,
+            0.125
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            3.0,
+            1.0
+          ],
+          "scaled_total": 8.0,
+          "entropy": 2.4056390622295662,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 2.40564,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.375,
+            0.125
+          ],
+          "scaled_total": 8,
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1,
+            3,
+            1
+          ],
+          "total": 8
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2.40564",
+            "max_entropy": "2.58496",
+            "probs": "[0.125, 0.125, 0.125, 0.125, 0.375, 0.125]",
+            "scaled_total": "8",
+            "scaled_weights": "[1, 1, 1, 1, 3, 1]",
+            "total": "8"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.09375",
+                "0.1875",
+                "0.28125",
+                "0.375",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.125",
+                "2",
+                "0.125",
+                "3",
+                "0.125",
+                "4",
+                "0.125",
+                "5",
+                "0.375",
+                "6",
+                "0.125"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.75",
+                "1.5",
+                "2.25",
+                "3",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "1",
+                "4",
+                "1",
+                "5",
+                "3",
+                "6",
+                "1"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "1",
+              "1",
+              "3",
+              "1"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Edit weight cell 5"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.125,
+              0.125,
+              0.125,
+              0.125,
+              0.375,
+              0.125
+            ],
+            "observed_values": [
+              0.125,
+              0.125,
+              0.125,
+              0.125,
+              0.375,
+              0.125
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              3.0,
+              1.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              3.0,
+              1.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 15,
+        "action": "Edit weight cell 6",
+        "state": {
+          "weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            3.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "1",
+            "1",
+            "1",
+            "1",
+            "3"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 8.0,
+          "probs": [
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.375
+          ],
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            3.0
+          ],
+          "scaled_total": 8.0,
+          "entropy": 2.4056390622295662,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 2.40564,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.125,
+            0.375
+          ],
+          "scaled_total": 8,
+          "scaled_weights": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            3
+          ],
+          "total": 8
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "2.40564",
+            "max_entropy": "2.58496",
+            "probs": "[0.125, 0.125, 0.125, 0.125, 0.125, 0.375]",
+            "scaled_total": "8",
+            "scaled_weights": "[1, 1, 1, 1, 1, 3]",
+            "total": "8"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.09375",
+                "0.1875",
+                "0.28125",
+                "0.375",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.125",
+                "2",
+                "0.125",
+                "3",
+                "0.125",
+                "4",
+                "0.125",
+                "5",
+                "0.125",
+                "6",
+                "0.375"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.75",
+                "1.5",
+                "2.25",
+                "3",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "1",
+                "3",
+                "1",
+                "4",
+                "1",
+                "5",
+                "1",
+                "6",
+                "3"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "1",
+              "1",
+              "1",
+              "1",
+              "3"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Edit weight cell 6"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.125,
+              0.125,
+              0.125,
+              0.125,
+              0.125,
+              0.375
+            ],
+            "observed_values": [
+              0.125,
+              0.125,
+              0.125,
+              0.125,
+              0.125,
+              0.375
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              3.0
+            ],
+            "observed_values": [
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              1.0,
+              3.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 16,
+        "action": "Six-outcome uneven distribution",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 1.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "1"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 4.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 4,
+          "scaled_weights": [
+            1,
+            3,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "4",
+            "scaled_weights": "[1, 3, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.75",
+                "1.5",
+                "2.25",
+                "3",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "1",
+                "2",
+                "3",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "1"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Six-outcome uneven distribution"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              3.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              1.0,
+              3.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 17,
+        "action": "Scale endpoint 0.1 preserves probabilities and entropy",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 0.1
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "0.1"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            0.1,
+            0.30000000000000004,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 0.4,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 0.4,
+          "scaled_weights": [
+            0.1,
+            0.3,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "0.4",
+            "scaled_weights": "[0.1, 0.3, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "0.075",
+                "0.15",
+                "0.225",
+                "0.3",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "0.1",
+                "2",
+                "0.3",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "0.1"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Scale endpoint 0.1 preserves probabilities and entropy"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.1,
+              0.30000000000000004,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.1,
+              0.3,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 18,
+        "action": "Scale endpoint 10 preserves probabilities and entropy",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 40.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 40,
+          "scaled_weights": [
+            10,
+            30,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "40",
+            "scaled_weights": "[10, 30, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "7.5",
+                "15",
+                "22.5",
+                "30",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "30",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Scale endpoint 10 preserves probabilities and entropy"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 19,
+        "action": "Certain outcome with five zero terms",
+        "state": {
+          "weights": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 1.0,
+          "probs": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 10.0,
+          "entropy": -0.0,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0,
+          "max_entropy": 2.58496,
+          "probs": [
+            1,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 10,
+          "scaled_weights": [
+            10,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 1
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0",
+            "max_entropy": "2.58496",
+            "probs": "[1, 0, 0, 0, 0, 0]",
+            "scaled_total": "10",
+            "scaled_weights": "[10, 0, 0, 0, 0, 0]",
+            "total": "1"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.25",
+                "0.5",
+                "0.75",
+                "1",
+                "Outcome index",
+                "Probability",
+                "1",
+                "1",
+                "2",
+                "0",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "2.5",
+                "5",
+                "7.5",
+                "10",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "0",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Certain outcome with five zero terms"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              1.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 20,
+        "action": "All-zero total error",
+        "state": {
+          "weights": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": true,
+        "expected_error_reason": "zero total makes normalized probabilities undefined",
+        "expected": null,
+        "parsed_observed": null,
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "\u2014",
+            "max_entropy": "\u2014",
+            "probs": "\u2014",
+            "scaled_total": "\u2014",
+            "scaled_weights": "\u2014",
+            "total": "\u2014"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": []
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": []
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "0",
+              "0",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Cannot calculate: Probabilities p_i: A calculation produced a non-finite number or invalid value.",
+          "svg_count": 0,
+          "theme": "false",
+          "action": "All-zero total error"
+        },
+        "readout_and_status_checks": {
+          "clear_readouts": true,
+          "clear_all_visualizations": true,
+          "visible_error": true,
+          "next_valid_edit_recovers": true
+        },
+        "plot_checks": {},
+        "recovery": {
+          "next_observation_index": 21,
+          "next_action": "Recover from zero total",
+          "next_raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2
+        },
+        "pass": true
+      },
+      {
+        "index": 21,
+        "action": "Recover from zero total",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 40.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 40,
+          "scaled_weights": [
+            10,
+            30,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "40",
+            "scaled_weights": "[10, 30, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "7.5",
+                "15",
+                "22.5",
+                "30",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "30",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Recover from zero total"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 22,
+        "action": "Negative weight rejected",
+        "state": {
+          "weights": [
+            -1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "-1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": true,
+        "expected_error_reason": "weight outside declared bounds",
+        "expected": null,
+        "parsed_observed": null,
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "\u2014",
+            "max_entropy": "\u2014",
+            "probs": "\u2014",
+            "scaled_total": "\u2014",
+            "scaled_weights": "\u2014",
+            "total": "\u2014"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": []
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": []
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "-1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Cannot calculate: Outcome weights w: array value is outside the allowed bounds.",
+          "svg_count": 0,
+          "theme": "false",
+          "action": "Negative weight rejected"
+        },
+        "readout_and_status_checks": {
+          "clear_readouts": true,
+          "clear_all_visualizations": true,
+          "visible_error": true,
+          "next_valid_edit_recovers": true
+        },
+        "plot_checks": {},
+        "recovery": {
+          "next_observation_index": 23,
+          "next_action": "Recover from negative weight",
+          "next_raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2
+        },
+        "pass": true
+      },
+      {
+        "index": 23,
+        "action": "Recover from negative weight",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 40.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 40,
+          "scaled_weights": [
+            10,
+            30,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "40",
+            "scaled_weights": "[10, 30, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "7.5",
+                "15",
+                "22.5",
+                "30",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "30",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Recover from negative weight"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 24,
+        "action": "Over-limit weight rejected",
+        "state": {
+          "weights": [
+            1000001.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1000001",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": true,
+        "expected_error_reason": "weight outside declared bounds",
+        "expected": null,
+        "parsed_observed": null,
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "\u2014",
+            "max_entropy": "\u2014",
+            "probs": "\u2014",
+            "scaled_total": "\u2014",
+            "scaled_weights": "\u2014",
+            "total": "\u2014"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": []
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": []
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1000001",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Cannot calculate: Outcome weights w: array value is outside the allowed bounds.",
+          "svg_count": 0,
+          "theme": "false",
+          "action": "Over-limit weight rejected"
+        },
+        "readout_and_status_checks": {
+          "clear_readouts": true,
+          "clear_all_visualizations": true,
+          "visible_error": true,
+          "next_valid_edit_recovers": true
+        },
+        "plot_checks": {},
+        "recovery": {
+          "next_observation_index": 25,
+          "next_action": "Recover from over-limit weight",
+          "next_raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2
+        },
+        "pass": true
+      },
+      {
+        "index": 25,
+        "action": "Recover from over-limit weight",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 40.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 40,
+          "scaled_weights": [
+            10,
+            30,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "40",
+            "scaled_weights": "[10, 30, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "7.5",
+                "15",
+                "22.5",
+                "30",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "30",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Recover from over-limit weight"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 26,
+        "action": "Blank weight cell error",
+        "state": {
+          "weights": [
+            null,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": true,
+        "expected_error_reason": "empty or browser-sanitized non-finite weight",
+        "expected": null,
+        "parsed_observed": null,
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "\u2014",
+            "max_entropy": "\u2014",
+            "probs": "\u2014",
+            "scaled_total": "\u2014",
+            "scaled_weights": "\u2014",
+            "total": "\u2014"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": []
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": []
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Cannot calculate: Outcome weights w: enter a finite number in every field.",
+          "svg_count": 0,
+          "theme": "false",
+          "action": "Blank weight cell error"
+        },
+        "readout_and_status_checks": {
+          "clear_readouts": true,
+          "clear_all_visualizations": true,
+          "visible_error": true,
+          "next_valid_edit_recovers": true
+        },
+        "plot_checks": {},
+        "recovery": {
+          "next_observation_index": 27,
+          "next_action": "Recover from blank cell",
+          "next_raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2
+        },
+        "pass": true
+      },
+      {
+        "index": 27,
+        "action": "Recover from blank cell",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 40.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 40,
+          "scaled_weights": [
+            10,
+            30,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "40",
+            "scaled_weights": "[10, 30, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "7.5",
+                "15",
+                "22.5",
+                "30",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "30",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Recover from blank cell"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 28,
+        "action": "Nonfinite weight edit rejected",
+        "state": {
+          "weights": [
+            null,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": true,
+        "expected_error_reason": "empty or browser-sanitized non-finite weight",
+        "expected": null,
+        "parsed_observed": null,
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "\u2014",
+            "max_entropy": "\u2014",
+            "probs": "\u2014",
+            "scaled_total": "\u2014",
+            "scaled_weights": "\u2014",
+            "total": "\u2014"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": []
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": []
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Cannot calculate: Outcome weights w: enter a finite number in every field.",
+          "svg_count": 0,
+          "theme": "false",
+          "action": "Nonfinite weight edit rejected"
+        },
+        "readout_and_status_checks": {
+          "clear_readouts": true,
+          "clear_all_visualizations": true,
+          "visible_error": true,
+          "next_valid_edit_recovers": true
+        },
+        "plot_checks": {},
+        "recovery": {
+          "next_observation_index": 29,
+          "next_action": "Recover from nonfinite edit",
+          "next_raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2
+        },
+        "pass": true
+      },
+      {
+        "index": 29,
+        "action": "Recover from nonfinite edit",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 40.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 40,
+          "scaled_weights": [
+            10,
+            30,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "40",
+            "scaled_weights": "[10, 30, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "7.5",
+                "15",
+                "22.5",
+                "30",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "30",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Recover from nonfinite edit"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 30,
+        "action": "Switch to light theme",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 40.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 40,
+          "scaled_weights": [
+            10,
+            30,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "40",
+            "scaled_weights": "[10, 30, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "7.5",
+                "15",
+                "22.5",
+                "30",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "30",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "true",
+          "action": "Switch to light theme"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      },
+      {
+        "index": 31,
+        "action": "Restore initial dark theme",
+        "state": {
+          "weights": [
+            1.0,
+            3.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scale": 10.0
+        },
+        "raw_browser_inputs": {
+          "scale": [
+            "10"
+          ],
+          "weights": [
+            "1",
+            "3",
+            "0",
+            "0",
+            "0",
+            "0"
+          ]
+        },
+        "expected_error": false,
+        "expected_error_reason": null,
+        "expected": {
+          "total": 4.0,
+          "probs": [
+            0.25,
+            0.75,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "scaled_total": 40.0,
+          "entropy": 0.8112781244591328,
+          "max_entropy": 2.584962500721156
+        },
+        "parsed_observed": {
+          "entropy": 0.811278,
+          "max_entropy": 2.58496,
+          "probs": [
+            0.25,
+            0.75,
+            0,
+            0,
+            0,
+            0
+          ],
+          "scaled_total": 40,
+          "scaled_weights": [
+            10,
+            30,
+            0,
+            0,
+            0,
+            0
+          ],
+          "total": 4
+        },
+        "observed": {
+          "curve": null,
+          "outputs": {
+            "entropy": "0.811278",
+            "max_entropy": "2.58496",
+            "probs": "[0.25, 0.75, 0, 0, 0, 0]",
+            "scaled_total": "40",
+            "scaled_weights": "[10, 30, 0, 0, 0, 0]",
+            "total": "4"
+          },
+          "plots": [
+            {
+              "accessible_values": [],
+              "id": "visualization-prob_bars",
+              "text": [
+                "0",
+                "0.1875",
+                "0.375",
+                "0.5625",
+                "0.75",
+                "Outcome index",
+                "Probability",
+                "1",
+                "0.25",
+                "2",
+                "0.75",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            },
+            {
+              "accessible_values": [],
+              "id": "visualization-scaled_bars",
+              "text": [
+                "0",
+                "7.5",
+                "15",
+                "22.5",
+                "30",
+                "Outcome index",
+                "Scaled weight",
+                "1",
+                "10",
+                "2",
+                "30",
+                "3",
+                "0",
+                "4",
+                "0",
+                "5",
+                "0",
+                "6",
+                "0"
+              ]
+            }
+          ],
+          "raw_state": {
+            "scale": [
+              "10"
+            ],
+            "weights": [
+              "1",
+              "3",
+              "0",
+              "0",
+              "0",
+              "0"
+            ]
+          },
+          "status": "Calculations and visualizations updated.",
+          "svg_count": 2,
+          "theme": "false",
+          "action": "Restore initial dark theme"
+        },
+        "readout_and_status_checks": {
+          "total": true,
+          "probs": true,
+          "scaled_weights": true,
+          "scaled_total": true,
+          "entropy": true,
+          "max_entropy": true,
+          "updated_status": true,
+          "two_views": true
+        },
+        "plot_checks": {
+          "prob_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              0.25,
+              0.75,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          },
+          "scaled_bars": {
+            "expected_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "observed_labels": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6"
+            ],
+            "expected_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "observed_values": [
+              10.0,
+              30.0,
+              0.0,
+              0.0,
+              0.0,
+              0.0
+            ],
+            "pass": true
+          }
+        },
+        "recovery": null,
+        "pass": true
+      }
+    ],
+    "console_warnings_errors": [],
+    "actual_controls": {
+      "arrays": [
+        {
+          "cells": [
+            {
+              "label": "Outcome weights w, entry 1",
+              "max": "",
+              "min": ""
+            },
+            {
+              "label": "Outcome weights w, entry 2",
+              "max": "",
+              "min": ""
+            },
+            {
+              "label": "Outcome weights w, entry 3",
+              "max": "",
+              "min": ""
+            },
+            {
+              "label": "Outcome weights w, entry 4",
+              "max": "",
+              "min": ""
+            },
+            {
+              "label": "Outcome weights w, entry 5",
+              "max": "",
+              "min": ""
+            },
+            {
+              "label": "Outcome weights w, entry 6",
+              "max": "",
+              "min": ""
+            }
+          ],
+          "id": "weights"
+        },
+        {
+          "cells": [],
+          "id": "scale"
+        }
+      ],
+      "buttons": [
+        {
+          "disabled": false,
+          "id": "theme-toggle",
+          "label": null,
+          "text": "Light theme"
+        },
+        {
+          "disabled": false,
+          "id": "remove-weights",
+          "label": "Remove the last entry from Outcome weights w",
+          "text": "Remove last"
+        },
+        {
+          "disabled": true,
+          "id": "add-weights",
+          "label": "Append zero to Outcome weights w",
+          "text": "Add entry"
+        }
+      ],
+      "checkboxes": [],
+      "ranges": [
+        {
+          "id": "control-scale",
+          "max": "10",
+          "min": "0.1",
+          "step": "0.1"
+        }
+      ]
+    },
+    "resize_boundaries": {
+      "remove_enabled_at_two": false,
+      "add_enabled_at_six": false
+    },
+    "disclosure_open_close_states": [
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null
+    ],
+    "disclosure_count": 6,
+    "layout": [
+      {
+        "requested": {
+          "width": 1280,
+          "height": 900
+        },
+        "observed": {
+          "client_width": 1150,
+          "height": 818,
+          "scroll_width": 1150,
+          "width": 1164
+        },
+        "horizontal_overflow": false
+      },
+      {
+        "requested": {
+          "width": 390,
+          "height": 844
+        },
+        "observed": {
+          "client_width": 341,
+          "height": 767,
+          "scroll_width": 341,
+          "width": 355
+        },
+        "horizontal_overflow": false
+      }
+    ],
+    "viewport_override_restored": true,
+    "theme_restored": true,
+    "visual_inspection": "Root P2 visually inspected both saved desktop and narrow screenshots for each of the three exact pages.",
+    "screenshots": [
+      "review-out/entropy-showcase-desktop.png",
+      "review-out/entropy-showcase-narrow.png"
+    ],
+    "range_error_scope": null,
+    "hidden_computation_note": null
+  },
+  "findings": [
+    {
+      "severity": "non_blocking_wording",
+      "location": "lesson.json visualizations[id=scaled_bars].title",
+      "observed": "The title says 'same probabilities, larger total' while scale c is legal from 0.1 to 10.",
+      "expected": "For 0<c<1, the scaled total becomes smaller. Suggested later repair: 'same probabilities, changed total' or 'total multiplied by c'.",
+      "impact": "The equations and explicit factor-c explanation are correct; only this fixed title overstates the direction of scaling."
+    }
+  ],
+  "offline": {
+    "status": "user_reported_pass",
+    "direct_file": true,
+    "network_disconnected": true,
+    "verified_by": "user report relayed in the current task",
+    "browser": "Chromium; version not supplied",
+    "specific_input_states": "not supplied for this latest showcase confirmation",
+    "note": "The user reports the latest entropy and attention offline checks passed. Older fixture and earlier-package values are not transferred to these pages. P2 browser tools cannot navigate file://."
+  },
+  "counts": {
+    "numerical_core_valid": 14,
+    "numerical_core_expected_errors": 8,
+    "numerical_core_total": 22,
+    "numerical_core_passed": 22,
+    "browser_valid": 27,
+    "browser_expected_errors": 5,
+    "browser_total": 32,
+    "browser_passed": 32,
+    "browser_error_recoveries": 5,
+    "curve_geometry_points_checked": 0,
+    "scan_bars_geometry_checked": 0
+  },
+  "external_test_evidence": {
+    "python_version": "3.11",
+    "passing_test_count": 51,
+    "attribution": "P1 verification reported by the user; not executed by P2 in this review. P2 independent calculations used Python 3.12.10."
+  }
+}
