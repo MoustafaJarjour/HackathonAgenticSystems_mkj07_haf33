@@ -1,0 +1,256 @@
+{
+  "checks": [
+    {
+      "atol": 1e-06,
+      "expected": {
+        "v": 0.5
+      },
+      "id": "half_saturation",
+      "name": "S = Km gives half of Vmax",
+      "rtol": 1e-06,
+      "state": {
+        "km": 1,
+        "s": 1,
+        "vmax": 1
+      }
+    },
+    {
+      "atol": 1e-06,
+      "expected": {
+        "v": 0.8
+      },
+      "id": "four_times_km",
+      "name": "S = 4*Km gives four fifths of Vmax",
+      "rtol": 1e-06,
+      "state": {
+        "km": 1,
+        "s": 4,
+        "vmax": 1
+      }
+    }
+  ],
+  "computations": [
+    {
+      "evidence_ids": [
+        "rate_law"
+      ],
+      "expression": "vmax*s/(km+s)",
+      "id": "v",
+      "label": "Initial rate v",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "concentration/time"
+    },
+    {
+      "evidence_ids": [
+        "rate_law"
+      ],
+      "expression": "s/(km+s)",
+      "id": "frac",
+      "label": "Saturation fraction S/(Km+S)",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "dimensionless"
+    },
+    {
+      "evidence_ids": [],
+      "expression": "vmax-v",
+      "id": "gap",
+      "label": "Gap to the plateau, Vmax - v",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": "concentration/time"
+    },
+    {
+      "id": "s_scan",
+      "label": "Fixed substrate scan (absolute concentrations)",
+      "expression": "[0.25,0.5,1,2,4,8]",
+      "unit": "concentration",
+      "show": false,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "evidence_ids": [
+        "rate_law"
+      ],
+      "expression": "vmax*s_scan/(km+s_scan)",
+      "id": "v_scan",
+      "label": "Rates along the fixed scan",
+      "provenance": "source_supported",
+      "show": true,
+      "unit": "concentration/time"
+    }
+  ],
+  "concept_summary": "The 1913 initial-rate law for invertase action states that the reaction velocity is proportional to the enzyme amount and rises with substrate concentration toward a plateau. In modern notation v = Vmax*S/(Km+S): S and Km share one concentration unit, Vmax is the plateau rate reached as S grows, and Km is the substrate concentration giving exactly half of Vmax.",
+  "controls": [
+    {
+      "default": 1,
+      "id": "vmax",
+      "kind": "range",
+      "label": "Vmax (plateau rate)",
+      "max": 10,
+      "meaning": "Rate approached as substrate concentration becomes large; sets the height of the plateau.",
+      "min": 0.1,
+      "step": 0.1
+    },
+    {
+      "default": 1,
+      "id": "km",
+      "kind": "range",
+      "label": "Km (half-saturation constant)",
+      "max": 10,
+      "meaning": "Substrate concentration at which v equals half of Vmax; same concentration unit as S.",
+      "min": 0.1,
+      "step": 0.1
+    },
+    {
+      "default": 1,
+      "id": "s",
+      "kind": "range",
+      "label": "Substrate concentration S",
+      "max": 20,
+      "meaning": "Concentration of substrate offered to the enzyme; drives the saturation curve.",
+      "min": 0,
+      "step": 0.1
+    }
+  ],
+  "equations": [
+    {
+      "evidence_ids": [
+        "rate_law"
+      ],
+      "explanation": "Transcribed 1913 initial-rate expression: velocity is proportional to enzyme amount Phi and to [S]/([S]+k). The modern teaching form v = Vmax*S/(Km+S) is the same shape with Vmax = C*Phi and Km = k.",
+      "expression": "v = vmax*s/(km+s)",
+      "provenance": "source_supported"
+    },
+    {
+      "evidence_ids": [
+        "rate_law"
+      ],
+      "explanation": "Dividing the rate law by Vmax isolates the dimensionless saturation fraction, which equals 1/2 when S = Km.",
+      "expression": "v/vmax = s/(km+s)",
+      "provenance": "source_supported"
+    }
+  ],
+  "explanation_steps": [
+    {
+      "body": "The 1913 paper writes the initial velocity as proportional to the enzyme amount Phi and to [S]/([S]+k). The modern teaching form v = Vmax*S/(Km+S) keeps that shape: Vmax = C*Phi collects the proportionality constant and enzyme amount, and Km = k is the substrate concentration at half saturation. Because S and Km are added, they must carry the same concentration unit.",
+      "evidence_ids": [
+        "rate_law"
+      ],
+      "heading": "The initial-rate law",
+      "provenance": "source_supported"
+    },
+    {
+      "body": "At small S the denominator is dominated by Km, so v is roughly (Vmax/Km)*S: the rate grows almost linearly with substrate. As S grows past Km the denominator is dominated by S, the fraction S/(Km+S) approaches 1, and v flattens toward the plateau Vmax. The gap Vmax - v shrinks but never reaches zero at finite S.",
+      "evidence_ids": [
+        "rate_law"
+      ],
+      "heading": "Why the curve saturates",
+      "provenance": "source_supported"
+    },
+    {
+      "body": "Setting S = Km makes the fraction Km/(Km+Km) = 1/2, so v = Vmax/2. This is the operational meaning of Km: it is read off the curve as the substrate concentration giving half the plateau rate, and it is a concentration, not a rate.",
+      "evidence_ids": [
+        "rate_law"
+      ],
+      "heading": "Reading Km off the curve",
+      "provenance": "source_supported"
+    }
+  ],
+  "explorations": [
+    {
+      "change": "Set Km = 1 and Vmax = 1, then move S from 0 up to 20 in steps of about 1.",
+      "observe": "v starts near 0, passes 0.5 at S = 1, and by S = 8 is about 0.89 while the gap Vmax - v has fallen to about 0.11.",
+      "why": "The fraction S/(Km+S) rises steeply while S < Km and then bends over, so the rate approaches the plateau without ever exceeding it."
+    },
+    {
+      "change": "Keep S = 4 fixed and raise Km from 0.1 to 10.",
+      "observe": "v falls from about 0.976 toward about 0.286 as Km grows, and the saturation fraction S/(Km+S) falls with it.",
+      "why": "Km sits in the denominator, so a larger Km means more substrate is needed to reach the same fraction of the plateau; at fixed S the enzyme looks less saturated."
+    }
+  ],
+  "grounding": {
+    "paper_title": "The Kinetics of Invertase Action (1913), Johnson and Goody translation",
+    "source_claims": [
+      {
+        "claim": "The initial rate is proportional to the enzyme amount and to [S]/([S]+k), with C a proportionality constant.",
+        "id": "rate_law",
+        "locator": "Equations (3)-(4), PDF page 11 (equation transcription)",
+        "quote": "nu = C*Phi*[S]/([S]+k)"
+      }
+    ],
+    "source_url": "https://www.chem.uwec.edu/Chem352_F18/pages/readings/media/Michaelis_%26_Menton_1913.pdf",
+    "teaching_simplifications": [
+      "The modern symbols Vmax and Km are teaching notation for C*Phi and k; the excerpt supplies only the transcribed equation and the note that C is a proportionality constant.",
+      "The fixed substrate scan [0.25, 0.5, 1, 2, 4, 8] and the gap Vmax - v are pedagogical constructions, not data from the 1913 paper.",
+      "The numeric ranges of the sliders (Vmax, Km, S) are chosen for display and are not experimental values reported in the excerpt."
+    ]
+  },
+  "limitations": [
+    "This is a toy evaluation of the rate law, not a reproduction of the 1913 invertase experiments; no measured velocities or concentrations from the paper are used.",
+    "The excerpt supplies only the transcribed equation and the statement that C is a proportionality constant, so the identification Vmax = C*Phi and Km = k is a teaching interpretation.",
+    "Km is not generally a binding dissociation constant; it is the substrate concentration giving half-maximal rate under the stated initial-rate assumptions and can reflect multiple kinetic steps.",
+    "The model assumes a single substrate, initial-rate conditions, and no product inhibition, reversibility, or enzyme inactivation; those effects are outside the excerpt.",
+    "The line view sweeps S only up to the slider maximum of 20, so the plateau is approached but never exactly attained."
+  ],
+  "schema_version": 2,
+  "terms": [
+    {
+      "meaning": "Initial reaction velocity, the rate measured before product accumulates.",
+      "symbol": "v (nu)"
+    },
+    {
+      "meaning": "Plateau rate approached as substrate concentration becomes large; in the excerpt it corresponds to the proportionality constant times the enzyme amount.",
+      "symbol": "Vmax"
+    },
+    {
+      "meaning": "Substrate concentration at which the rate is half of Vmax; same concentration unit as S.",
+      "symbol": "Km"
+    },
+    {
+      "meaning": "Substrate concentration offered to the enzyme.",
+      "symbol": "S"
+    },
+    {
+      "meaning": "Proportionality constant in the transcribed 1913 equation.",
+      "symbol": "C"
+    },
+    {
+      "meaning": "Enzyme amount in the transcribed 1913 equation.",
+      "symbol": "Phi"
+    }
+  ],
+  "title": "Initial-Rate Kinetics: v = Vmax*S/(Km+S)",
+  "visualizations": [
+    {
+      "id": "curve",
+      "kind": "line",
+      "source": "v",
+      "sweep_control": "s",
+      "title": "Initial rate versus substrate concentration",
+      "value_label": "v",
+      "x_label": "Substrate concentration S",
+      "y_label": "Initial rate v"
+    },
+    {
+      "id": "scan_bars",
+      "kind": "bars",
+      "title": "Rates at fixed substrate concentrations",
+      "source": "v_scan",
+      "x_label": "Substrate concentration S",
+      "y_label": "Initial rate v",
+      "labels": [
+        "0.25",
+        "0.5",
+        "1",
+        "2",
+        "4",
+        "8"
+      ],
+      "value_label": "v"
+    }
+  ],
+  "why_it_matters": "This rate law is the standard starting point for describing enzyme kinetics: it explains why reaction velocity rises with substrate but levels off, and it defines Km as a concentration that reports how much substrate is needed for half-maximal activity. Getting the units and the half-saturation reading right is essential before fitting real velocity data or comparing enzymes."
+}

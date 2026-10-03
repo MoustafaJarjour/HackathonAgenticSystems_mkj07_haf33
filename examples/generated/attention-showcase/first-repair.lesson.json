@@ -1,0 +1,595 @@
+{
+  "schema_version": 2,
+  "title": "Scaled Dot-Product Attention with Editable 2×2 Q, K, and V",
+  "concept_summary": "Queries and keys are compared by dot products; dividing those scores by sqrt(d_k) (the actual number of query/key feature columns) and applying a row-wise softmax turns the scores into weights that sum to one, and the output is the weighted sum of the value rows. With tiny editable matrices you can see every intermediate quantity: raw scores Q·Kᵀ, scaled scores, softmax weights, and the weighted output.",
+  "why_it_matters": "Scaled dot-product attention is the core mixing operation of the Transformer: it decides, for each query, how much of each value to read. In the paper's setting, the 1/sqrt(d_k) factor is motivated by keeping the variance of dot products from growing with feature count when query and key coordinates are comparable random variables; it is not a universal guarantee for arbitrary user-supplied vectors. In this lesson d_k is fixed at 2, and the scaling visibly reduces the spread of the demonstrated scores, which controls how concentrated the softmax weights become. Understanding the raw scores, the scaling, and the resulting weights is the prerequisite for understanding multi-head attention and the rest of the architecture.",
+  "explanation_steps": [
+    {
+      "heading": "Scores compare each query with each key",
+      "body": "Pack the queries as rows of Q and the keys as rows of K. The raw score for query row i against key row j is the dot product of those two rows, i.e. entry (i,j) of Q·Kᵀ. A large positive score means the query and key have a large dot product: this depends on both their directions and their magnitudes, so it is not the same as cosine similarity. For example, a long vector can score highly against a moderately aligned key, while a short vector pointing in the same direction scores lower.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "dot_products",
+        "packed_matrices"
+      ]
+    },
+    {
+      "heading": "Divide by sqrt(d_k), then softmax each row",
+      "body": "The raw scores are divided by sqrt(d_k), where d_k is the number of feature columns of Q and K (here 2). Then softmax is applied to each row of the scaled score matrix, so each query's weights are nonnegative and sum to 1. In the paper's statistical motivation, dividing by sqrt(d_k) keeps the variance of dot products from growing with feature count when query and key coordinates are comparable random variables; this is not guaranteed for arbitrary user-supplied vectors. In this fixed d_k = 2 demonstration, the division shrinks the score spread and therefore makes the softmax weights less concentrated.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "divide_sqrt",
+        "softmax_rows",
+        "dimension_dk"
+      ]
+    },
+    {
+      "heading": "Output is the weighted sum of values",
+      "body": "The output row for query i is the weighted average of the rows of V using that query's softmax weights. If one weight is near 1, the output copies that value row; if the weights are equal, the output is the plain average of the value rows.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "weighted_sum"
+      ]
+    }
+  ],
+  "terms": [
+    {
+      "symbol": "Q",
+      "meaning": "Matrix whose rows are queries; here a 2×2 editable teaching input, not a learned projection."
+    },
+    {
+      "symbol": "K",
+      "meaning": "Matrix whose rows are keys; here a 2×2 editable teaching input, not a learned projection."
+    },
+    {
+      "symbol": "V",
+      "meaning": "Matrix whose rows are values; here a 2×2 editable teaching input, not a learned projection."
+    },
+    {
+      "symbol": "d_k",
+      "meaning": "Number of feature columns of Q and K, derived from the actual matrices (ncols(q))."
+    },
+    {
+      "symbol": "Q·Kᵀ",
+      "meaning": "Raw score matrix; entry (i,j) is the dot product of query row i with key row j."
+    },
+    {
+      "symbol": "softmax",
+      "meaning": "Row-wise normalization that maps scores to nonnegative weights summing to 1 per row."
+    },
+    {
+      "symbol": "scaled",
+      "meaning": "0/1 toggle: 1 divides scores by sqrt(d_k); 0 leaves them unscaled (teaching construction)."
+    }
+  ],
+  "equations": [
+    {
+      "expression": "scores = matmul(q, transpose(k))",
+      "explanation": "Raw compatibility scores: each query row dotted with each key row.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "dot_products",
+        "packed_matrices"
+      ]
+    },
+    {
+      "expression": "dk = ncols(q)",
+      "explanation": "Feature dimension d_k is read from the actual query matrix, not from a separate knob.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "dimension_dk"
+      ]
+    },
+    {
+      "expression": "scale = 1 + scaled*(1/sqrt(dk) - 1)",
+      "explanation": "When the toggle is 1, scale = 1/sqrt(d_k); when it is 0, scale = 1 (unscaled). This is a teaching construction for the comparison.",
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "divide_sqrt"
+      ]
+    },
+    {
+      "expression": "scaled_scores = scores * scale",
+      "explanation": "Scores divided by sqrt(d_k) when the toggle is on.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "divide_sqrt"
+      ]
+    },
+    {
+      "expression": "weights = softmax(scaled_scores)",
+      "explanation": "Row-wise softmax turns scaled scores into attention weights.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "softmax_rows"
+      ]
+    },
+    {
+      "expression": "output = matmul(weights, v)",
+      "explanation": "Each output row is the weight-averaged combination of the value rows.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "weighted_sum"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "q",
+      "label": "Query matrix Q (2×2)",
+      "meaning": "Rows are queries, columns are features. Editing a cell changes the raw scores and everything downstream.",
+      "kind": "array",
+      "default": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "min": -10,
+      "max": 10
+    },
+    {
+      "id": "k",
+      "label": "Key matrix K (2×2)",
+      "meaning": "Rows are keys, columns are features. Identical key rows produce identical score columns.",
+      "kind": "array",
+      "default": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "min": -10,
+      "max": 10
+    },
+    {
+      "id": "v",
+      "label": "Value matrix V (2×2)",
+      "meaning": "Rows are values; the output is a weighted average of these rows.",
+      "kind": "array",
+      "default": [
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "min": -10,
+      "max": 10
+    },
+    {
+      "id": "scaled",
+      "label": "Scaled attention (1 = divide by sqrt(d_k), 0 = unscaled)",
+      "meaning": "Numeric 0/1 checkbox. 1 divides scores by sqrt(d_k); 0 leaves scores unscaled, a teaching construction for comparison.",
+      "kind": "toggle",
+      "default": 1,
+      "min": 0,
+      "max": 1,
+      "step": 1
+    }
+  ],
+  "computations": [
+    {
+      "id": "scores",
+      "label": "Raw scores Q·Kᵀ",
+      "expression": "matmul(q, transpose(k))",
+      "unit": "",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "dot_products"
+      ]
+    },
+    {
+      "id": "dk",
+      "label": "d_k = feature columns of Q",
+      "expression": "ncols(q)",
+      "unit": "features",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "dimension_dk"
+      ]
+    },
+    {
+      "id": "scale",
+      "label": "Scaling factor applied to scores",
+      "expression": "1 + scaled*(1/sqrt(dk) - 1)",
+      "unit": "",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "divide_sqrt"
+      ]
+    },
+    {
+      "id": "scaled_scores",
+      "label": "Scaled scores",
+      "expression": "scores * scale",
+      "unit": "",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "divide_sqrt"
+      ]
+    },
+    {
+      "id": "weights",
+      "label": "Attention weights (row-wise softmax)",
+      "expression": "softmax(scaled_scores)",
+      "unit": "",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "softmax_rows"
+      ]
+    },
+    {
+      "id": "output",
+      "label": "Weighted output = weights·V",
+      "expression": "matmul(weights, v)",
+      "unit": "",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "weighted_sum"
+      ]
+    }
+  ],
+  "visualizations": [
+    {
+      "id": "score_heat",
+      "kind": "heatmap",
+      "title": "Scaled score matrix (rows = queries, columns = keys)",
+      "source": "scaled_scores",
+      "x_label": "key index",
+      "y_label": "query index",
+      "value_label": "scaled score",
+      "row_labels": [
+        "query 1",
+        "query 2"
+      ],
+      "column_labels": [
+        "key 1",
+        "key 2"
+      ]
+    },
+    {
+      "id": "weight_heat",
+      "kind": "heatmap",
+      "title": "Attention weight matrix (each row sums to 1)",
+      "source": "weights",
+      "x_label": "key index",
+      "y_label": "query index",
+      "value_label": "weight",
+      "row_labels": [
+        "query 1",
+        "query 2"
+      ],
+      "column_labels": [
+        "key 1",
+        "key 2"
+      ]
+    }
+  ],
+  "explorations": [
+    {
+      "change": "With Q = [[1,0],[0,1]], K = [[1,0],[0,1]], V = [[1,0],[0,1]], flip the scaled toggle between 1 and 0.",
+      "observe": "At toggle 1 the scaled scores are 1/sqrt(2) ≈ 0.7071 on the diagonal and 0 off-diagonal. The first weight row is about [0.6698, 0.3302] and the second weight row is about [0.3302, 0.6698], so each row is more concentrated on its matching key. At toggle 0 the scores are 1 and 0, giving first row about [0.7311, 0.2689] and second row about [0.2689, 0.7311], so the weights become more concentrated on the diagonal and the output moves closer to the corresponding value row.",
+      "why": "Dividing by sqrt(d_k) shrinks the score spread, which makes the softmax weights less concentrated. Removing the scaling (the teaching construction) leaves larger score differences and therefore sharper weights; this is the effect the scaling factor is meant to control."
+    },
+    {
+      "change": "Set Q = [[0,0],[0,0]] (zero queries) and leave K, V, and the toggle at their defaults.",
+      "observe": "Every raw score is 0, so every scaled score is 0 and each weight row is exactly [0.5, 0.5]; the output is the average of the value rows, [[0.5,0.5],[0.5,0.5]].",
+      "why": "Zero queries give zero dot products with every key, so softmax over equal scores returns exactly uniform weights. This is an analytically exact edge case, not a numerical approximation."
+    },
+    {
+      "change": "Set K = [[1,0],[1,0]] (identical keys) and keep Q = [[1,0],[0,1]], V = [[1,0],[0,1]], toggle = 1.",
+      "observe": "Both columns of the score matrix are equal, so both columns of the weight matrix are equal: each row is [0.5, 0.5], and the output is again the average of the value rows.",
+      "why": "Identical key rows make every query's dot product with key 1 equal to its dot product with key 2, so softmax cannot distinguish them and splits the weight equally. This is another exactly derivable case."
+    }
+  ],
+  "limitations": [
+    "Q, K, and V are supplied teaching inputs, not learned linear projections; the lesson does not show how they are produced.",
+    "The 2×2 matrices are a toy demonstration and do not reproduce any experimental result from the paper.",
+    "The unscaled comparison is a teaching construction added for contrast; the paper's attention always divides by sqrt(d_k).",
+    "The lesson does not cover multi-head attention, masking, positional encodings, or training.",
+    "Small matrix size does not by itself prevent softmax saturation: with large enough score differences, the weights can still become arbitrarily concentrated."
+  ],
+  "grounding": {
+    "paper_title": "Attention Is All You Need",
+    "source_url": "https://arxiv.org/html/1706.03762v7",
+    "source_claims": [
+      {
+        "id": "weighted_sum",
+        "claim": "The output is a weighted sum of the values, with weights from a query-key compatibility function.",
+        "locator": "Section 3.2, first paragraph",
+        "quote": "The output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key."
+      },
+      {
+        "id": "dot_products",
+        "claim": "Attention computes dot products of each query with all keys.",
+        "locator": "Section 3.2.1, equation (1)",
+        "quote": "We compute the dot products of the query with all keys"
+      },
+      {
+        "id": "divide_sqrt",
+        "claim": "The dot products are divided by sqrt(d_k) before softmax.",
+        "locator": "Section 3.2.1, equation (1)",
+        "quote": "divide each by sqrt(d_k)"
+      },
+      {
+        "id": "softmax_rows",
+        "claim": "A softmax function is applied to obtain the weights on the values.",
+        "locator": "Section 3.2.1, equation (1)",
+        "quote": "apply a softmax function to obtain the weights on the values"
+      },
+      {
+        "id": "dimension_dk",
+        "claim": "Queries and keys have dimension d_k.",
+        "locator": "Section 3.2.1, equation (1)",
+        "quote": "The input consists of queries and keys of dimension d_k, and values of dimension d_v."
+      },
+      {
+        "id": "packed_matrices",
+        "claim": "Queries, keys, and values are packed into matrices Q, K, and V.",
+        "locator": "Section 3.2.1, equation (1)",
+        "quote": "we compute the attention function on a set of queries simultaneously, packed together into a matrix Q. The keys and values are also packed together into matrices K and V."
+      },
+      {
+        "id": "eq1_transcription",
+        "claim": "Equation transcription: Attention(Q,K,V) = softmax(Q*K^T/sqrt(d_k))*V, with softmax applied to each row.",
+        "locator": "Section 3.2.1, equation (1) (transcription, not a verbatim primary-paper quotation)",
+        "quote": "Attention(Q,K,V) = softmax(Q*K^T/sqrt(d_k))*V; softmax is applied to each row."
+      }
+    ],
+    "teaching_simplifications": [
+      "Q, K, and V are treated as directly editable 2×2 teaching inputs rather than outputs of learned linear projections.",
+      "The 0/1 toggle that removes the 1/sqrt(d_k) division is a teaching construction for comparison; the paper always uses the scaled form.",
+      "The 2×2 size and the specific default matrices are chosen for hand-checkable arithmetic and are not from the paper.",
+      "The claim that removing the scaling concentrates the weights is illustrated on a toy case; it is not an experimental result from the paper."
+    ]
+  },
+  "checks": [
+    {
+      "id": "zero_queries",
+      "name": "Zero queries give exactly uniform weights",
+      "state": {
+        "q": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "scaled": 1
+      },
+      "expected": {
+        "scores": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "dk": 2,
+        "scale": 0.7071067811865476,
+        "scaled_scores": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "weights": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "output": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ]
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    },
+    {
+      "id": "identical_keys",
+      "name": "Identical keys give exactly equal weight columns",
+      "state": {
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "v": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "scaled": 1
+      },
+      "expected": {
+        "scores": [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "dk": 2,
+        "scale": 0.7071067811865476,
+        "scaled_scores": [
+          [
+            0.7071067811865476,
+            0.7071067811865476
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "weights": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "output": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ]
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    },
+    {
+      "id": "unscaled_invariant",
+      "name": "Toggle 0 leaves raw scores unscaled",
+      "state": {
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "scaled": 0
+      },
+      "expected": {
+        "scores": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "dk": 2,
+        "scale": 1,
+        "scaled_scores": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    }
+  ]
+}
