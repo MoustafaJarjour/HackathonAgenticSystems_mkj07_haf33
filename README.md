@@ -24,6 +24,16 @@ python agent.py --input examples/generated/entropy-showcase/input.json --output 
 
 Open `out/index.html` locally. It contains its styles, lesson data, math core, controls, and SVG views. Interactions require no API calls or downloaded resources. `out/lesson.json` contains the saved lesson; `out/trace.jsonl` records stages, attempts, reported usage, and outcomes. Read the final trace status and exit code; a partial file is not evidence of success.
 
+Open `out/trace.md` for a readable run report, automatically written on success or failure. It includes the final outcome, elapsed time, observed token usage, a timeline, and formatted numerical evidence. Earlier failed checks remain visible even when a repair succeeds; missing usage is shown as unknown. The JSONL file remains the original audit log.
+
+To convert an existing trace without rerunning the model:
+
+```bash
+python -m src.trace_report out/my-test/trace.jsonl
+```
+
+This writes `out/my-test/trace.md`. Use `--output path/to/report.md` to choose a different report path. Incomplete or malformed traces are marked incomplete, with line warnings.
+
 Input JSON requires nonempty `source_url`, `focus`, and `audience` strings. Supply the actual source text through `excerpt`, `source_text`, or `paper_excerpt`; alternatively set `PTP_SOURCE_FILE` to a local text/PDF file or `PTP_SOURCE_DIR` to a source cache. The assignment names three required fields while referring to five strings, so additional source aliases are accepted without guessing the unnamed fields. A URL without supplied/local text fails by default. Development-only retrieval can be enabled with `PTP_ALLOW_SOURCE_FETCH=1`; leave it disabled for assessment, where network requests are restricted to OpenRouter.
 
 ## Offline verification

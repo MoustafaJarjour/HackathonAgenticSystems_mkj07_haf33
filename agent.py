@@ -16,6 +16,7 @@ from src.planner import generate, repair, select_context, can_repair, audit_sour
 from src.renderer import render
 from src.source import SourceError, obtain_source
 from src.trace import Trace
+from src.trace_report import write_report
 from src.validator import validate_html, validate_spec
 from src.runtime_checker import check_runtime
 
@@ -28,10 +29,19 @@ def main(argv=None) -> int:
     args = parser.parse_args(argv)
     trace, client, timer = None, None, None
     budget = Budget(PROCESS_STARTED)
+
+    def report_trace():
+        if trace:
+            try:
+                report = write_report(trace.path)
+                print(f"Readable trace: {report}", flush=True)
+            except (OSError, ValueError):
+                print("Could not write the readable trace; inspect trace.jsonl.", file=sys.stderr)
+
     try:
         args.output.mkdir(parents=True, exist_ok=True)
         # Do not let a failed rerun look successful by retaining previous artifacts.
-        for filename in ("index.html", "lesson.json", "index.tmp", "lesson.tmp", "partial.lesson.json"):
+        for filename in ("index.html", "lesson.json", "index.tmp", "lesson.tmp", "partial.lesson.json", "trace.md"):
             (args.output / filename).unlink(missing_ok=True)
         trace = Trace(args.output / "trace.jsonl", secret=os.environ.get("OPENROUTER_API_KEY", ""))
         trace.event("run", "start", "ok", model=args.model, schema_version=2,
@@ -42,6 +52,7 @@ def main(argv=None) -> int:
         def deadline():
             try:
                 trace.event("run", "deadline", "failed", **budget.summary())
+                report_trace()
             finally:
                 os._exit(4)  # Bounds even slow DNS, PDF extraction or a trickling response.
 
@@ -190,6 +201,7 @@ def main(argv=None) -> int:
             timer.cancel()
         if client:
             client.close()
+        report_trace()
 
 
 if __name__ == "__main__":
