@@ -1,0 +1,22 @@
+{
+  "tested_package": "review-out/live/attention-auto-reviewed",
+  "tested_lesson_sha256": "99d857ed3a06a789fd18b92a29227e8b3287490eb2214a7724ce5331b72487aa",
+  "final_package": "examples/generated/attention-showcase",
+  "final_lesson_sha256": "e97f3844edc2a7deafa14361586bcf9931329e53f6c807949194a72d2449a16e",
+  "user_reported_offline": {
+    "browser": "Chrome",
+    "network": "disconnected",
+    "action": "Uncheck and recheck Scaled attention with default identity Q/K/V.",
+    "expected_first_row_on": [
+      0.669762,
+      0.330238
+    ],
+    "expected_first_row_off": [
+      0.731059,
+      0.268941
+    ],
+    "result": "passed and restored original values"
+  },
+  "frozen_controls_computations_visualizations_checks_unchanged": true,
+  "scope": "User checked the fresh automatic-review page; final teaching-only repairs preserve its numerical/UI definitions. No claim that the final revised HTML itself received this direct-file check."
+}

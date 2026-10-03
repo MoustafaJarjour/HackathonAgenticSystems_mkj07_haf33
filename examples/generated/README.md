@@ -1,6 +1,30 @@
-# Generated review candidates
+# Generated lessons and review evidence
 
-These packages contain complete model output from the actual CLI. Keep each package's `input.json`, `lesson.json`, `index.html`, and `trace.jsonl` unchanged during review; publish revisions as distinct packages. Authored development fixtures live separately under `tests/science/` and ignored `review-out/`.
+These packages preserve fresh CLI output and separately identified model repairs. Keep each package's `input.json`, `lesson.json`, `index.html`, and `trace.jsonl` unchanged during review; publish revisions as distinct packages. Authored development fixtures live separately under `tests/science/` and ignored `review-out/`.
+
+## Current showcase packages
+
+These exact outputs were published at `17c2dbd` and remain unchanged. Every folder contains `input.json`, `lesson.json`, `index.html`, and `trace.jsonl`. Attention/enzyme include their preceding fresh CLI output and traces; attention also retains the first teaching-repair stage. The final HTML was produced by the renderer from model output, with no manual edits.
+
+| Package | Generation mode | Independent science | Browser evidence |
+|---|---|---|---|
+| [entropy-showcase](entropy-showcase/index.html) | Fresh CLI generation with model source critique | 132 legal states and 8 invalid rejections pass; resizing, scale invariance and provenance accepted | Nine recorded Chromium states; user reports all five direct-file offline steps passed |
+| [attention-showcase](attention-showcase/index.html) | Fresh CLI plus two separately traced teaching repairs | 63 legal states and 11 invalid rejections pass; frozen computations/controls/checks preserved | User verified checkbox on the preceding fresh page offline; final teaching-only revision preserves numerical/UI definitions. P2 final-page recheck pending |
+| [enzyme-showcase](enzyme-showcase/index.html) | Fresh CLI plus one separately traced teaching repair | 412 legal states and 6 invalid rejections pass; absolute scan labels and Km caveat accepted | User verified three final slider states offline; P2 detailed final-page recheck pending |
+| [logistic-reviewed](logistic-reviewed/index.html) | Saved fresh candidate plus traced model teaching repair | Accepted four-update recurrence and source/teaching scope | P2 science/browser review and user-reported direct-file offline check passed |
+
+| Current case | Fresh CLI: input / completion / total | Complete showcase history: input / completion / total | Attempts across history |
+|---|---|---|---|
+| Entropy | 11,864 / 2,989 / 14,853 | Same | 2 |
+| Attention | 21,761 / 6,002 / 27,763 | 37,604 / 7,841 / 45,445 | 5 |
+| Enzyme | 13,934 / 2,416 / 16,350 | 19,913 / 2,890 / 22,803 | 3 |
+| Logistic | 17,415 / 3,137 / 20,552 | 23,103 / 3,855 / 26,958 | 4 |
+
+Costs include all recorded attempts in each chain, including failed numerical candidates. Final teaching-repair traces are separate development runs, explicitly marked `fresh_cli_generation=false`; they are not claimed as fresh assessment-CLI acceptance. The per-run 30,000 limit applies to completion tokens, while total tokens include input. Immutable-case repair behavior and honest failure were also proved by injecting a known wrong logistic equation into a separate copy, then executing and repairing it; original showcase files were unchanged.
+
+Detailed independent states are in [science reports](../../tests/science/reviews/), replayable with `python -m tests.science.check_generated`. Direct-file reports and served-browser observations are recorded separately in [browser evidence](../../tests/browser/reviews/entropy-showcase.json) and [attention checkbox evidence](../../tests/browser/reviews/attention-showcase.json).
+
+## Earlier unchanged candidates
 
 | Package | Published commit | Independent result |
 |---|---|---|
@@ -22,4 +46,4 @@ These packages at **`781b369186afe61362dcefc84924c3944f2ceb92`** preserve the ea
 | [entropy-reviewed](entropy-reviewed/index.html) | Provenance/coding claims and old UI findings resolved; numeric cells, outcome labels, recovery and 18 Chromium observations passed. Still lacks outcome resizing. |
 | [enzyme-reviewed](enzyme-reviewed/index.html) | Transcription labeling and historical-Km scope clarified; rates, slider bounds, all 48 curve samples/current marker per state and 23 Chromium observations passed. Reference-line readout labels remain misleading. |
 
-Each repair uses one model request, with completion tokens of 718 (logistic), 538 (attention), 1,259 (entropy) and 529 (enzyme). Exact traces, hashes, inputs and findings are in the corresponding [logistic](../../tests/browser/reviews/logistic-reviewed.json), [attention](../../tests/browser/reviews/attention-reviewed.json), [entropy](../../tests/browser/reviews/entropy-reviewed.json) and [enzyme](../../tests/browser/reviews/enzyme-reviewed.json) review records. Logistic is an independently reviewed offline example; fresh CLI acceptance after generator changes and the outstanding control/presentation checks remain separate work.
+Each repair uses one model request, with completion tokens of 718 (logistic), 538 (attention), 1,259 (entropy) and 529 (enzyme). Exact traces, hashes, inputs and findings are in the corresponding [logistic](../../tests/browser/reviews/logistic-reviewed.json), [attention](../../tests/browser/reviews/attention-reviewed.json), [entropy](../../tests/browser/reviews/entropy-reviewed.json) and [enzyme](../../tests/browser/reviews/enzyme-reviewed.json) review records. Logistic is an independently reviewed offline example; fresh CLI acceptance and the later resizing/scaling/final-page checks are recorded separately above.

@@ -157,5 +157,5 @@ def validate_html(html: str, spec: dict) -> list[str]:
     return ["nonempty_html", "required_sections", "control_ids", "balanced_tags", "offline_resources"]
 
 
-# TODO: validate_science(case, source, spec, client) with the SAME budgeted client,
-# only after browser/invariant checks prove useful. Never claim quote presence proves fidelity.
+# Model source critique is orchestrated separately with the same budgeted client.
+# Exact quotations and executed model cases do not prove scientific interpretation.

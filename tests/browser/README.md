@@ -1,5 +1,8 @@
 # Browser checks
 
+Current showcase evidence is indexed in [the generated lesson table](../../examples/generated/README.md). The records below identify earlier original/revised packages by exact hashes. The final resizable entropy review adds nine served-Chromium observations and five user-reported direct-file offline steps; the fresh attention checkbox and three final enzyme slider states have separate user-reported offline checks. P2 is rechecking the latest final attention/enzyme pages. These evidence scopes are kept separate.
+
+
 Use the **exact renderer output**. Do not edit HTML to obtain a passing result. Serve the ignored preview directory, then open its pages in Chromium:
 
 ```text

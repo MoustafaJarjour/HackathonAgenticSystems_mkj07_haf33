@@ -1,0 +1,34 @@
+{
+  "package": "examples/generated/enzyme-showcase",
+  "lesson_sha256": "4cfc9d6b37914803faabef74185e367b034041910cce9fa1070437c22bf4d2e1",
+  "html_sha256": "62db1e7fa59b04060c16297a1e86292304a930d9dff3187819bcd97c5c1432d3",
+  "method": "User-reported direct-file Chrome check, network disconnected, 2026-10-03",
+  "steps": [
+    {
+      "state": {
+        "vmax": 1,
+        "km": 2,
+        "s": 2
+      },
+      "expected_rate": 0.5
+    },
+    {
+      "state": {
+        "vmax": 2,
+        "km": 2,
+        "s": 2
+      },
+      "expected_rate": 1
+    },
+    {
+      "state": {
+        "vmax": 2,
+        "km": 2,
+        "s": 0
+      },
+      "expected_rate": 0
+    }
+  ],
+  "result": "All three passed; plots remained visible; user reconnected afterward.",
+  "scope": "Direct-file update check; detailed SVG geometry and final visual review are separate P2 checks."
+}

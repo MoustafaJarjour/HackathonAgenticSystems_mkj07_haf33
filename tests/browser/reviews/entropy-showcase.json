@@ -1,0 +1,639 @@
+{
+  "observations": [
+    {
+      "label": "entropy_default_uniform4",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "H": 2,
+        "maxH": 2,
+        "probabilities": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 3",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 4",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "1"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "4"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "[0.25, 0.25, 0.25, 0.25]"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "[1, 1, 1, 1]"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "4"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "2"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "2"
+        }
+      ],
+      "status": "Calculations and visualizations updated.",
+      "svg_count": 2,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    },
+    {
+      "label": "entropy_scale10",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "H": 2,
+        "scaled_total": 40,
+        "probabilities": [
+          0.25,
+          0.25,
+          0.25,
+          0.25
+        ]
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 3",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 4",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "10"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "4"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "[0.25, 0.25, 0.25, 0.25]"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "[10, 10, 10, 10]"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "40"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "2"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "2"
+        }
+      ],
+      "status": "Calculations and visualizations updated.",
+      "svg_count": 2,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    },
+    {
+      "label": "entropy_append_zero5",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "weights": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "H": 2,
+        "maxH": 2.321928094887362
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 3",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 4",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 5",
+          "value": "0"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "10"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "4"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "[0.25, 0.25, 0.25, 0.25, 0]"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "[10, 10, 10, 10, 0]"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "40"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "2"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "2.32193"
+        }
+      ],
+      "status": "Calculations and visualizations updated.",
+      "svg_count": 2,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    },
+    {
+      "label": "entropy_resize6_max",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "H": 2,
+        "maxH": 2.584962500721156,
+        "newEntries": [
+          0,
+          0
+        ]
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 3",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 4",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 5",
+          "value": "0"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 6",
+          "value": "0"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "10"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "4"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "[0.25, 0.25, 0.25, 0.25, 0, 0]"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "[10, 10, 10, 10, 0, 0]"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "40"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "2"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "2.58496"
+        }
+      ],
+      "status": "Calculations and visualizations updated.",
+      "svg_count": 2,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    },
+    {
+      "label": "entropy_remove_to2",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "H": 1,
+        "maxH": 1,
+        "retained": [
+          1,
+          1
+        ]
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "10"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "2"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "[0.5, 0.5]"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "[10, 10]"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "20"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "1"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "1"
+        }
+      ],
+      "status": "Calculations and visualizations updated.",
+      "svg_count": 2,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    },
+    {
+      "label": "entropy_certainty",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "H": 0,
+        "probs": [
+          1,
+          0
+        ]
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "0"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "10"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "1"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "[1, 0]"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "[10, 0]"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "10"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "0"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "1"
+        }
+      ],
+      "status": "Calculations and visualizations updated.",
+      "svg_count": 2,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    },
+    {
+      "label": "entropy_zero_total_rejected",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "unavailable": true,
+        "svg_count": 0
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": "0"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "0"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "10"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "\u2014"
+        }
+      ],
+      "status": "Cannot calculate: Probabilities p_i: A calculation produced a non-finite number or invalid value.",
+      "svg_count": 0,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    },
+    {
+      "label": "entropy_blank_rejected",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "unavailable": true,
+        "svg_count": 0
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": ""
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "0"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "10"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "\u2014"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "\u2014"
+        }
+      ],
+      "status": "Cannot calculate: Outcome weights w: enter a finite number in every field.",
+      "svg_count": 0,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    },
+    {
+      "label": "entropy_recovered_without_reload",
+      "url": "http://127.0.0.1:8766/entropy-auto-reviewed/index.html",
+      "expected": {
+        "H": 0,
+        "svg_count": 2
+      },
+      "controls": [
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 1",
+          "value": "1"
+        },
+        {
+          "checked": null,
+          "id": "",
+          "label": "Outcome weights w, entry 2",
+          "value": "0"
+        },
+        {
+          "checked": null,
+          "id": "control-scale",
+          "label": null,
+          "value": "10"
+        }
+      ],
+      "overflow": false,
+      "results": [
+        {
+          "id": "calculation-total",
+          "value": "1"
+        },
+        {
+          "id": "calculation-probs",
+          "value": "[1, 0]"
+        },
+        {
+          "id": "calculation-scaled_weights",
+          "value": "[10, 0]"
+        },
+        {
+          "id": "calculation-scaled_total",
+          "value": "10"
+        },
+        {
+          "id": "calculation-entropy",
+          "value": "0"
+        },
+        {
+          "id": "calculation-max_entropy",
+          "value": "1"
+        }
+      ],
+      "status": "Calculations and visualizations updated.",
+      "svg_count": 2,
+      "title": "Entropy in Bits from Editable Outcome Weights"
+    }
+  ],
+  "package": "examples/generated/entropy-showcase",
+  "lesson_sha256": "45f2c764a01a616d3c932defb6af86882dacc223331781a68a036a15e73017d7",
+  "html_sha256": "735096b0db42773c0d979c05f47e5b7a110606919bf7a2e8357826e31d3eb487",
+  "method": "Actual Chromium via UI automation; separately user-reported direct-file offline steps.",
+  "user_reported_offline": {
+    "steps": [
+      "uniform-four H=2",
+      "append-zero-five H=2 max=2.32193",
+      "common scale10 leaves probabilities/H unchanged",
+      "blank weight clears results/plots",
+      "restore1 recovers without reload"
+    ],
+    "result": "all five passed",
+    "browser": "Chrome",
+    "network": "disconnected",
+    "date": "2026-10-03"
+  }
+}
