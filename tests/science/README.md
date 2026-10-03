@@ -6,9 +6,10 @@ Run the reference checks without an API key:
 
 ```text
 python -m unittest discover -s tests/science -p "test_*.py" -v
+python -m tests.science.create_previews
 ```
 
-`fixtures.json` holds complete states and independent expectations. A production-runtime or browser check must compare the exact rendered output to these values; reference checks alone do not prove production correctness. Map generated control/output names explicitly when they differ. Never change expectations to accommodate an incorrect generated lesson.
+`fixtures.json` holds complete states and independent expectations. `test_shared_core.py` compiles developer expressions and compares execution in the exact browser math core against those values. `create_previews.py` writes lessons to JSON, reads the saved JSON back, executes cases, and renders HTML; open the resulting pages under `review-out/science/` in Chromium. These are authored fixtures, not fresh model outputs. Map generated control/output names explicitly when they differ. Never change expectations to accommodate an incorrect generated lesson.
 
 - **Entropy:** Shannon, *A Mathematical Theory of Communication*, section 6, Theorem 2 and properties 1–2; [original reprint](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf). Logarithms are base 2. Uniform distributions have H = log2(n); certain outcomes have H = 0. The zero contribution is the continuous limit of p log2(p), not an epsilon approximation. Weights divided by their sum produce probabilities; L2 normalization does not.
 - **Attention:** Vaswani et al., *Attention Is All You Need*, section 3.2.1, equation (1); [original paper](https://arxiv.org/html/1706.03762v7). For identity Q and K with two columns, the score advantage is 1/sqrt(2). The first weight is 1/(1+exp(-1/sqrt(2))). Each row sums to one. Multiplying those weights by V gives the output. The optional unscaled mode is a teaching comparison, not the paper's scaled mechanism.

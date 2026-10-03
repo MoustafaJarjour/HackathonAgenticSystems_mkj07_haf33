@@ -12,7 +12,8 @@ def entropy(state):
     if any(x < 0 for x in weights) or sum(weights) <= 0:
         raise ValueError("Use nonnegative weights with a positive sum.")
     p = [x / sum(weights) for x in weights]
-    return {"probabilities": p, "entropy_bits": -sum(x * math.log2(x) for x in p if x > 0)}
+    return {"probabilities": p, "entropy_bits": -sum(x * math.log2(x) for x in p if x > 0),
+            "max_entropy_bits": math.log2(len(weights))}
 
 
 def attention(state):

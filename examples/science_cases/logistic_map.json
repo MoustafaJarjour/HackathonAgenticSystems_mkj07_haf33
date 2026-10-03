@@ -1,0 +1,6 @@
+{
+  "source_url": "https://www.esalq.usp.br/departamentos/leb/aulas/lce164/simple.pdf",
+  "focus": "Apply x_next = r*x*(1-x) repeatedly, using each output as the next input. This lesson displays the initial state and four updates.",
+  "audience": "Undergraduate learner",
+  "excerpt": "Simple mathematical models with very complicated dynamics. Equation (3), section 1.\nThis is sometimes called the \"logistic\" difference equation.\nEquation transcription: Equation (3) transcribed: X_(t+1) = a*X_t*(1-X_t). Rename a to r for the teaching example."
+}
