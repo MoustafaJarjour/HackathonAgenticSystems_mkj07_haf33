@@ -11,6 +11,43 @@ python -m http.server 8082 --bind 127.0.0.1 --directory review-out
 
 The page math is separately compared to independent expectations in `tests/science/test_shared_core.py` at 1e-12 absolute/relative tolerances. Browser readouts use six significant digits; compare displayed values at 5e-6 absolute plus 5e-6 relative tolerance.
 
+## Final showcase recheck at 17c2dbd
+
+On 3 October 2026, P2 reviewed the exact unchanged packages at **`17c2dbded568be3ccc0feba4bdbd52a0135843b5`** in Codex's in-app Chromium, served from localhost. All **89 browser observations** passed independent readout/error comparisons: 32 entropy, 34 attention and 23 enzyme. The exact embedded configurations also passed **116 independent core checks**, including expected domain failures, at 1e-12 absolute/relative tolerance. All 18 package files, including ancestor lessons and traces, still match that commit after normalizing Windows checkout line endings. P2 made no model calls and changed no generated files.
+
+| Exact package/action | Independent expected | Chromium observed |
+|---|---|---|
+| Entropy: four equal weights, append zero | H=2 unchanged; Hmax=log2(5) | H=2; Hmax=2.32193; retained [1,1,1,1,0] |
+| Entropy: remove to two, append zeros through six | H=1 throughout; Hmax=log2(n) | H=1 for n=2–6; Hmax ends at 2.58496; removal/add disabled at respective bounds |
+| Entropy: six equal weights | H=Hmax=log2(6) | Both 2.58496; each of six cells independently edited and checked |
+| Entropy: [1,3,0,0,0,0], scale=0.1 then 10 | H=0.8112781244591328 at both; scaled totals 0.4 then 40 | H=0.811278 at both; totals 0.4 and 40 |
+| Entropy: zero total, negative/over-limit, blank/nonfinite edit; correct to uneven weights | Visible error, six cleared readouts and zero SVGs; valid results/two plots recover | All error/recovery pairs passed without reload |
+| Attention: identity Q/K, checkbox on then off | First weight 0.6697615493 then 0.7310585786; d_k=2 | 0.669762 then 0.731059; d_k=2; checking restores scaled state |
+| Attention: V=[[10,0],[0,5]], scaled then unscaled | First output [6.6976154933,1.6511922534] then [7.3105857863,1.3447071068] | [6.69762,1.65119] then [7.31059,1.34471] |
+| Attention: all 12 matrix cells, zero queries, identical keys, legal negatives and Q=K=diag(10,10) | Independent matrix product/row softmax; uniform weights for equal scores; stable saturation at legal bounds | All calculations and both heatmaps passed |
+| Attention: blank/nonfinite query, Q=11 or V=-11; correct to legal state | Six cleared readouts and zero SVGs; calculation and both heatmaps recover | All error/recovery pairs passed |
+| Enzyme: S=Km=2,Vmax=10; S=6; Km=6 with S=2 | Rate/fraction 5/0.5; 7.5/0.75; 2.5/0.25 | Exact displayed values agree |
+| Enzyme: S=2,Km=2,Vmax=10, double both S and Km | Current rate/fraction stay 5/0.5; fixed absolute scan changes | Current 5/0.5 preserved; scan changes from [1.11111,2,3.33333,5,6.66667,8] to [0.588235,1.11111,2,3.33333,5,6.66667] |
+| Enzyme: every slider minimum/maximum and attempted outward keyboard step | Range widgets hold declared bounds; legal interior recalculates | All six endpoint clamp attempts and return to S=Km=2,Vmax=10 passed |
+
+Each enzyme observation retains the actual 48 polyline samples, current marker and six scan bars. Coordinates were compared independently to v=Vmax*S/(Km+S) at 1e-9 SVG units; labels/readouts use the display tolerance. Scan x labels are the fixed absolute concentrations **0.25,0.5,1,2,4,8**, with the axis “Substrate concentration S”. No readout implies an absent Km/Vmax reference line. The hidden `s_scan` computation is not a missing visible readout. Sliders expose no blank numeric editor, so enzyme invalid-domain failures are core evidence; browser evidence records prevention at widget bounds.
+
+Every theme button and every calculation disclosure was operated. All disclosure open/close states matched; no warning/error console messages were observed. Desktop and narrow screenshots were inspected, with no horizontal overflow at actual viewport widths 1164 and 355 pixels. Narrow SVG text is smaller; numerical readouts remain separately available. Temporary viewport overrides were reset.
+
+Source fidelity and corrected explanations pass for the stated teaching mechanisms. Attention uses its actual two-feature dimension, identifies the unscaled mode as a teaching comparison, and removes the unreachable third-column/false saturation statements. Entropy marks weight normalization as a teaching construction and handles zero probabilities exactly. Enzyme distinguishes the historical notation from general modern Km. **One minor entropy wording finding remains:** its chart title says “larger total” when c<1 makes the total smaller. Prefer “changed total”; calculations are correct and the generated page was left unchanged.
+
+| HTML | Git LF SHA-256 | Reviewed Windows CRLF SHA-256 |
+|---|---|---|
+| entropy-showcase/index.html | `735096b0db42773c0d979c05f47e5b7a110606919bf7a2e8357826e31d3eb487` | `cabf213eee302dcaf498f52a3184d75f2919c272c1269a57b46e2585410ba4b2` |
+| attention-showcase/index.html | `c491117d7551700d055614f6ecdc0c6c3369432d8f2030be806a80542085fc0c` | `e25e85741c3702dc1597b54d64248b9838cbefb8a3fcf2d98a4993cf581804f5` |
+| enzyme-showcase/index.html | `62db1e7fa59b04060c16297a1e86292304a930d9dff3187819bcd97c5c1432d3` | `ba19478b449f0be510c9f358c5d16d8b951d10b4be9a7473f2effb29bfc02c21` |
+
+Complete inputs, expectations, observations, errors, recovery, control metadata, source findings and all file hashes are in the [entropy](reviews/entropy-showcase.json), [attention](reviews/attention-showcase.json) and [enzyme](reviews/enzyme-showcase.json) records. Entropy is a fresh CLI generation: two requests, 31.632 seconds. Attention retains its original CLI trace (three requests, 26.25 seconds), first live-repair trace (one request, 5.266 seconds), and final live-repair trace (one request, 2.593 seconds). Enzyme retains its original CLI trace (two requests, 39.587 seconds) and final live-repair trace (one request, 2.05 seconds). All six traces finish successfully; recorded response usage matches their finish totals. Final attention/enzyme traces set `fresh_cli_generation=false`. These separate stages do not establish one new CLI execution within a cumulative budget; attention's wall-clock lineage includes inspection delays.
+
+The user reports direct-file, network-disconnected recalculation passed on the exact final entropy and attention showcase pages. No exact before/after states or browser versions were supplied for those final checks; earlier entropy-page values are not transferred to these changed files. The browser tool blocks `file://`, so this evidence is attributed to the user rather than independently performed by P2. Enzyme direct-file interaction remains unestablished. P1 reports Python 3.11 with 51 passing tests and fresh CLI traces; P2 did not independently rerun that environment. Logistic-reviewed is already accepted and was not changed or rechecked in this pass.
+
+## Historical authored-fixture review
+
 Observed in Codex's in-app Chromium on 3 October 2026, using renderer output from the version-2 developer fixtures:
 
 | Page | Input/action | Expected and observed |
@@ -129,7 +166,7 @@ P2 then operated every exposed scientific input and the theme button in each rep
 
 The human P2 reviewer opened **`examples/generated/logistic-reviewed/index.html` via `file://` with the network disconnected**, kept r=4 and changed x0 from 0.5 to 0.25. They confirmed the displayed trajectory changed from [0.5,1,0,0,0] to [0.25,0.75,0.75,0.75,0.75], matching the independent four-update expectations. This is explicitly user-reported offline interaction; Chromium version was not supplied. The reviewed Windows HTML SHA-256 is **`282bc607ca14445f8cb43e37bed6000098c93f737dec2df239117b960f2695ce`**. The browser tool still blocks direct-file navigation, and served-page testing does not replace this reported check. Both Git LF and reviewed CRLF hashes are in the repaired logistic record; the package stayed unchanged.
 
-The earlier integrated 38-test run on Python 3.12 was followed by 19 transport/generation/repair tests, then 21 affected runtime/generation/repair tests after P1's optional array-bound and exploration-prompt updates. These are overlapping test groups, not additive full-suite counts. Required Python 3.11, fresh end-to-end CLI evidence after generator changes, entropy resizing and a scientific scaling-checkbox interaction remain outside this completed page-review evidence.
+The earlier integrated 38-test run on Python 3.12 was followed by 19 transport/generation/repair tests, then 21 affected runtime/generation/repair tests after P1's optional array-bound and exploration-prompt updates. These are overlapping historical test groups, not additive full-suite counts. The final showcase section above records the later resizing/checkbox/label checks, new entropy CLI lineage and attributed P1 Python 3.11 result.
 
 For each supplied package, record the publishing commit/model, exact input case and source selection, `lesson.json`, `index.html`, and `trace.jsonl` paths and SHA-256 hashes. Keep those files unchanged. Verify the HTML's embedded spec equals the saved JSON and its compiled computations correspond to that spec; identify the embedded math/UI versions rather than assuming the current checkout matches. Review the trace's final outcome, requests, usage, repairs, failed/skipped checks, and output promotion. A leftover HTML page from another run is not a successful generation.
 

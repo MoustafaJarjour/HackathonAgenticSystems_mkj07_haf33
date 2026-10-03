@@ -1,6 +1,22 @@
 # Generated review candidates
 
-These packages contain complete model output from the actual CLI. Keep each package's `input.json`, `lesson.json`, `index.html`, and `trace.jsonl` unchanged during review; publish revisions as distinct packages. Authored development fixtures live separately under `tests/science/` and ignored `review-out/`.
+These packages contain saved model output from CLI generation or explicitly traced live model repairs. Keep each package's input, lesson, HTML and traces unchanged during review; publish revisions as distinct packages. Authored development fixtures live separately under `tests/science/` and ignored `review-out/`.
+
+## Final showcase review
+
+The three exact showcase folders at **`17c2dbded568be3ccc0feba4bdbd52a0135843b5`** passed 116 independent numerical checks (including expected failures) and 89 Chromium observations. All 18 package files, including ancestor lessons/traces, stayed unchanged. Source equations, teaching adaptations and corrected explanations were reviewed independently.
+
+| Showcase | Exact-output review | Generation lineage |
+|---|---|---|
+| [entropy-showcase](entropy-showcase/index.html) | [32 browser observations / 22 core checks](../../tests/browser/reviews/entropy-showcase.json): 2–6 entries, zero append/removal, scale invariance, invalid edits and recovery passed. One minor title issue: “larger total” also appears when scale<1. | Fresh CLI generation, two model requests. |
+| [attention-showcase](attention-showcase/index.html) | [34 browser observations / 27 core checks](../../tests/browser/reviews/attention-showcase.json): scaling checkbox, all 12 cells, both heatmaps, legal saturation/negative states and recovery passed. Corrected fixed-shape/scaling explanations accepted. | Original CLI generation plus two separately traced live model repairs; original/intermediate lessons and traces retained. |
+| [enzyme-showcase](enzyme-showcase/index.html) | [23 browser observations / 67 core checks](../../tests/browser/reviews/enzyme-showcase.json): all sliders, bounds, 48 curve samples/current marker and six fixed absolute-concentration scan bars passed. Misleading reference-line headings resolved. | Original CLI generation plus a separately traced live model repair; original lesson/trace retained. |
+
+The final attention/enzyme repair traces say `fresh_cli_generation=false`; they do not claim a new full CLI run. Their numerical expressions/cases are preserved from the saved candidates (enzyme's scan computation label was clarified). Stage request counts, reported usage and elapsed times are recorded separately in the reviews; inspection delays are not pipeline execution time.
+
+The user reports network-disconnected `file://` recalculation passed on the final entropy and attention pages, without supplying exact states or browser versions. Enzyme direct-file interaction is unestablished. P1 reports Python 3.11 with 51 passing tests; this was not independently rerun by P2. [Logistic-reviewed](logistic-reviewed/index.html) remains accepted for its four-update source/math/browser and user-reported offline scope.
+
+## Earlier CLI packages
 
 | Package | Published commit | Independent result |
 |---|---|---|
