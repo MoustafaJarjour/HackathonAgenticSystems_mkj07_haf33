@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" data-theme="dark"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Four Updates of the Logistic Difference Equation</title><style>/* Offline laboratory: indigo instruments, cyan relationships, amber inputs. */
+:root {
+  color-scheme: dark;
+  --bg: #0e1120; --surface: #171c2e; --raised: #20273b;
+  --ink: #f1f4ff; --muted: #b0bdd1; --accent: #a8a5ff;
+  --cyan: #78d7f8; --amber: #ffd184; --line: #36415b; --error: #ff9eb3;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+:root[data-theme=light] {
+  color-scheme: light;
+  --bg: #edf1f8; --surface: #fff; --raised: #f3f5fb;
+  --ink: #17233b; --muted: #50617b; --accent: #5144c4;
+  --cyan: #07688a; --amber: #8b4b00; --line: #ccd5e5; --error: #a82144;
+}
+* { box-sizing: border-box }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.65 var(--sans); -webkit-font-smoothing: antialiased }
+main { width: min(100% - 3rem, 1240px); margin: 0 auto }
+a { color: var(--cyan); text-underline-offset: .22em; overflow-wrap: anywhere }
+button, input { font: inherit }
+button { border: 1px solid var(--line); background: var(--raised); color: var(--ink); border-radius: .45rem; padding: .5rem .75rem; cursor: pointer; min-height: 40px }
+button:hover:not(:disabled) { border-color: var(--accent); background: var(--surface) }
+button:disabled { opacity: .45; cursor: default }
+:focus-visible { outline: 3px solid var(--cyan); outline-offset: 3px }
+.skip-link { position: absolute; left: 1rem; top: -6rem; padding: .8rem; background: var(--surface); z-index: 10 }
+.skip-link:focus { top: 1rem }
+.command-bar { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; padding: 1.4rem 0; border-bottom: 1px solid var(--line) }
+.brand-title { margin: 0; font-size: 1.1rem; font-weight: 800; letter-spacing: -.035em; display: flex; align-items: center; gap: .8rem; flex-wrap: wrap }
+.brand-badge { font: .65rem/1.6 var(--mono); color: var(--cyan); padding: .15rem .5rem; border: 1px solid var(--line); border-radius: .25rem; letter-spacing: .04em }
+.theme-toggle { font-size: .8rem }
+.hero-statement { padding: 2.5rem 0 1rem }
+.eyebrow { font: .7rem/1.6 var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .1em; margin-bottom: .6rem }
+h1 { font-size: clamp(2.1rem, 5vw, 3.7rem); font-weight: 850; line-height: 1.08; letter-spacing: -.045em; margin: .3rem 0 1.3rem; max-width: 1050px; text-wrap: balance; overflow-wrap: anywhere }
+h2 { font-size: 1.12rem; font-weight: 750; letter-spacing: -.015em; line-height: 1.35; margin: 0 0 .85rem }
+h3 { font-size: .97rem; line-height: 1.4; margin: .5rem 0 }
+p { margin: .4rem 0 .9rem }
+p, h2, h3, dd, .control-label { overflow-wrap: anywhere }
+nav { display: flex; gap: 1.3rem; flex-wrap: wrap; font-size: .85rem }
+section { background: var(--surface); border: 1px solid var(--line); border-radius: .85rem; padding: 1.4rem; margin: 1.2rem 0; min-width: 0; scroll-margin-top: 1rem }
+.brief-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem }
+.brief-cards section { margin-bottom: 0 }
+.brief-cards p { margin-bottom: 0 }
+#terms h2 { color: var(--muted); font: .73rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: .08em }
+dl { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,220px),1fr)); gap: .8rem; margin: 0 }
+.term-pill { background: var(--raised); border-radius: .4rem; padding: .7rem .9rem; min-width: 0 }
+dt { font: 600 .9rem/1.5 var(--mono); color: var(--cyan); overflow-wrap: anywhere }
+dd { margin: .1rem 0 0; font-size: .84rem; color: var(--muted) }
+.explanation-steps { padding-left: 1.5rem; margin-bottom: 0 }
+.explanation-steps li { padding-left: .3rem; margin: 0 0 1.25rem }
+.lab-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.35fr); gap: 1.6rem; align-items: start }
+.control-deck, .apparatus-deck { min-width: 0 }
+.lab-grid section { margin: 0 0 1.3rem }
+.control-grid { display: grid; gap: .9rem }
+.control { border: 1px solid var(--line); border-radius: .65rem; padding: 1rem; background: var(--raised); min-width: 0 }
+.control:focus-within { border-color: var(--accent) }
+.control-label { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: .5rem; font-weight: 700; font-size: .87rem; margin: 0 0 .6rem }
+.control-label output { font: 650 .95rem/1.4 var(--mono); color: var(--amber); font-variant-numeric: tabular-nums }
+input[type=range] { width: 100%; accent-color: var(--accent); min-height: 30px; margin: .3rem 0; cursor: ew-resize }
+input[type=number] { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: .35rem; padding: .5rem; background: var(--surface); color: var(--ink); font: .9rem/1.4 var(--mono); font-variant-numeric: tabular-nums; min-height: 40px }
+input[aria-invalid=true] { border-color: var(--error) }
+.toggle-field { display: flex; align-items: center; gap: .55rem }
+input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--accent); margin: 0 }
+.toggle-field label { font-size: .85rem; cursor: pointer }
+.array-editor { min-width: 0 }
+.array-shape { font: .7rem/1.5 var(--mono); color: var(--muted); margin-bottom: .6rem }
+.array-cells { display: grid; gap: .5rem; min-width: 0 }
+.vector-cells { grid-template-columns: repeat(auto-fit,minmax(4.5rem,1fr)) }
+.matrix-cells { overflow-x: auto; padding: .15rem .15rem .4rem; margin: -.15rem }
+.array-cell { min-width: 0; display: block }
+.array-cell span { display: block; font: .65rem/1.4 var(--mono); color: var(--muted); margin-bottom: .2rem }
+.array-actions { display: flex; gap: .45rem; flex-wrap: wrap; align-items: center; margin-top: .75rem }
+.array-actions button { font-size: .75rem; padding: .4rem .6rem }
+.array-actions span { width: 100%; font-size: .7rem }
+.control p.muted { margin: .6rem 0 0; font-size: .78rem }
+.muted, figcaption, .evidence { color: var(--muted); font-size: .84rem }
+.equation-hud { border-left: 3px solid var(--accent); background: var(--raised); padding: .8rem 1rem; border-radius: .35rem; margin-top: .8rem }
+.equation-hud p:last-child { margin-bottom: 0 }
+.formula, code { font-family: var(--mono); overflow-wrap: anywhere }
+.formula { font-size: 1rem; line-height: 1.55; color: var(--cyan) }
+.badge { display: inline-block; border: 1px solid var(--line); border-radius: .3rem; padding: .15rem .4rem; font-size: .68rem; color: var(--cyan) }
+.badge-teaching_simplification { color: var(--amber) }
+.evidence { display: inline; font-size: .72rem }
+#runtime-status { border-left: 3px solid var(--accent); padding: .6rem .75rem; margin: 1rem 0 0; background: var(--raised); font: .75rem/1.6 var(--mono); overflow-wrap: anywhere }
+#runtime-status.error { color: var(--error); border-color: var(--error) }
+.calculation-grid { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,210px),1fr)); gap: .9rem }
+.calculation { background: var(--raised); border: 1px solid var(--line); border-top: 3px solid var(--cyan); padding: 1rem; border-radius: .5rem; min-width: 0 }
+.calculation h3 { color: var(--muted); font-size: .8rem; margin: 0 }
+pre { font: 650 clamp(.95rem,1.6vw,1.3rem)/1.5 var(--mono); font-variant-numeric: tabular-nums; margin: .6rem 0 .3rem; white-space: pre-wrap; overflow-wrap: anywhere }
+.unit { color: var(--muted); font-size: .73rem; margin: 0 0 .5rem }
+summary { color: var(--accent); font-size: .75rem; cursor: pointer }
+details code { display: block; font-size: .75rem; margin: .5rem 0 }
+.visual { background: var(--raised); border: 1px solid var(--line); border-radius: .55rem; padding: .45rem; min-height: 180px }
+figure { margin: 1rem 0 0 }
+figure+figure { margin-top: 1.5rem }
+figure h3 { margin-bottom: .6rem }
+figcaption { margin: .7rem 0 0; font-size: .73rem }
+svg { display: block; width: 100%; height: auto; max-height: 460px; font-family: var(--sans) }
+.plot-error { color: var(--error); padding: 1rem }
+#explorations ol { display: grid; grid-template-columns: repeat(auto-fit,minmax(min(100%,280px),1fr)); gap: 1rem 2rem; margin-bottom: 0; padding-left: 1.5rem }
+#explorations li { background: var(--raised); border-radius: .5rem; padding: .7rem 1rem; margin: 0 }
+#explorations strong { color: var(--cyan) }
+li { margin-bottom: .6rem }
+li p { margin: .3rem 0 }
+blockquote { border-left: 2px solid var(--accent); margin: .7rem 0; padding: .6rem 1rem; background: var(--raised); color: var(--muted) }
+#grounding li { scroll-margin-top: 1rem; overflow-wrap: anywhere }
+#grounding li:target { outline: 2px solid var(--accent); outline-offset: 5px }
+.source-url { font-size: .85rem; overflow-wrap: anywhere }
+footer { text-align: center; padding: 1.6rem 0 2.6rem; border-top: 1px solid var(--line); margin-top: 2rem; color: var(--muted); font: .72rem/1.6 var(--mono) }
+@media(max-width:980px) { .lab-grid { grid-template-columns: 1fr; gap: 0 } .control-grid { grid-template-columns: repeat(auto-fit,minmax(min(100%,300px),1fr)) } }
+@media(max-width:600px) { main { width: calc(100% - 1.5rem) } .brief-cards { grid-template-columns: 1fr; gap: 0 } section { padding: 1rem } .hero-statement { padding-top: 1.8rem } h1 { font-size: 2.15rem } .brand-badge { font-size: .6rem } .command-bar { gap: .8rem } }
+@media(prefers-reduced-motion:reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important } }
+@media print { :root, :root[data-theme=light] { color-scheme: light; --bg: #fff; --surface: #fff; --raised: #f4f4f4; --ink: #111; --muted: #444; --accent: #423a99; --cyan: #07536c; --amber: #704100; --line: #bbb; --error: #92112c } main { width: 100% } .lab-grid, .brief-cards { display: block } section, figure, .control, .calculation { break-inside: avoid } .theme-toggle, .skip-link, .array-actions, nav { display: none } body { font-size: 11pt } h1 { font-size: 25pt } a { color: var(--ink) } }
+</style></head>
+<body><a class="skip-link" href="#controls">Skip to the interactive controls</a><main><header class="command-bar"><p class="brand-title">Paper to Playground<span class="brand-badge">Interactive lesson</span></p><button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">Light theme</button></header>
+<div class="hero-statement"><p class="eyebrow">From a relationship to a working model</p><h1>Four Updates of the Logistic Difference Equation</h1><nav aria-label="Lesson navigation"><a href="#concept">Understand</a><a href="#controls">Explore</a><a href="#grounding">Check the source</a></nav></div>
+<div class="brief-cards">
+<section id="concept"><h2>The concept</h2><p>The logistic difference equation x_next = r*x*(1-x) is applied repeatedly, using each output as the next input. Starting from an initial state x0, four updates produce a short trajectory of five values. This demonstrates recurrence without claiming to establish chaos.</p></section>
+<section id="why"><h2>Why it matters</h2><p>The logistic difference equation is the standard minimal example of a deterministic rule whose repeated application can produce complicated behavior. Seeing the first few iterates makes the recurrence concrete before any claims about long-term dynamics are made.</p></section>
+</div>
+<section id="terms"><h2>Symbols and terms</h2><dl><div class="term-pill"><dt>x</dt><dd>The state of the population or system at a given iteration, restricted here to the interval [0,1].</dd></div><div class="term-pill"><dt>r</dt><dd>The growth or control parameter, restricted here to the interval [0,4].</dd></div><div class="term-pill"><dt>x_next</dt><dd>The state at the next iteration, computed as r*x*(1-x).</dd></div><div class="term-pill"><dt>x0</dt><dd>The initial state before any update is applied.</dd></div></dl></section>
+<section id="explanation"><h2>How the mechanism works</h2><ol class="explanation-steps"><li><h3>The recurrence rule</h3><p>The source gives the first-order difference equation X_(t+1) = a*X_t*(1-X_t), sometimes called the logistic difference equation. In modern teaching notation we write x_next = r*x*(1-x).</p><p><span class="badge badge-source_supported">Source-supported relationship</span><span class="evidence"> Evidence: <a href="#evidence-logistic_equation">logistic_equation</a>, <a href="#evidence-logistic_name">logistic_name</a></span></p></li><li><h3>Iterating four times</h3><p>Starting from an initial state x0, we compute x1 = r*x0*(1-x0), then use x1 as the input to compute x2, and so on through x4. This produces a short trajectory of five values: x0, x1, x2, x3, x4.</p><p><span class="badge badge-teaching_simplification">Teaching simplification</span></p></li><li><h3>What the short trajectory shows</h3><p>Four updates are enough to see the recurrence in action and to compare different r values, but they are not enough to establish long-term behavior such as chaos. The lesson therefore makes no claim beyond the displayed iterates.</p><p><span class="badge badge-teaching_simplification">Teaching simplification</span></p></li></ol></section>
+<div class="lab-grid"><div class="control-deck">
+<section id="controls"><h2>Explore the mechanism</h2><p class="muted">Edit a value to update the results and plots. Array entries are numbered from 1.</p><div class="control-grid"><div class="control" data-control-id="r"><label class="control-label" for="control-r">Growth parameter r <output id="value-r" for="control-r"></output></label><input type="range" id="control-r" value="4" min="0" max="4" step="0.01" aria-describedby="meaning-r"><p class="muted" id="meaning-r">The growth parameter r in the recurrence x_next = r*x*(1-x).</p></div><div class="control" data-control-id="x0"><label class="control-label" for="control-x0">Initial state x0 <output id="value-x0" for="control-x0"></output></label><input type="range" id="control-x0" value="0.5" min="0" max="1" step="0.01" aria-describedby="meaning-x0"><p class="muted" id="meaning-x0">The initial state x0 before any update is applied.</p></div></div>
+<p id="runtime-status" role="status" aria-live="polite">Initializing calculations…</p></section>
+<section id="equations"><h2>Relationships</h2><article class="equation-hud"><p class="formula">x_next = r*x*(1-x)</p><p>The logistic difference equation in modern teaching notation, equivalent to the source&#x27;s X_(t+1) = a*X_t*(1-X_t).</p><p><span class="badge badge-source_supported">Source-supported relationship</span><span class="evidence"> Evidence: <a href="#evidence-logistic_equation">logistic_equation</a></span></p></article><article class="equation-hud"><p class="formula">x1 = r*x0*(1-x0)</p><p>The first update obtained by applying the recurrence once to the initial state x0.</p><p><span class="badge badge-teaching_simplification">Teaching simplification</span></p></article></section>
+</div><div class="apparatus-deck">
+<section id="visualizations"><h2>See what changes</h2><figure><h3>Trajectory: initial state plus four updates</h3><div id="visualization-trajectory_view" class="visual" aria-label="Trajectory: initial state plus four updates"></div><figcaption>Iteration · State x</figcaption></figure></section>
+<section id="calculations"><h2>Calculated results</h2><p class="muted">Displayed numbers are rounded to six significant digits. Calculations use full floating-point precision.</p><div class="calculation-grid"><article class="calculation"><h3>First update x1</h3><pre id="calculation-x1" aria-live="polite">—</pre><p class="unit"></p><details><summary>Calculation and evidence</summary><code>r*x0*(1-x0)</code><p><span class="badge badge-teaching_simplification">Teaching simplification</span></p></details></article><article class="calculation"><h3>Second update x2</h3><pre id="calculation-x2" aria-live="polite">—</pre><p class="unit"></p><details><summary>Calculation and evidence</summary><code>r*x1*(1-x1)</code><p><span class="badge badge-teaching_simplification">Teaching simplification</span></p></details></article><article class="calculation"><h3>Third update x3</h3><pre id="calculation-x3" aria-live="polite">—</pre><p class="unit"></p><details><summary>Calculation and evidence</summary><code>r*x2*(1-x2)</code><p><span class="badge badge-teaching_simplification">Teaching simplification</span></p></details></article><article class="calculation"><h3>Fourth update x4</h3><pre id="calculation-x4" aria-live="polite">—</pre><p class="unit"></p><details><summary>Calculation and evidence</summary><code>r*x3*(1-x3)</code><p><span class="badge badge-teaching_simplification">Teaching simplification</span></p></details></article><article class="calculation"><h3>Trajectory: x0, x1, x2, x3, x4</h3><pre id="calculation-trajectory" aria-live="polite">—</pre><p class="unit"></p><details><summary>Calculation and evidence</summary><code>[x0, x1, x2, x3, x4]</code><p><span class="badge badge-teaching_simplification">Teaching simplification</span></p></details></article></div></section>
+</div></div>
+<section id="explorations"><h2>Try these explorations</h2><ol><li><p><strong>Change:</strong> Set r to 2 and x0 to 0.5, then set r to 4 and x0 to 0.5.</p><p><strong>Observe:</strong> At r=2 the values settle to 0.5 after the first update; at r=4 they move through 0.5, 1, 0, 0, 0.</p><p><strong>Why:</strong> This shows how the same recurrence can produce a fixed point or a longer cycle depending on r, without claiming chaos.</p></li><li><p><strong>Change:</strong> Change x0 from 0.5 to 0.25 while keeping r=4.</p><p><strong>Observe:</strong> The first update changes, and all later updates shift accordingly because each step feeds the previous result forward.</p><p><strong>Why:</strong> This demonstrates that the recurrence uses each output as the next input, so the trajectory is a sequence of dependent states.</p></li></ol></section>
+<section id="limitations"><h2>Assumptions and limitations</h2><ul><li>Only four updates are shown; this short trajectory does not establish chaos or any long-term asymptotic behavior.</li><li>The source text is a reprint excerpt; only the recurrence equation and its name are treated as source-supported here.</li><li>The numerical checks use exactly representable states and do not test sensitivity to small perturbations.</li></ul></section>
+<section id="grounding"><h2>Grounding in the source</h2><p><strong>Simple mathematical models with very complicated dynamics</strong></p><p class="source-url"><a href="https://ned.ipac.caltech.edu/level5/Sept01/May/May2.html" target="_blank" rel="noopener noreferrer">Read the source</a></p><h3>Source-supported claims</h3><ul><li id="evidence-logistic_name"><strong>logistic_name</strong>: The recurrence is sometimes called the logistic difference equation.<p class="muted">Source location: Section 2, FIRST-ORDER DIFFERENCE EQUATIONS, equation (3)</p><blockquote>This is sometimes called the &quot;logistic&quot; difference equation.</blockquote></li><li id="evidence-logistic_equation"><strong>logistic_equation</strong>: The first-order difference equation is X_(t+1) = a*X_t*(1-X_t).<p class="muted">Source location: Section 2, FIRST-ORDER DIFFERENCE EQUATIONS, equation (3)</p><blockquote>X_(t+1) = a*X_t*(1-X_t)</blockquote></li></ul><h3>Our teaching simplifications</h3><ul><li>The source uses X_(t+1) = a*X_t*(1-X_t); this lesson renames a to r and X to x for modern teaching notation.</li><li>The lesson restricts x to [0,1] and r to [0,4] and displays only four updates, which is a pedagogical choice not stated as a theorem in the excerpt.</li><li>The trajectory visualization is a simple line plot of five values, not a reproduction of any figure from the paper.</li></ul><p class="muted">This lesson illustrates a mechanism. A toy calculation does not reproduce the paper’s experimental results.</p></section>
+<footer>All calculations and visualizations run locally in this file.</footer></main>
+<script id="lesson-data" type="application/json">{"spec": {"why_it_matters": "The logistic difference equation is the standard minimal example of a deterministic rule whose repeated application can produce complicated behavior. Seeing the first few iterates makes the recurrence concrete before any claims about long-term dynamics are made.", "visualizations": [{"id": "trajectory_view", "kind": "bars", "labels": ["x0", "x1", "x2", "x3", "x4"], "source": "trajectory", "title": "Trajectory: initial state plus four updates", "value_label": "x value", "x_label": "Iteration", "y_label": "State x"}], "title": "Four Updates of the Logistic Difference Equation", "terms": [{"symbol": "x", "meaning": "The state of the population or system at a given iteration, restricted here to the interval [0,1]."}, {"symbol": "r", "meaning": "The growth or control parameter, restricted here to the interval [0,4]."}, {"symbol": "x_next", "meaning": "The state at the next iteration, computed as r*x*(1-x)."}, {"symbol": "x0", "meaning": "The initial state before any update is applied."}], "schema_version": 2, "limitations": ["Only four updates are shown; this short trajectory does not establish chaos or any long-term asymptotic behavior.", "The source text is a reprint excerpt; only the recurrence equation and its name are treated as source-supported here.", "The numerical checks use exactly representable states and do not test sensitivity to small perturbations."], "grounding": {"paper_title": "Simple mathematical models with very complicated dynamics", "source_url": "https://ned.ipac.caltech.edu/level5/Sept01/May/May2.html", "source_claims": [{"id": "logistic_name", "claim": "The recurrence is sometimes called the logistic difference equation.", "locator": "Section 2, FIRST-ORDER DIFFERENCE EQUATIONS, equation (3)", "quote": "This is sometimes called the \"logistic\" difference equation."}, {"id": "logistic_equation", "claim": "The first-order difference equation is X_(t+1) = a*X_t*(1-X_t).", "locator": "Section 2, FIRST-ORDER DIFFERENCE EQUATIONS, equation (3)", "quote": "X_(t+1) = a*X_t*(1-X_t)"}], "teaching_simplifications": ["The source uses X_(t+1) = a*X_t*(1-X_t); this lesson renames a to r and X to x for modern teaching notation.", "The lesson restricts x to [0,1] and r to [0,4] and displays only four updates, which is a pedagogical choice not stated as a theorem in the excerpt.", "The trajectory visualization is a simple line plot of five values, not a reproduction of any figure from the paper."]}, "explorations": [{"why": "This shows how the same recurrence can produce a fixed point or a longer cycle depending on r, without claiming chaos.", "observe": "At r=2 the values settle to 0.5 after the first update; at r=4 they move through 0.5, 1, 0, 0, 0.", "change": "Set r to 2 and x0 to 0.5, then set r to 4 and x0 to 0.5."}, {"why": "This demonstrates that the recurrence uses each output as the next input, so the trajectory is a sequence of dependent states.", "observe": "The first update changes, and all later updates shift accordingly because each step feeds the previous result forward.", "change": "Change x0 from 0.5 to 0.25 while keeping r=4."}], "explanation_steps": [{"provenance": "source_supported", "heading": "The recurrence rule", "evidence_ids": ["logistic_equation", "logistic_name"], "body": "The source gives the first-order difference equation X_(t+1) = a*X_t*(1-X_t), sometimes called the logistic difference equation. In modern teaching notation we write x_next = r*x*(1-x)."}, {"provenance": "teaching_simplification", "heading": "Iterating four times", "evidence_ids": [], "body": "Starting from an initial state x0, we compute x1 = r*x0*(1-x0), then use x1 as the input to compute x2, and so on through x4. This produces a short trajectory of five values: x0, x1, x2, x3, x4."}, {"provenance": "teaching_simplification", "heading": "What the short trajectory shows", "evidence_ids": [], "body": "Four updates are enough to see the recurrence in action and to compare different r values, but they are not enough to establish long-term behavior such as chaos. The lesson therefore makes no claim beyond the displayed iterates."}], "equations": [{"provenance": "source_supported", "expression": "x_next = r*x*(1-x)", "explanation": "The logistic difference equation in modern teaching notation, equivalent to the source's X_(t+1) = a*X_t*(1-X_t).", "evidence_ids": ["logistic_equation"]}, {"provenance": "teaching_simplification", "expression": "x1 = r*x0*(1-x0)", "explanation": "The first update obtained by applying the recurrence once to the initial state x0.", "evidence_ids": []}], "controls": [{"step": 0.01, "min": 0, "meaning": "The growth parameter r in the recurrence x_next = r*x*(1-x).", "max": 4, "label": "Growth parameter r", "kind": "range", "id": "r", "default": 4}, {"step": 0.01, "min": 0, "meaning": "The initial state x0 before any update is applied.", "max": 1, "label": "Initial state x0", "kind": "range", "id": "x0", "default": 0.5}], "concept_summary": "The logistic difference equation x_next = r*x*(1-x) is applied repeatedly, using each output as the next input. Starting from an initial state x0, four updates produce a short trajectory of five values. This demonstrates recurrence without claiming to establish chaos.", "computations": [{"evidence_ids": [], "expression": "r*x0*(1-x0)", "id": "x1", "label": "First update x1", "provenance": "teaching_simplification", "show": true, "unit": ""}, {"evidence_ids": [], "expression": "r*x1*(1-x1)", "id": "x2", "label": "Second update x2", "provenance": "teaching_simplification", "show": true, "unit": ""}, {"evidence_ids": [], "expression": "r*x2*(1-x2)", "id": "x3", "label": "Third update x3", "provenance": "teaching_simplification", "show": true, "unit": ""}, {"evidence_ids": [], "expression": "r*x3*(1-x3)", "id": "x4", "label": "Fourth update x4", "provenance": "teaching_simplification", "show": true, "unit": ""}, {"evidence_ids": [], "expression": "[x0, x1, x2, x3, x4]", "id": "trajectory", "label": "Trajectory: x0, x1, x2, x3, x4", "provenance": "teaching_simplification", "show": true, "unit": ""}], "checks": [{"state": {"r": 4, "x0": 0.5}, "rtol": 0.001, "name": "r=4, x0=0.5", "id": "case_r4", "expected": {"x1": 1, "x4": 0}, "atol": 0.001}, {"state": {"r": 2, "x0": 0.5}, "rtol": 0.001, "name": "r=2, x0=0.5", "id": "case_r2", "expected": {"x1": 0.5, "x4": 0.5}, "atol": 0.001}]}, "compiled": {"x1": ["mul", ["mul", ["var", "r"], ["var", "x0"]], ["sub", ["num", 1], ["var", "x0"]]], "x2": ["mul", ["mul", ["var", "r"], ["var", "x1"]], ["sub", ["num", 1], ["var", "x1"]]], "x3": ["mul", ["mul", ["var", "r"], ["var", "x2"]], ["sub", ["num", 1], ["var", "x2"]]], "x4": ["mul", ["mul", ["var", "r"], ["var", "x3"]], ["sub", ["num", 1], ["var", "x3"]]], "trajectory": ["list", [["var", "x0"], ["var", "x1"], ["var", "x2"], ["var", "x3"], ["var", "x4"]]]}}</script><script>/* Pure bounded mathematics shared verbatim by the browser and Python checker. */
+(() => {
+  "use strict";
+  const MAX_LEAVES = 64, MAX_DEPTH = 32, MAX_OPERATIONS = 100000;
+  const fail = message => { throw new Error(message); };
+  const budget = limits => ({remaining: Math.min(MAX_OPERATIONS, limits.maxOperations ?? MAX_OPERATIONS)});
+  function tick(b) { if (--b.remaining < 0) fail("Calculation operation budget exceeded."); }
+  function number(x) { if (typeof x !== "number" || !Number.isFinite(x)) fail("A calculation produced a non-finite number or invalid value."); return x; }
+  function checkValue(value, depth = 0, count = {leaves: 0}) {
+    if (depth > MAX_DEPTH) fail("Array nesting is too deep.");
+    if (Array.isArray(value)) {
+      if (value.length < 1 || value.length > MAX_LEAVES) fail("Arrays must contain between 1 and 64 elements.");
+      const children = value.map(item => checkValue(item, depth + 1, count));
+      if (children.some(shape => JSON.stringify(shape) !== JSON.stringify(children[0]))) fail("Arrays must have a rectangular shape.");
+      return [value.length, ...children[0]];
+    }
+    number(value);
+    if (++count.leaves > MAX_LEAVES) fail("Each array is limited to 64 numeric values.");
+    return [];
+  }
+  function vector(value) {
+    if (!Array.isArray(value) || !value.length || value.some(x => typeof x !== "number")) fail("This operation requires a numeric vector.");
+    return value;
+  }
+  function matrix(value) {
+    if (!Array.isArray(value) || !value.length || !Array.isArray(value[0])) fail("This operation requires a numeric matrix.");
+    value.forEach(vector);
+    if (value.some(row => row.length !== value[0].length)) fail("Matrix rows must have equal lengths.");
+    return value;
+  }
+  function unary(value, fn, b) {
+    tick(b);
+    return Array.isArray(value) ? value.map(x => unary(x, fn, b)) : number(fn(number(value)));
+  }
+  function binary(a, c, fn, b) {
+    tick(b);
+    if (Array.isArray(a) && Array.isArray(c)) {
+      if (a.length !== c.length) fail("Array operations require equal shapes, or a scalar to broadcast.");
+      // Reject differently nested shapes rather than broadcasting each subarray.
+      if (a.some((x, i) => Array.isArray(x) !== Array.isArray(c[i]))) fail("Array operations require equal shapes.");
+      return a.map((x, i) => binary(x, c[i], fn, b));
+    }
+    if (Array.isArray(a)) return a.map(x => binary(x, c, fn, b));
+    if (Array.isArray(c)) return c.map(x => binary(a, x, fn, b));
+    return number(fn(number(a), number(c)));
+  }
+  const arithmetic = {add: (a,b) => a+b, sub: (a,b) => a-b, mul: (a,b) => a*b, div: (a,b) => a/b, pow: (a,b) => a**b};
+  const elementwise = {sin: Math.sin, cos: Math.cos, exp: Math.exp, log: Math.log, log2: Math.log2, sqrt: Math.sqrt, abs: Math.abs, xlogx: x => { if (x < 0) fail("xlogx requires nonnegative values."); return x === 0 ? 0 : x * Math.log2(x); }};
+  function softmax(xs, b) {
+    vector(xs);
+    const largest = Math.max(...xs);
+    const weights = xs.map(x => {tick(b); return Math.exp(x - largest);});
+    const total = weights.reduce((a,c) => a+c, 0);
+    return weights.map(x => {tick(b); return x / total;});
+  }
+  function call(name, args, b) {
+    const arity = expected => { if (args.length !== expected) fail(`${name} requires ${expected} argument(s).`); };
+    if (Object.hasOwn(elementwise, name)) {arity(1); return unary(args[0], elementwise[name], b);}
+    switch (name) {
+      case "minimum": case "maximum":
+        arity(2); return binary(args[0], args[1], name === "minimum" ? Math.min : Math.max, b);
+      case "length": arity(1); return vector(args[0]).length;
+      case "ncols": arity(1); return matrix(args[0])[0].length;
+      case "sum": case "mean": {
+        arity(1); const xs = vector(args[0]);
+        const total = xs.reduce((a,c) => {tick(b); return a+c;}, 0);
+        return number(name === "mean" ? total / xs.length : total);
+      }
+      case "norm": case "normalize": {
+        arity(1); const xs = vector(args[0]); xs.forEach(() => tick(b));
+        const magnitude = number(Math.hypot(...xs));
+        if (name === "norm") return magnitude;
+        if (magnitude === 0) fail("Cannot normalize a zero vector.");
+        return unary(xs, x => x / magnitude, b);
+      }
+      case "dot": {
+        arity(2); const a = vector(args[0]), c = vector(args[1]);
+        if (a.length !== c.length) fail("dot requires vectors of equal length.");
+        return number(a.reduce((total, x, i) => {tick(b); return total + x * c[i];}, 0));
+      }
+      case "matmul": {
+        arity(2); const a = matrix(args[0]), c = matrix(args[1]);
+        if (a[0].length !== c.length) fail("Matrix dimensions do not match for matmul.");
+        if (a.length * c[0].length > MAX_LEAVES) fail("Matrix product exceeds 64 numeric values.");
+        return a.map(row => c[0].map((_, j) => number(row.reduce((total, x, k) => {tick(b); return total + x * c[k][j];}, 0))));
+      }
+      case "transpose": {
+        arity(1); const a = matrix(args[0]);
+        return a[0].map((_, j) => a.map(row => {tick(b); return row[j];}));
+      }
+      case "softmax": {
+        arity(1);
+        if (Array.isArray(args[0]) && Array.isArray(args[0][0])) return matrix(args[0]).map(row => softmax(row, b));
+        return softmax(args[0], b);
+      }
+      case "linspace": {
+        arity(3); const start = number(args[0]), end = number(args[1]), n = number(args[2]);
+        if (!Number.isInteger(n) || n < 2 || n > MAX_LEAVES) fail("linspace count must be an integer between 2 and 64.");
+        return Array.from({length:n}, (_, i) => {tick(b); const t = i / (n - 1); return number((1-t)*start + t*end);});
+      }
+      case "clip": {
+        arity(3); const lo = number(args[1]), hi = number(args[2]);
+        if (lo > hi) fail("clip lower bound exceeds its upper bound.");
+        return unary(args[0], x => Math.min(hi, Math.max(lo, x)), b);
+      }
+      default: fail(`Unsupported operation: ${name}`);
+    }
+  }
+  function evaluate(node, env, b, depth = 0) {
+    tick(b);
+    if (depth > MAX_DEPTH) fail("Expression nesting is too deep.");
+    if (!Array.isArray(node)) fail("Invalid expression tree.");
+    const next = n => evaluate(n, env, b, depth + 1);
+    switch (node[0]) {
+      case "num": return number(node[1]);
+      case "var": if (!Object.hasOwn(env, node[1])) fail(`Unknown variable: ${node[1]}`); return env[node[1]];
+      case "list": { const value = node[1].map(next); checkValue(value); return value; }
+      case "neg": return unary(next(node[1]), x => -x, b);
+      case "pos": return next(node[1]);
+      case "call": return call(node[1], node[2].map(next), b);
+      default:
+        if (Object.hasOwn(arithmetic, node[0])) return binary(next(node[1]), next(node[2]), arithmetic[node[0]], b);
+        fail(`Unsupported expression node: ${node[0]}`);
+    }
+  }
+  function controlValues(spec, state) {
+    if (!state || typeof state !== "object" || Array.isArray(state)) fail("A complete control state is required.");
+    const ids = spec.controls.map(c => c.id);
+    if (Object.keys(state).length !== ids.length || Object.keys(state).some(id => !ids.includes(id))) fail("Control state has missing or unknown keys.");
+    const values = Object.create(null);
+    for (const control of spec.controls) {
+      if (!Object.hasOwn(state, control.id)) fail("Control state has missing keys.");
+      const value = state[control.id];
+      if (control.kind === "array") {
+        if (!Array.isArray(value)) fail(`${control.label}: enter a JSON array.`);
+        const shape = checkValue(value), declared = checkValue(control.default);
+        if (shape.length > 2) fail("Controls support vectors or matrices only.");
+        if (declared.length === 2 && JSON.stringify(shape) !== JSON.stringify(declared)) fail(`${control.label}: matrix dimensions must stay fixed.`);
+        if (declared.length === 1 && (shape.length !== 1 || shape[0] < (control.min_items ?? declared[0]) || shape[0] > (control.max_items ?? declared[0]))) fail(`${control.label}: vector length is outside the allowed bounds.`);
+        if (control.min != null || control.max != null) value.flat().forEach(x => {if (control.min != null && x < control.min || control.max != null && x > control.max) fail(`${control.label}: array value is outside the allowed bounds.`);});
+      } else {
+        number(value);
+        if (control.kind === "toggle" && value !== 0 && value !== 1) fail(`${control.label}: toggle must be 0 or 1.`);
+        if (control.min !== undefined && value < control.min || control.max !== undefined && value > control.max) fail(`${control.label}: value is outside the allowed bounds.`);
+      }
+      values[control.id] = value;
+    }
+    return values;
+  }
+  function compute(spec, compiled, state, limits = {}) {
+    if (limits.maxOperations !== undefined && (!Number.isInteger(limits.maxOperations) || limits.maxOperations < 1)) fail("Invalid operation limit.");
+    const b = budget(limits);
+    const env = controlValues(spec, state), outputs = Object.create(null);
+    for (const computation of spec.computations) {
+      try {
+        const value = evaluate(compiled[computation.id], env, b);
+        if (checkValue(value).length > 2) fail("Outputs must be scalars, vectors or matrices.");
+        env[computation.id] = value; outputs[computation.id] = value;
+      } catch (error) { fail(`${computation.label}: ${error.message}`); }
+    }
+    return outputs;
+  }
+  globalThis.PTPMath = Object.freeze({compute, validateState: controlValues});
+})();
+
+/* Browser controls and SVG views. Mathematics lives in math_runtime.js. */
+(() => {
+  "use strict";
+  const {spec, compiled} = JSON.parse(document.getElementById("lesson-data").textContent);
+  const MAX_OPERATIONS = 100000;
+  const SVG_NS = "http://www.w3.org/2000/svg";
+  const accent = "var(--accent)", muted = "var(--muted)";
+  const fail = message => { throw new Error(message); };
+  const budget = () => ({remaining: MAX_OPERATIONS});
+  function number(x) { if (typeof x !== "number" || !Number.isFinite(x)) fail("A calculation produced a non-finite number or invalid value."); return x; }
+  function vector(value) { if (!Array.isArray(value) || !value.length || value.some(x => typeof x !== "number")) fail("This view requires a numeric vector."); return value; }
+  function matrix(value) { if (!Array.isArray(value) || !value.length || !Array.isArray(value[0]) || value.some(row => !Array.isArray(row) || row.length !== value[0].length)) fail("This view requires a rectangular numeric matrix."); value.forEach(vector); return value; }
+  function controlValues(overrides = {}) {
+    const state = Object.fromEntries(spec.controls.map(c => [c.id, c.default]));
+    Object.assign(state, overrides);
+    return globalThis.PTPMath.validateState(spec, state);
+  }
+  function compute(overrides = {}, b = budget()) {
+    return globalThis.PTPMath.compute(spec, compiled, controlValues(overrides), {maxOperations:b.remaining});
+  }
+  function formatted(value) {
+    if (Array.isArray(value)) return "[" + value.map(formatted).join(Array.isArray(value[0]) ? ",\n " : ", ") + "]";
+    const n = number(value);
+    return String(Number(n.toPrecision(6)));
+  }
+  function svgElement(name, attrs = {}, text) {
+    const node = document.createElementNS(SVG_NS, name);
+    for (const [key, value] of Object.entries(attrs)) node.setAttribute(key, String(value));
+    if (text !== undefined) node.textContent = String(text);
+    return node;
+  }
+  function plotRoot(vis) {
+    const svg = svgElement("svg", {viewBox:"0 0 800 340", role:"img", "aria-label":vis.title});
+    svg.append(svgElement("title", {}, vis.title));
+    return svg;
+  }
+  function domain(values, includeZero = false) {
+    let lo = Math.min(...values), hi = Math.max(...values);
+    if (includeZero) {lo = Math.min(0, lo); hi = Math.max(0, hi);}
+    if (lo === hi) {const padding = Math.max(1, Math.abs(lo) * .1); lo -= padding; hi += padding;}
+    number(lo); number(hi); number(hi - lo);
+    return [lo, hi];
+  }
+  function axes(svg, vis, xDomain, yDomain, categorical = false) {
+    const left=70, top=25, width=700, height=230;
+    const x = n => left + (n - xDomain[0]) / (xDomain[1] - xDomain[0]) * width;
+    const y = n => top + height - (n - yDomain[0]) / (yDomain[1] - yDomain[0]) * height;
+    svg.append(svgElement("path", {d:`M${left},${top}V${top+height}H${left+width}`, fill:"none", stroke:muted}));
+    for (let i=0; i<=4; i++) {
+      const t=i/4, value=(1-t)*yDomain[0]+t*yDomain[1];
+      svg.append(svgElement("line", {x1:left,y1:y(value),x2:left+width,y2:y(value),stroke:"var(--line)"}));
+      svg.append(svgElement("text", {x:left-9,y:y(value)+4,"text-anchor":"end","font-size":11,fill:muted}, formatted(value)));
+      if (!categorical) {
+        const xv=(1-t)*xDomain[0]+t*xDomain[1];
+        svg.append(svgElement("text", {x:x(xv),y:top+height+22,"text-anchor":"middle","font-size":11,fill:muted}, formatted(xv)));
+      }
+    }
+    svg.append(svgElement("text", {x:left+width/2,y:325,"text-anchor":"middle","font-size":13,fill:muted}, vis.x_label));
+    svg.append(svgElement("text", {x:17,y:top+height/2,transform:`rotate(-90 17 ${top+height/2})`, "text-anchor":"middle","font-size":13,fill:muted}, vis.y_label));
+    return {x,y,left,top,width,height};
+  }
+  function linePlot(vis, values, outputs, b) {
+    const control = spec.controls.find(item => item.id === vis.sweep_control);
+    if (!control || control.kind === "array" || control.min === undefined || control.max === undefined || control.min >= control.max) fail("Line plots need a scalar sweep control with distinct min/max bounds.");
+    const xs=[], ys=[];
+    // Respect a finite step grid, including integer-valued algorithm parameters.
+    const intervals=(control.max-control.min)/control.step;
+    const onGrid=Number.isFinite(intervals)&&intervals>=1;
+    const gridEnd=onGrid?Math.floor(intervals):0;
+    for (let i=0; i<48; i++) {
+      const t=i/47;
+      let k=onGrid?Math.round(t*gridEnd):0;
+      let value=onGrid?control.min+k*control.step:(1-t)*control.min+t*control.max;
+      // Rounding can put a grid point just beyond max; use the prior valid point.
+      if(onGrid&&value>control.max) {k=Math.max(0,k-1);value=control.min+k*control.step;}
+      if(value<control.min||value>control.max) fail("Sweep sample lies outside the control bounds.");
+      if(xs.length&&value===xs[xs.length-1]) continue;
+      xs.push(value); ys.push(number(compute({...values,[control.id]:value}, b)[vis.source]));
+    }
+    if(xs.length<2) fail("Line plots need at least two distinct valid sweep settings.");
+    const current = number(outputs[vis.source]);
+    const svg=plotRoot(vis), a=axes(svg,vis,[control.min,control.max],domain([...ys,current]));
+    const points=xs.map((value,i) => `${number(a.x(value))},${number(a.y(ys[i]))}`).join(" ");
+    svg.append(svgElement("polyline", {points,fill:"none",stroke:accent,"stroke-width":2.5}));
+    const marker=svgElement("circle", {cx:number(a.x(values[control.id])),cy:number(a.y(current)),r:5,fill:accent,stroke:"white","stroke-width":2});
+    marker.append(svgElement("title", {}, `${control.label}: ${formatted(values[control.id])}; result: ${formatted(current)}`));
+    svg.append(marker); return svg;
+  }
+  function barsPlot(vis, outputs) {
+    const values=vector(outputs[vis.source]), svg=plotRoot(vis), a=axes(svg,vis,[0,values.length],domain(values,true),true);
+    const cell=a.width/values.length, base=a.y(0);
+    values.forEach((value,i) => {
+      const top=Math.min(base,a.y(value)), height=Math.abs(base-a.y(value));
+      const rect=svgElement("rect",{x:a.left+i*cell+cell*.1,y:top,width:cell*.8,height,fill:accent});
+      const label=vis.labels?.[i]??String(i+1);
+      rect.append(svgElement("title",{},`${label}: ${formatted(value)}`)); svg.append(rect);
+      svg.append(svgElement("text",{x:a.left+(i+.5)*cell,y:a.top+a.height+22,"text-anchor":"middle","font-size":11,fill:muted},label));
+      if(values.length<=12) svg.append(svgElement("text",{x:a.left+(i+.5)*cell,y:value>=0?top-5:top+height+14,"text-anchor":"middle","font-size":11,fill:accent},formatted(value)));
+    });
+    return svg;
+  }
+  function heatmapPlot(vis, outputs) {
+    const values=matrix(outputs[vis.source]), flat=values.flat(), [lo,hi]=domain(flat), svg=plotRoot(vis);
+    const left=85, top=25, width=625, height=245, cellWidth=width/values[0].length, cellHeight=height/values.length;
+    values.forEach((row,i) => {
+      const rowLabel=vis.row_labels?.[i]??String(i+1);
+      svg.append(svgElement("text",{x:left-12,y:top+(i+.5)*cellHeight+4,"text-anchor":"end","font-size":11,fill:muted},rowLabel));
+      row.forEach((value,j) => {
+        const t=(value-lo)/(hi-lo), fill=`hsl(192 66% ${94-t*61}%)`;
+        const rect=svgElement("rect",{x:left+j*cellWidth,y:top+i*cellHeight,width:cellWidth,height:cellHeight,fill,stroke:"white","stroke-width":1});
+        rect.append(svgElement("title",{},`Row ${rowLabel}, column ${vis.column_labels?.[j]??j+1}: ${formatted(value)}`));svg.append(rect);
+        if(values.length<=8&&row.length<=8) svg.append(svgElement("text",{x:left+(j+.5)*cellWidth,y:top+(i+.5)*cellHeight+4,"text-anchor":"middle","font-size":12,fill:t>.65?"white":"#203046"},formatted(value)));
+      });
+    });
+    values[0].forEach((_,j) => svg.append(svgElement("text",{x:left+(j+.5)*cellWidth,y:top+height+18,"text-anchor":"middle","font-size":11,fill:muted},vis.column_labels?.[j]??j+1)));
+    svg.append(svgElement("text",{x:left+width/2,y:320,"text-anchor":"middle","font-size":13,fill:muted},vis.x_label));
+    svg.append(svgElement("text",{x:20,y:top+height/2,transform:`rotate(-90 20 ${top+height/2})`,"text-anchor":"middle","font-size":13,fill:muted},vis.y_label));
+    svg.append(svgElement("text",{x:785,y:30,"text-anchor":"end","font-size":10,fill:muted},`High ${formatted(hi)}`));
+    svg.append(svgElement("text",{x:785,y:48,"text-anchor":"end","font-size":10,fill:muted},`Low ${formatted(lo)}`));
+    return svg;
+  }
+  function readNumber(input, label) {
+    input.removeAttribute("aria-invalid");
+    if(input.value.trim()==="" || !Number.isFinite(Number(input.value))) {
+      input.setAttribute("aria-invalid", "true");
+      fail(`${label}: enter a finite number in every field.`);
+    }
+    return Number(input.value);
+  }
+  function arrayInputs(control) {
+    return [...document.getElementById(`cells-${control.id}`).querySelectorAll("[data-array-cell]")];
+  }
+  function resizeVector(control, delta) {
+    const cells=document.getElementById(`cells-${control.id}`), inputs=arrayInputs(control);
+    const minimum=control.min_items??control.default.length, maximum=control.max_items??control.default.length;
+    const length=inputs.length+delta;
+    if(length<minimum || length>maximum) return;
+    if(delta<0) cells.lastElementChild.remove();
+    else {
+      const label=document.createElement("label"), index=document.createElement("span"), input=document.createElement("input");
+      label.className="array-cell";index.textContent=String(length);
+      input.type="number";input.step="any";input.value="0";
+      input.setAttribute("data-array-cell", "");
+      input.setAttribute("aria-label", `${control.label}, entry ${length}`);
+      input.setAttribute("aria-describedby", `meaning-${control.id}`);
+      label.append(index,input);cells.append(label);
+    }
+    document.getElementById(`shape-${control.id}`).textContent=`${length} entries`;
+    document.getElementById(`remove-${control.id}`).disabled=length<=minimum;
+    document.getElementById(`add-${control.id}`).disabled=length>=maximum;
+    update();
+  }
+  function readControls() {
+    const values=Object.create(null);
+    for(const control of spec.controls) {
+      const input=document.getElementById(`control-${control.id}`);
+      if(control.kind==="array") {
+        const entries=arrayInputs(control).map(cell=>readNumber(cell,control.label));
+        if(Array.isArray(control.default[0])) {
+          const columns=control.default[0].length;
+          if(entries.length!==control.default.length*columns) fail(`${control.label}: matrix shape must remain fixed.`);
+          values[control.id]=Array.from({length:control.default.length},(_,row)=>entries.slice(row*columns,(row+1)*columns));
+        } else values[control.id]=entries;
+      } else if(control.kind==="toggle") {
+        values[control.id]=input.checked?1:0;
+      } else {
+        values[control.id]=readNumber(input,control.label);
+      }
+    }
+    return controlValues(values);
+  }
+  function update() {
+    const status=document.getElementById("runtime-status");
+    try {
+      const values=readControls(), b=budget(), outputs=compute(values,b);
+      const plots=spec.visualizations.map(vis => {
+        try {
+          switch(vis.kind) {
+            case "line": return linePlot(vis,values,outputs,b);
+            case "bars": return barsPlot(vis,outputs);
+            case "heatmap": return heatmapPlot(vis,outputs);
+            default: fail(`Unsupported visualization: ${vis.kind}`);
+          }
+        } catch(error) {fail(`${vis.title}: ${error.message}`);}
+      });
+      for(const control of spec.controls) document.getElementById(`value-${control.id}`).textContent=control.kind==="array"?"":control.kind==="toggle"?(values[control.id]===1?"On · 1":"Off · 0"):formatted(values[control.id]);
+      for(const item of spec.computations) if(item.show) document.getElementById(`calculation-${item.id}`).textContent=formatted(outputs[item.id]);
+      spec.visualizations.forEach((vis,i) => document.getElementById(`visualization-${vis.id}`).replaceChildren(plots[i]));
+      status.textContent="Calculations and visualizations updated.";status.className="";
+      document.documentElement.dataset.runtimeState="ok";
+      return {ok:true,outputs};
+    } catch(error) {
+      status.textContent=`Cannot calculate: ${error.message}`;status.className="error";
+      for(const control of spec.controls) document.getElementById(`value-${control.id}`).textContent="";
+      for(const item of spec.computations) if(item.show) document.getElementById(`calculation-${item.id}`).textContent="—";
+      for(const vis of spec.visualizations) {
+        const target=document.getElementById(`visualization-${vis.id}`);
+        target.replaceChildren();const p=document.createElement("p");p.className="plot-error";p.textContent="Plot unavailable until the calculation error is corrected.";target.append(p);
+      }
+      document.documentElement.dataset.runtimeState="error";
+      return {ok:false,error:error.message};
+    }
+  }
+  // Pure compute and update hooks support lightweight Chromium smoke tests.
+  window.PTP=Object.freeze({compute:overrides=>compute(overrides),update});
+  for(const control of spec.controls) {
+    document.getElementById(`control-${control.id}`).addEventListener("input",update);
+    if(control.kind==="array"&&!Array.isArray(control.default[0])&&(control.min_items??control.default.length)<(control.max_items??control.default.length)) {
+      document.getElementById(`add-${control.id}`).addEventListener("click",()=>resizeVector(control,1));
+      document.getElementById(`remove-${control.id}`).addEventListener("click",()=>resizeVector(control,-1));
+    }
+  }
+  const themeToggle=document.getElementById("theme-toggle");
+  if(themeToggle) themeToggle.addEventListener("click",()=>{
+    const light=document.documentElement.dataset.theme!=="light";
+    document.documentElement.dataset.theme=light?"light":"dark";
+    themeToggle.textContent=light?"Dark theme":"Light theme";
+    themeToggle.setAttribute("aria-pressed", String(light));
+  });
+  update();
+})();
+</script></body></html>
