@@ -45,7 +45,24 @@ Direct `file://` navigation was blocked by the browser tool's URL policy. Served
 
 ## Fresh generated artifact review
 
-As of 3 October 2026, no accepted fresh lesson package has been supplied to P2. Complete live model responses alone do not establish an accepted lesson. The observations above apply to authored fixtures; the expanded independent states in `tests/science/fixtures.json` have not yet been operated in a fresh page.
+The first fresh package, `examples/generated/entropy-v1/`, was reviewed unchanged at commit **`d944f28c8f76422f76a6e92e940883fb4847274f`** on 3 October 2026. Its trace reports CLI success using `deepseek/deepseek-v4.1-flash`: one request, 3,674 prompt tokens, 2,727 completion tokens, zero reasoning tokens, and 14.327 seconds. The embedded UTF-8 spec equals `lesson.json`, compiled expressions match, and the embedded math core matches the reviewed core. Its UI matches the earlier `3bcb827` runtime, rather than the new numeric-editor integration in `6512a95`.
+
+Independent core comparisons passed for seven valid three-outcome states. Four invalid/out-of-size core states failed as expected. Chromium passed 17 recorded observations at the six-digit display tolerance: the initial uniform distribution, certain/two-positive/uneven distributions, editing all three weight positions, both scale endpoints, maximum legal weights, eight invalid edits, and recovery without reload. All five calculation disclosures opened and closed. Invalid inputs cleared all five readouts and removed the plot; correction restored them. No warning/error console logs were observed. Controls and results were inspected at desktop and narrow viewports without horizontal overflow; the temporary viewport override was reset.
+
+| Fresh entropy action | Independent expected H | Chromium observed H |
+|---|---|---|
+| weights=[1,1,1], scale=1 | log2(3)=1.584962500721156 | 1.58496 |
+| weights=[1,0,0], scale=1 | 0 | 0 |
+| weights=[1,1,0], scale=1 | 1 | 1 |
+| weights=[1,3,0] or [0,1,3], scale=1 | 0.8112781244591328 | 0.811278 |
+| weights=[1,3,0], scale=0.1 then 10 | 0.8112781244591328 at both endpoints | 0.811278 at both endpoints |
+| weights=[100,100,100], scale=1 | log2(3)=1.584962500721156 | 1.58496 |
+| Zero total, negative/over-limit entry, wrong length/shape, malformed/empty JSON | Error, cleared values and plot | Visible error; five cleared readouts; zero SVGs |
+| Correct to weights=[1,3,0], scale=10 | 0.8112781244591328 and restored plot | 0.811278 and one restored SVG |
+
+P2 manually opened this **fresh** `entropy-v1/index.html` through `file://` with the network disconnected, kept scale=1, changed weights from [1,1,1] to [1,3,0], and confirmed H changed from 1.58496 to 0.811278 bits. This is user-reported offline evidence; Chromium version was not supplied. The reviewed Windows HTML SHA-256 is `b545b7460ab7e300746cddc088b6ed21b78cae719cfed8d6cc311071c10cf14f`. Git's LF blob and Windows CRLF checkout hashes are both recorded in [the full review](reviews/entropy-v1.json).
+
+**Acceptance remains needs revision.** Fixed min_items=max_items=3 prevents outcome-count changes; the scale control preserves entropy and does not replace resizing. Generated evidence presents authored equation-transcription text as source quotation and mislocates the zero-limit claim under entropy property 2. Weight normalization needs teaching provenance, while Hmax has genuine support in [Shannon's section 6, property 2](https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf). The embedded older page uses a JSON textarea, ignores the supplied outcome labels, and cannot verify new numeric cells, resizing, or checkbox controls. The compression statement also needs lossless/memoryless qualifications or removal. The other three fresh packages have not been reviewed. An updated release page needs its own unchanged-artifact and offline checks.
 
 For each supplied package, record the generation commit/model, exact input case and source selection, `lesson.json`, `index.html`, and `trace.jsonl` paths and SHA-256 hashes. Keep those files unchanged. Verify the HTML's embedded spec equals the saved JSON and its compiled computations correspond to that spec; identify the embedded math/UI versions rather than assuming the current checkout matches. Review the trace's final outcome, requests, usage, repairs, failed/skipped checks, and output promotion. A leftover HTML page from another run is not a successful generation.
 

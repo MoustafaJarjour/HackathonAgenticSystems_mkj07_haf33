@@ -1,0 +1,1090 @@
+{
+  "artifact_commit": "d944f28c8f76422f76a6e92e940883fb4847274f",
+  "package": "examples/generated/entropy-v1",
+  "review_date": "2026-10-03",
+  "reviewer": "P2",
+  "acceptance": "needs_revision",
+  "artifact_hashes": {
+    "input.json": {
+      "git_blob_sha256": "faa6fa36a6d4849e87b6bb5aafba2b6dc371438df048c18b0953cd53a26edea3",
+      "reviewed_checkout_sha256": "1c1ba048263c4bf05d0ac1c6a00e02bd2a22031f944f8341dedccc79b42d3623"
+    },
+    "lesson.json": {
+      "git_blob_sha256": "143e71f167170a049267e995b3890e3137bb462f8569e7b9e7958352db17e5c1",
+      "reviewed_checkout_sha256": "9304a7b986ea49aab83308e1b17e9cfdf3990da1ac050b8f0938d1592366504f"
+    },
+    "index.html": {
+      "git_blob_sha256": "5331fb90028ff5f64a443714f4dd9b8ba1da616890fdebab5b416b305b4fef4c",
+      "reviewed_checkout_sha256": "b545b7460ab7e300746cddc088b6ed21b78cae719cfed8d6cc311071c10cf14f"
+    },
+    "trace.jsonl": {
+      "git_blob_sha256": "123201a1e7adf9a0312c5db140ed48d37c969f87433da2056e01b41ff3c39600",
+      "reviewed_checkout_sha256": "7d753622d94c7a23b572ed0fa136c17df9fb1ca193fb68f3edc98e41abe1c35b"
+    }
+  },
+  "hash_note": "Git blobs use LF; this Windows checkout uses CRLF. Files were unchanged throughout review.",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "trace_summary": {
+    "final_result": "success",
+    "requests": 1,
+    "prompt_tokens": 3674,
+    "completion_tokens": 2727,
+    "reasoning_tokens": 0,
+    "total_tokens": 6401,
+    "reserved_completion_tokens": 8000,
+    "elapsed_seconds": 14.327,
+    "CLI_browser_review": "skipped",
+    "CLI_independent_science": "skipped"
+  },
+  "identity": {
+    "embedded_spec_matches_saved_json": true,
+    "embedded_compiled_AST_matches_saved_computations": true,
+    "embedded_math_core_matches_reviewed_checkout": true,
+    "embedded_UI_matches_pre_integration_commit": "3bcb827",
+    "new_UI_from_6512a95_is_embedded": false
+  },
+  "numerical_core_observations": [
+    {
+      "state": {
+        "weights": [
+          1,
+          1,
+          1
+        ],
+        "scale": 1
+      },
+      "ok": true,
+      "outputs": {
+        "scaled_weights": [
+          1,
+          1,
+          1
+        ],
+        "total_weight": 3,
+        "probabilities": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "entropy": 1.584962500721156,
+        "max_entropy": 1.584962500721156
+      },
+      "expected": {
+        "probabilities": [
+          0.3333333333333333,
+          0.3333333333333333,
+          0.3333333333333333
+        ],
+        "entropy": 1.584962500721156,
+        "max_entropy": 1.584962500721156
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "weights": [
+          1,
+          0,
+          0
+        ],
+        "scale": 1
+      },
+      "ok": true,
+      "outputs": {
+        "scaled_weights": [
+          1,
+          0,
+          0
+        ],
+        "total_weight": 1,
+        "probabilities": [
+          1,
+          0,
+          0
+        ],
+        "entropy": 0,
+        "max_entropy": 1.584962500721156
+      },
+      "expected": {
+        "probabilities": [
+          1.0,
+          0.0,
+          0.0
+        ],
+        "entropy": -0.0,
+        "max_entropy": 1.584962500721156
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "weights": [
+          1,
+          1,
+          0
+        ],
+        "scale": 1
+      },
+      "ok": true,
+      "outputs": {
+        "scaled_weights": [
+          1,
+          1,
+          0
+        ],
+        "total_weight": 2,
+        "probabilities": [
+          0.5,
+          0.5,
+          0
+        ],
+        "entropy": 1,
+        "max_entropy": 1.584962500721156
+      },
+      "expected": {
+        "probabilities": [
+          0.5,
+          0.5,
+          0.0
+        ],
+        "entropy": 1.0,
+        "max_entropy": 1.584962500721156
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "weights": [
+          1,
+          3,
+          0
+        ],
+        "scale": 1
+      },
+      "ok": true,
+      "outputs": {
+        "scaled_weights": [
+          1,
+          3,
+          0
+        ],
+        "total_weight": 4,
+        "probabilities": [
+          0.25,
+          0.75,
+          0
+        ],
+        "entropy": 0.8112781244591328,
+        "max_entropy": 1.584962500721156
+      },
+      "expected": {
+        "probabilities": [
+          0.25,
+          0.75,
+          0.0
+        ],
+        "entropy": 0.8112781244591328,
+        "max_entropy": 1.584962500721156
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "weights": [
+          0,
+          1,
+          3
+        ],
+        "scale": 1
+      },
+      "ok": true,
+      "outputs": {
+        "scaled_weights": [
+          0,
+          1,
+          3
+        ],
+        "total_weight": 4,
+        "probabilities": [
+          0,
+          0.25,
+          0.75
+        ],
+        "entropy": 0.8112781244591328,
+        "max_entropy": 1.584962500721156
+      },
+      "expected": {
+        "probabilities": [
+          0.0,
+          0.25,
+          0.75
+        ],
+        "entropy": 0.8112781244591328,
+        "max_entropy": 1.584962500721156
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "weights": [
+          1,
+          3,
+          0
+        ],
+        "scale": 0.1
+      },
+      "ok": true,
+      "outputs": {
+        "scaled_weights": [
+          0.1,
+          0.30000000000000004,
+          0
+        ],
+        "total_weight": 0.4,
+        "probabilities": [
+          0.25,
+          0.7500000000000001,
+          0
+        ],
+        "entropy": 0.8112781244591327,
+        "max_entropy": 1.584962500721156
+      },
+      "expected": {
+        "probabilities": [
+          0.25,
+          0.75,
+          0.0
+        ],
+        "entropy": 0.8112781244591328,
+        "max_entropy": 1.584962500721156
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "weights": [
+          1,
+          3,
+          0
+        ],
+        "scale": 10
+      },
+      "ok": true,
+      "outputs": {
+        "scaled_weights": [
+          10,
+          30,
+          0
+        ],
+        "total_weight": 40,
+        "probabilities": [
+          0.25,
+          0.75,
+          0
+        ],
+        "entropy": 0.8112781244591328,
+        "max_entropy": 1.584962500721156
+      },
+      "expected": {
+        "probabilities": [
+          0.25,
+          0.75,
+          0.0
+        ],
+        "entropy": 0.8112781244591328,
+        "max_entropy": 1.584962500721156
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "weights": [
+          0,
+          0,
+          0
+        ],
+        "scale": 1
+      },
+      "ok": false,
+      "error": "Probabilities: A calculation produced a non-finite number or invalid value."
+    },
+    {
+      "state": {
+        "weights": [
+          -1,
+          2,
+          0
+        ],
+        "scale": 1
+      },
+      "ok": false,
+      "error": "Weights: array value is outside the allowed bounds."
+    },
+    {
+      "state": {
+        "weights": [
+          1,
+          1
+        ],
+        "scale": 1
+      },
+      "ok": false,
+      "error": "Weights: vector length is outside the allowed bounds."
+    },
+    {
+      "state": {
+        "weights": [
+          1,
+          1,
+          1,
+          0
+        ],
+        "scale": 1
+      },
+      "ok": false,
+      "error": "Weights: vector length is outside the allowed bounds."
+    }
+  ],
+  "browser": {
+    "implementation": "Codex in-app Chromium",
+    "version": "not reported",
+    "atol": 5e-06,
+    "rtol": 5e-06,
+    "observations": [
+      {
+        "action": "initial page",
+        "inputs": {
+          "weights_text": "[1, 1, 1]",
+          "scale": 1.0
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            1,
+            1,
+            1
+          ],
+          "scale": 1.0
+        },
+        "expected": {
+          "scaled_weights": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "total_weight": 3.0,
+          "probabilities": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "entropy": 1.584962500721156,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 1.58496,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            0.333333,
+            0.333333,
+            0.333333
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            1
+          ],
+          "total_weight": 3
+        },
+        "status": "passed"
+      },
+      {
+        "action": "edit weights",
+        "inputs": {
+          "weights_text": "[1,0,0]",
+          "scale": 1.0
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            1,
+            0,
+            0
+          ],
+          "scale": 1.0
+        },
+        "expected": {
+          "scaled_weights": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "total_weight": 1.0,
+          "probabilities": [
+            1.0,
+            0.0,
+            0.0
+          ],
+          "entropy": -0.0,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 0,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            1,
+            0,
+            0
+          ],
+          "scaled_weights": [
+            1,
+            0,
+            0
+          ],
+          "total_weight": 1
+        },
+        "status": "passed"
+      },
+      {
+        "action": "edit weights",
+        "inputs": {
+          "weights_text": "[1,1,0]",
+          "scale": 1.0
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            1,
+            1,
+            0
+          ],
+          "scale": 1.0
+        },
+        "expected": {
+          "scaled_weights": [
+            1.0,
+            1.0,
+            0.0
+          ],
+          "total_weight": 2.0,
+          "probabilities": [
+            0.5,
+            0.5,
+            0.0
+          ],
+          "entropy": 1.0,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 1,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            0.5,
+            0.5,
+            0
+          ],
+          "scaled_weights": [
+            1,
+            1,
+            0
+          ],
+          "total_weight": 2
+        },
+        "status": "passed"
+      },
+      {
+        "action": "edit weights",
+        "inputs": {
+          "weights_text": "[1,3,0]",
+          "scale": 1.0
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            1,
+            3,
+            0
+          ],
+          "scale": 1.0
+        },
+        "expected": {
+          "scaled_weights": [
+            1.0,
+            3.0,
+            0.0
+          ],
+          "total_weight": 4.0,
+          "probabilities": [
+            0.25,
+            0.75,
+            0.0
+          ],
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 0.811278,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            0.25,
+            0.75,
+            0
+          ],
+          "scaled_weights": [
+            1,
+            3,
+            0
+          ],
+          "total_weight": 4
+        },
+        "status": "passed"
+      },
+      {
+        "action": "edit weights",
+        "inputs": {
+          "weights_text": "[0,1,3]",
+          "scale": 1.0
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            0,
+            1,
+            3
+          ],
+          "scale": 1.0
+        },
+        "expected": {
+          "scaled_weights": [
+            0.0,
+            1.0,
+            3.0
+          ],
+          "total_weight": 4.0,
+          "probabilities": [
+            0.0,
+            0.25,
+            0.75
+          ],
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 0.811278,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            0,
+            0.25,
+            0.75
+          ],
+          "scaled_weights": [
+            0,
+            1,
+            3
+          ],
+          "total_weight": 4
+        },
+        "status": "passed"
+      },
+      {
+        "action": "scale Home",
+        "inputs": {
+          "weights_text": "[1,3,0]",
+          "scale": 0.1
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            1,
+            3,
+            0
+          ],
+          "scale": 0.1
+        },
+        "expected": {
+          "scaled_weights": [
+            0.1,
+            0.30000000000000004,
+            0.0
+          ],
+          "total_weight": 0.4,
+          "probabilities": [
+            0.25,
+            0.75,
+            0.0
+          ],
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 0.811278,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            0.25,
+            0.75,
+            0
+          ],
+          "scaled_weights": [
+            0.1,
+            0.3,
+            0
+          ],
+          "total_weight": 0.4
+        },
+        "status": "passed"
+      },
+      {
+        "action": "scale End",
+        "inputs": {
+          "weights_text": "[1,3,0]",
+          "scale": 10.0
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            1,
+            3,
+            0
+          ],
+          "scale": 10.0
+        },
+        "expected": {
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0
+          ],
+          "total_weight": 40.0,
+          "probabilities": [
+            0.25,
+            0.75,
+            0.0
+          ],
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 0.811278,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            0.25,
+            0.75,
+            0
+          ],
+          "scaled_weights": [
+            10,
+            30,
+            0
+          ],
+          "total_weight": 40
+        },
+        "status": "passed"
+      },
+      {
+        "action": "invalid weights",
+        "inputs": {
+          "weights_text": "[0,0,0]",
+          "scale": 10.0
+        },
+        "status_message": "Cannot calculate: Probabilities: A calculation produced a non-finite number or invalid value.",
+        "svg_count": 0,
+        "state": {
+          "weights": [
+            0,
+            0,
+            0
+          ],
+          "scale": 10.0
+        },
+        "expected": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "observed": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "invalid weights",
+        "inputs": {
+          "weights_text": "[-1,2,0]",
+          "scale": 10.0
+        },
+        "status_message": "Cannot calculate: Weights: array value is outside the allowed bounds.",
+        "svg_count": 0,
+        "state": {
+          "weights": [
+            -1,
+            2,
+            0
+          ],
+          "scale": 10.0
+        },
+        "expected": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "observed": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "invalid weights",
+        "inputs": {
+          "weights_text": "[101,1,0]",
+          "scale": 10.0
+        },
+        "status_message": "Cannot calculate: Weights: array value is outside the allowed bounds.",
+        "svg_count": 0,
+        "state": {
+          "weights": [
+            101,
+            1,
+            0
+          ],
+          "scale": 10.0
+        },
+        "expected": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "observed": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "invalid weights",
+        "inputs": {
+          "weights_text": "[1,1]",
+          "scale": 10.0
+        },
+        "status_message": "Cannot calculate: Weights: vector length is outside the allowed bounds.",
+        "svg_count": 0,
+        "state": {
+          "weights": [
+            1,
+            1
+          ],
+          "scale": 10.0
+        },
+        "expected": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "observed": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "invalid weights",
+        "inputs": {
+          "weights_text": "[1,1,1,0]",
+          "scale": 10.0
+        },
+        "status_message": "Cannot calculate: Weights: vector length is outside the allowed bounds.",
+        "svg_count": 0,
+        "state": {
+          "weights": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "scale": 10.0
+        },
+        "expected": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "observed": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "invalid weights",
+        "inputs": {
+          "weights_text": "[[1,1,1]]",
+          "scale": 10.0
+        },
+        "status_message": "Cannot calculate: Weights: vector length is outside the allowed bounds.",
+        "svg_count": 0,
+        "state": {
+          "weights": [
+            [
+              1,
+              1,
+              1
+            ]
+          ],
+          "scale": 10.0
+        },
+        "expected": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "observed": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "invalid weights",
+        "inputs": {
+          "weights_text": "[1,",
+          "scale": 10.0
+        },
+        "status_message": "Cannot calculate: Weights: invalid JSON array.",
+        "svg_count": 0,
+        "state": null,
+        "expected": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "observed": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "invalid weights",
+        "inputs": {
+          "weights_text": "",
+          "scale": 10.0
+        },
+        "status_message": "Cannot calculate: Weights: invalid JSON array.",
+        "svg_count": 0,
+        "state": null,
+        "expected": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "observed": {
+          "visible_error": true,
+          "cleared_values": true,
+          "svg_count": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "recover valid weights without reload",
+        "inputs": {
+          "weights_text": "[1,3,0]",
+          "scale": 10.0
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            1,
+            3,
+            0
+          ],
+          "scale": 10.0
+        },
+        "expected": {
+          "scaled_weights": [
+            10.0,
+            30.0,
+            0.0
+          ],
+          "total_weight": 40.0,
+          "probabilities": [
+            0.25,
+            0.75,
+            0.0
+          ],
+          "entropy": 0.8112781244591328,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 0.811278,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            0.25,
+            0.75,
+            0
+          ],
+          "scaled_weights": [
+            10,
+            30,
+            0
+          ],
+          "total_weight": 40
+        },
+        "status": "passed"
+      },
+      {
+        "action": "legal maximum weight entries",
+        "inputs": {
+          "weights_text": "[100,100,100]",
+          "scale": 1.0
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "state": {
+          "weights": [
+            100,
+            100,
+            100
+          ],
+          "scale": 1.0
+        },
+        "expected": {
+          "scaled_weights": [
+            100.0,
+            100.0,
+            100.0
+          ],
+          "total_weight": 300.0,
+          "probabilities": [
+            0.3333333333333333,
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "entropy": 1.584962500721156,
+          "max_entropy": 1.584962500721156
+        },
+        "observed": {
+          "entropy": 1.58496,
+          "max_entropy": 1.58496,
+          "probabilities": [
+            0.333333,
+            0.333333,
+            0.333333
+          ],
+          "scaled_weights": [
+            100,
+            100,
+            100
+          ],
+          "total_weight": 300
+        },
+        "status": "passed"
+      }
+    ],
+    "console_warnings_errors": [],
+    "disclosures": "All five calculation/evidence disclosures opened and closed successfully.",
+    "layout": {
+      "requested_desktop": [
+        1280,
+        900
+      ],
+      "observed_desktop": [
+        1164,
+        818
+      ],
+      "requested_narrow": [
+        390,
+        844
+      ],
+      "observed_narrow": [
+        355,
+        767
+      ],
+      "horizontal_overflow": false,
+      "scope": "Control layout and visible results reviewed; viewport override reset."
+    }
+  },
+  "offline": {
+    "status": "user_reported_pass",
+    "network": "disconnected",
+    "navigation": "file://",
+    "file": "examples/generated/entropy-v1/index.html",
+    "html_checkout_sha256": "b545b7460ab7e300746cddc088b6ed21b78cae719cfed8d6cc311071c10cf14f",
+    "browser": "Chromium; version not supplied",
+    "before": {
+      "weights": [
+        1,
+        1,
+        1
+      ],
+      "scale": 1,
+      "entropy_display": 1.58496
+    },
+    "after": {
+      "weights": [
+        1,
+        3,
+        0
+      ],
+      "scale": 1,
+      "entropy_display": 0.811278
+    },
+    "attribution": "User confirmed the specified network-disconnected direct-file check in this chat."
+  },
+  "findings": [
+    {
+      "id": "entropy-v1-resize",
+      "priority": 1,
+      "status": "open",
+      "finding": "Weights have min_items=max_items=3. Two- and four-entry edits fail, and no add/remove capability exists. The common scale changes intermediate weights/total but preserves probabilities, entropy and Hmax; it does not demonstrate changing outcome count.",
+      "action": "Generate a lesson with bounded outcome resizing and a meaningful count-dependent readout; preserve these expected values."
+    },
+    {
+      "id": "entropy-v1-provenance",
+      "priority": 1,
+      "status": "open",
+      "finding": "entropy_formula and zero_contribution evidence quote authored equation-transcription text from the input as source quotation. Weight normalization is tagged source_supported but is an authored parameterization. zero_contribution points to entropy property 2, which is the uniform maximum statement.",
+      "action": "Keep transcription and derived teaching claims distinct from exact original quotations, correct locators, and provide actual source support for Hmax."
+    },
+    {
+      "id": "entropy-v1-old-ui",
+      "priority": 1,
+      "status": "open",
+      "finding": "Published HTML embeds the earlier runtime and a JSON textarea. It lacks numeric cell editors and ignores supplied Outcome 1/2/3 labels in favor of chart indices 0/1/2. New UI commit 6512a95 cannot be certified using this page.",
+      "action": "Publish a new immutable package from the integrated generation pipeline and repeat every browser control check."
+    },
+    {
+      "id": "entropy-v1-coding-claim",
+      "priority": 2,
+      "status": "open",
+      "finding": "The source-coding statement in why_it_matters omits memoryless/lossless assumptions and is outside the supplied 229-character excerpt. Single-symbol entropy alone does not set a universal compression bound for sources with memory.",
+      "action": "Qualify the teaching statement for lossless coding of independent draws, or omit it from this focused lesson."
+    }
+  ],
+  "remaining_packages": [
+    "attention",
+    "enzyme_kinetics",
+    "logistic_map"
+  ],
+  "limitations": [
+    "No accepted fresh showcase yet.",
+    "Fresh integrated matrix cells, checkbox and resizing not yet reviewed.",
+    "User-reported offline result is for this exact v1 candidate; repeat if the release HTML changes.",
+    "P2 tests used Python 3.12; required Python 3.11 release validation remains with P1."
+  ]
+}
