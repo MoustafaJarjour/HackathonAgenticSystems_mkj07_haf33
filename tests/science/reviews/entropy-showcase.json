@@ -7398,5 +7398,12 @@
   "valid_total": 132,
   "invalid_passed": 8,
   "invalid_total": 8,
-  "independent_expected_value_basis": "Separate Python development oracles and analytically derived states; not generated lesson checks."
+  "independent_expected_value_basis": "Separate Python development oracles and analytically derived states; not generated lesson checks.",
+  "title_only_revision": {
+    "lesson": "examples/generated/entropy-polished/lesson.json",
+    "sha256": "25e9afc90591e2d60ced023a22a26948efbc802b12f088f093de630890c776a7",
+    "view_id": "scaled_bars",
+    "title": "Scaled weights c*w_i (same probabilities, total multiplied by c)",
+    "source": "Traced live model repair of P2 non-blocking title finding; all other fields identical. No additional browser review claimed."
+  }
 }

@@ -1,6 +1,7 @@
 """Replay independent review states against unchanged generated showcase files."""
 import hashlib
 import json
+import copy
 from pathlib import Path
 
 from src.renderer import render
@@ -40,6 +41,22 @@ def check_report(path):
     if valid != report["valid_total"] or invalid != report["invalid_total"]:
         raise ValueError("Review case counts disagree.")
     print(f"{lesson_path.parent.name}: {valid} independent states, {invalid} invalid rejections passed")
+    revision = report.get("title_only_revision")
+    if revision:
+        revised_path = Path(revision["lesson"])
+        revised_raw = revised_path.read_bytes()
+        if hashlib.sha256(revised_raw).hexdigest() != revision["sha256"]:
+            raise ValueError("Title revision hash changed.")
+        revised = json.loads(revised_raw)
+        expected_revision = copy.deepcopy(spec)
+        next(view for view in expected_revision["visualizations"]
+             if view["id"] == revision["view_id"])["title"] = revision["title"]
+        if revised != expected_revision:
+            raise ValueError("Title revision changed other reviewed fields.")
+        revised_compiled, _ = validate_spec(revised, case["excerpt"], case["source_url"])
+        if revised_compiled != compiled or render(revised, compiled) != (revised_path.parent / "index.html").read_text():
+            raise ValueError("Title revision changed compiled math or rendered assets.")
+        print(f"{revised_path.parent.name}: exact title-only change verified; reviewed math/controls preserved")
 
 
 def main():

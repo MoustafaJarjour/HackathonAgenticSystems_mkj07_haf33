@@ -1,0 +1,317 @@
+{
+  "schema_version": 2,
+  "title": "Entropy in Bits from Editable Outcome Weights",
+  "concept_summary": "Entropy H measures the average uncertainty of a probability distribution over n outcomes. Given nonnegative weights w_i with positive total, we form probabilities p_i = w_i / sum(w) and compute H = -sum(p_i * log2(p_i)) in bits. H vanishes only when one outcome is certain, is positive otherwise, and for fixed n reaches its maximum log2(n) when all p_i are equal. Appending a zero weight adds an impossible outcome: it leaves H unchanged but raises the achievable maximum log2(n). Multiplying all weights by a positive common scale leaves the probabilities and H unchanged.",
+  "why_it_matters": "Entropy quantifies how many bits of choice or uncertainty a source has, which underlies data compression, channel capacity, and coding limits. Understanding that H depends only on the normalized probabilities, not on the raw weights or their scale, and that adding impossible outcomes changes the ceiling but not the current uncertainty, prevents common modeling errors when designing or analyzing communication systems.",
+  "explanation_steps": [
+    {
+      "heading": "From weights to probabilities",
+      "body": "The source defines H over probabilities p_i with sum(p_i)=1. To let you edit raw nonnegative weights, we normalize: p_i = w_i / sum(w), which requires a positive total. This division is a teaching input construction, not a quoted step. The entropy formula itself is the source's Theorem 2 in base-2 units.",
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "theorem2",
+        "sum_p_one"
+      ]
+    },
+    {
+      "heading": "Certainty and the uniform maximum",
+      "body": "If one outcome has all the probability, every term p_i*log2(p_i) is zero, so H = 0: only certainty makes H vanish, otherwise H is positive. For a fixed number of outcomes n, H is largest, equal to log2(n), when all p_i are equal. Both statements are source-supported properties.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "certainty",
+        "uniform_max"
+      ]
+    },
+    {
+      "heading": "Zero weights and common scaling",
+      "body": "A zero weight gives p_i = 0; by the continuity convention the term 0*log2(0) contributes zero, so appending a zero weight leaves H unchanged while raising the maximum log2(n). Multiplying every weight by the same positive factor c cancels in p_i = w_i/sum(w), so the probabilities and H are unchanged, while the scaled weights c*w_i and scaled total c*sum(w) both grow by the factor c. The zero-term convention and the scaling argument are teaching constructions.",
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "theorem2"
+      ]
+    }
+  ],
+  "terms": [
+    {
+      "symbol": "w_i",
+      "meaning": "Nonnegative editable outcome weight; raw input before normalization."
+    },
+    {
+      "symbol": "p_i",
+      "meaning": "Probability of outcome i, computed as w_i divided by the total of all weights."
+    },
+    {
+      "symbol": "n",
+      "meaning": "Number of outcomes, equal to length(w); grows when the vector is resized."
+    },
+    {
+      "symbol": "H",
+      "meaning": "Entropy in bits, H = -sum(p_i * log2(p_i))."
+    },
+    {
+      "symbol": "log2(n)",
+      "meaning": "Maximum possible entropy for n outcomes, attained when all p_i are equal."
+    },
+    {
+      "symbol": "c",
+      "meaning": "Positive common scale factor applied to every weight; cancels during normalization."
+    }
+  ],
+  "equations": [
+    {
+      "expression": "H = -sum(p_i * log2(p_i))",
+      "explanation": "Theorem 2 transcribed with base-2 units and equation-symbol spacing; p_i are probabilities summing to one.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "theorem2"
+      ]
+    },
+    {
+      "expression": "sum(p_i) = 1",
+      "explanation": "Normalization condition on the probabilities appearing in Theorem 2.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "sum_p_one"
+      ]
+    },
+    {
+      "expression": "p_i = w_i / sum(w)",
+      "explanation": "Teaching input construction: divide nonnegative weights by their positive total to obtain probabilities.",
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "expression": "0 * log2(0) := 0",
+      "explanation": "Teaching convention derived by continuity: a zero-probability term contributes zero rather than evaluating log2(0).",
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    }
+  ],
+  "controls": [
+    {
+      "id": "weights",
+      "label": "Outcome weights w",
+      "meaning": "Editable nonnegative weights; resize from 2 to 6 outcomes, appending zeros. Probabilities are w_i/sum(w).",
+      "kind": "array",
+      "default": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": 0,
+      "max": 1000000,
+      "min_items": 2,
+      "max_items": 6
+    },
+    {
+      "id": "scale",
+      "label": "Common scale factor c",
+      "meaning": "Positive factor multiplying every weight; probabilities and H are unchanged, scaled weights and total grow by c.",
+      "kind": "range",
+      "default": 1,
+      "min": 0.1,
+      "max": 10,
+      "step": 0.1
+    }
+  ],
+  "computations": [
+    {
+      "id": "total",
+      "label": "Total of weights",
+      "expression": "sum(weights)",
+      "unit": "weight units",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "probs",
+      "label": "Probabilities p_i",
+      "expression": "weights / sum(weights)",
+      "unit": "probability",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "scaled_weights",
+      "label": "Scaled weights c*w_i",
+      "expression": "scale * weights",
+      "unit": "weight units",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "scaled_total",
+      "label": "Scaled total c*sum(w)",
+      "expression": "scale * sum(weights)",
+      "unit": "weight units",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "entropy",
+      "label": "Entropy H in bits",
+      "expression": "-sum(xlogx(weights / sum(weights)))",
+      "unit": "bits",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "theorem2"
+      ]
+    },
+    {
+      "id": "max_entropy",
+      "label": "Maximum log2(n)",
+      "expression": "log2(length(weights))",
+      "unit": "bits",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "uniform_max"
+      ]
+    }
+  ],
+  "visualizations": [
+    {
+      "id": "prob_bars",
+      "kind": "bars",
+      "title": "Probabilities p_i = w_i / sum(w)",
+      "source": "probs",
+      "x_label": "Outcome index",
+      "y_label": "Probability",
+      "value_label": "p_i"
+    },
+    {
+      "id": "scaled_bars",
+      "kind": "bars",
+      "title": "Scaled weights c*w_i (same probabilities, total multiplied by c)",
+      "source": "scaled_weights",
+      "x_label": "Outcome index",
+      "y_label": "Scaled weight",
+      "value_label": "c*w_i"
+    }
+  ],
+  "explorations": [
+    {
+      "change": "Set weights to [1,1,1,1] and read H; then resize to 5 outcomes (appending a zero) and read H again.",
+      "observe": "H stays at 2 bits while log2(n) rises from 2 to about 2.322 bits.",
+      "why": "A zero weight gives p_i = 0, whose entropy term is zero by the continuity convention, so H is unchanged; but the uniform maximum log2(n) grows with n."
+    },
+    {
+      "change": "Set weights to [1,1,1,1] and slide the common scale c from 1 to 10.",
+      "observe": "The scaled weights and scaled total grow tenfold, but the probability bars and H remain identical.",
+      "why": "The factor c cancels in p_i = w_i/sum(w), so normalization makes entropy invariant to a positive common scale."
+    }
+  ],
+  "limitations": [
+    "This is a toy calculator over user-entered weights, not a reproduction of any experimental measurement.",
+    "The zero-term convention 0*log2(0)=0 and the weight-normalization step are teaching constructions, not quoted from the paper.",
+    "Only nonnegative weights with a positive total are valid; a zero total would make p_i undefined.",
+    "The demo covers at most 6 outcomes and does not model source coding or channel capacity.",
+    "Entropy values are computed from the entered weights only; no external data or fitted parameters are used."
+  ],
+  "grounding": {
+    "paper_title": "A Mathematical Theory of Communication",
+    "source_url": "https://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf",
+    "source_claims": [
+      {
+        "id": "theorem2",
+        "claim": "Entropy in base-2 units is H = -sum(p_i * log2(p_i)) over probabilities.",
+        "locator": "Section 6, Theorem 2, printed pages 10-11; equation-symbol spacing transcribed",
+        "quote": "H = -sum(p_i * log2(p_i))"
+      },
+      {
+        "id": "sum_p_one",
+        "claim": "The p_i are probabilities and sum to one.",
+        "locator": "Section 6, Theorem 2, printed pages 10-11; symbol spacing transcribed",
+        "quote": "sum(p_i)=1"
+      },
+      {
+        "id": "certainty",
+        "claim": "H vanishes only when the outcome is certain; otherwise H is positive.",
+        "locator": "Section 6, properties 1-2, printed pages 10-11",
+        "quote": "Thus only when we are certain of the outcome does H vanish. Otherwise H is positive."
+      },
+      {
+        "id": "uniform_max",
+        "claim": "For fixed n, H is maximized at log n when all p_i are equal.",
+        "locator": "Section 6, properties 1-2, printed pages 10-11",
+        "quote": "For a given n, H is a maximum and equal to log n when all the p_i are equal."
+      }
+    ],
+    "teaching_simplifications": [
+      "Weight normalization p_i = w_i/sum(w) is a derived input construction, not quoted from the paper.",
+      "The zero-probability convention 0*log2(0)=0 is derived by continuity, not stated in the excerpt.",
+      "The common scale factor c and its invariance demonstration are teaching additions.",
+      "The resizable 2-to-6 outcome vector and appending zeros are interface choices, not source content."
+    ]
+  },
+  "checks": [
+    {
+      "id": "uniform_four",
+      "name": "Uniform four outcomes gives H = 2 bits",
+      "state": {
+        "weights": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scale": 1
+      },
+      "expected": {
+        "entropy": 2,
+        "max_entropy": 2,
+        "total": 4,
+        "scaled_total": 4
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    },
+    {
+      "id": "certainty_case",
+      "name": "Certain outcome gives H = 0",
+      "state": {
+        "weights": [
+          1,
+          0,
+          0
+        ],
+        "scale": 1
+      },
+      "expected": {
+        "entropy": 0,
+        "max_entropy": 1.584962500721156,
+        "total": 1,
+        "scaled_total": 1
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    },
+    {
+      "id": "scale_invariance",
+      "name": "Common scale leaves H unchanged",
+      "state": {
+        "weights": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "scale": 10
+      },
+      "expected": {
+        "entropy": 2,
+        "max_entropy": 2,
+        "total": 4,
+        "scaled_total": 40
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    }
+  ]
+}

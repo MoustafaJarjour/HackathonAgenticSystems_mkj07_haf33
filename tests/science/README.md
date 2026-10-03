@@ -54,3 +54,5 @@ Separate saved-candidate live model repairs were subsequently reviewed at commit
 ## Final generated-package checks
 
 `python -m tests.science.check_generated` replays the recorded independent expected values in `reviews/*-showcase.json` against unchanged saved final lessons. It checks source structure, offline HTML structure, exact lesson SHA-256, 607 legal numerical states and 25 invalid-state rejections. Expectations use the separate Shannon, scaled-attention and Michaelis-Menten development references and analytically constructed states. These references are not used in production generation. Browser behavior and human offline reports remain separate evidence.
+
+P2 also independently reviewed the exact three showcase outputs at `17c2dbd`: 116 numerical checks including invalid states passed. These are separate review samples and are not added to the 607 legal-state count as if all states were unique. The P2 run used Python 3.12; the submitted suite and recorded-state replay also passed on P1's clean Python 3.11.15 installation.
