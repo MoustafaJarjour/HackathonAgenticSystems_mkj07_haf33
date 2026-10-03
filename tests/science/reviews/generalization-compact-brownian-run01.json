@@ -1,0 +1,2368 @@
+{
+  "package": "examples/generated/generalization-compact/brownian-run01",
+  "case": "brownian_diffusion",
+  "variant": "compact-json",
+  "partial_lesson": "examples/generated/generalization-compact/brownian-run01/partial.lesson.json",
+  "usable_generated_html": false,
+  "final_lesson_exists": false,
+  "html_exists": false,
+  "unmodified": true,
+  "package_hashes_before": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "6c28bda4ec7597ca3c1479a3443305c66abf0dc24160001f525126a65ddf4b39",
+      "canonical_lf_sha256": "54b9efea499641e905dd5f7a2d4d505d506e807712e76546392a1defe3f8a0f3",
+      "bytes": 15613
+    },
+    "trace.jsonl": {
+      "raw_sha256": "7c76467efb5c1b10c9b02e32c058b56cb9374b4a5b8711c1effd53fa7ee54f80",
+      "canonical_lf_sha256": "7c76467efb5c1b10c9b02e32c058b56cb9374b4a5b8711c1effd53fa7ee54f80",
+      "bytes": 31701
+    }
+  },
+  "package_hashes_after": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "6c28bda4ec7597ca3c1479a3443305c66abf0dc24160001f525126a65ddf4b39",
+      "canonical_lf_sha256": "54b9efea499641e905dd5f7a2d4d505d506e807712e76546392a1defe3f8a0f3",
+      "bytes": 15613
+    },
+    "trace.jsonl": {
+      "raw_sha256": "7c76467efb5c1b10c9b02e32c058b56cb9374b4a5b8711c1effd53fa7ee54f80",
+      "canonical_lf_sha256": "7c76467efb5c1b10c9b02e32c058b56cb9374b4a5b8711c1effd53fa7ee54f80",
+      "bytes": 31701
+    }
+  },
+  "atol": 1e-12,
+  "rtol": 1e-12,
+  "explicit_scientific_control_mapping": {
+    "T": "temp",
+    "eta": "eta",
+    "a": "radius",
+    "t": "time"
+  },
+  "explicit_physical_output_mapping": {
+    "D_um2_per_s": "diffusion",
+    "MSD_um2": "msd",
+    "RMS_x_um": "rms"
+  },
+  "controls": [
+    {
+      "id": "temp",
+      "label": "Absolute temperature T (K)",
+      "meaning": "Temperature of the liquid; D is proportional to T.",
+      "kind": "range",
+      "default": 300,
+      "min": 250,
+      "max": 400,
+      "step": 1
+    },
+    {
+      "id": "eta",
+      "label": "Dynamic viscosity eta (mPa*s)",
+      "meaning": "Viscosity of the liquid; D is inversely proportional to eta.",
+      "kind": "range",
+      "default": 1,
+      "min": 0.1,
+      "max": 5,
+      "step": 0.1
+    },
+    {
+      "id": "radius",
+      "label": "Particle radius a (micrometres)",
+      "meaning": "Radius of the suspended sphere; D is inversely proportional to a.",
+      "kind": "range",
+      "default": 1,
+      "min": 0.1,
+      "max": 5,
+      "step": 0.1
+    },
+    {
+      "id": "time",
+      "label": "Elapsed time t (s)",
+      "meaning": "Observation time; MSD grows linearly and RMS grows as its square root.",
+      "kind": "range",
+      "default": 1,
+      "min": 0,
+      "max": 60,
+      "step": 0.5
+    }
+  ],
+  "valid_total": 60,
+  "valid_passed": 60,
+  "fixture_valid_total": 12,
+  "fixture_valid_passed": 12,
+  "invalid_total": 3,
+  "invalid_passed": 3,
+  "records": [
+    {
+      "id": "default",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 0.43947422604976444,
+        "rms": 0.6629285225797458,
+        "rms_quad_time": 1.3258570451594915,
+        "rms_double_eta": 0.4687612537581175
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 0.43947422604976444,
+          "rms": 0.6629285225797458,
+          "rms_quad_time": 1.3258570451594915,
+          "rms_double_eta": 0.4687612537581175
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "four_times_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 4
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 1.7578969041990578,
+        "rms": 1.3258570451594915,
+        "rms_quad_time": 2.651714090318983,
+        "rms_double_eta": 0.937522507516235
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 1.7578969041990578,
+          "rms": 1.3258570451594915,
+          "rms_quad_time": 2.651714090318983,
+          "rms_double_eta": 0.937522507516235
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "twice_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 2,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 2,
+        "radius": 1,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 0.10986855651244111,
+        "msd": 0.21973711302488222,
+        "rms": 0.4687612537581175,
+        "rms_quad_time": 0.937522507516235,
+        "rms_double_eta": 0.33146426128987283
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.10986855651244111,
+          "msd": 0.21973711302488222,
+          "rms": 0.4687612537581175,
+          "rms_quad_time": 0.937522507516235,
+          "rms_double_eta": 0.3314642612898729
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "twice_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 2,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 2,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 0.10986855651244111,
+        "msd": 0.21973711302488222,
+        "rms": 0.4687612537581175,
+        "rms_quad_time": 0.937522507516235,
+        "rms_double_eta": 0.33146426128987283
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.10986855651244111,
+          "msd": 0.21973711302488222,
+          "rms": 0.4687612537581175,
+          "rms_quad_time": 0.937522507516235,
+          "rms_double_eta": 0.3314642612898729
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "higher_temperature",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 400,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 400,
+        "eta": 1,
+        "radius": 1,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 0.29298281736650966,
+        "msd": 0.5859656347330193,
+        "rms": 0.7654839219297942,
+        "rms_quad_time": 1.5309678438595884,
+        "rms_double_eta": 0.5412788720858311
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.2929828173665096,
+          "msd": 0.5859656347330192,
+          "rms": 0.7654839219297942,
+          "rms_quad_time": 1.5309678438595884,
+          "rms_double_eta": 0.5412788720858311
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "lower_temperature",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 250,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 250,
+        "eta": 1,
+        "radius": 1,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 0.18311426085406854,
+        "msd": 0.3662285217081371,
+        "rms": 0.605168176384166,
+        "rms_quad_time": 1.210336352768332,
+        "rms_double_eta": 0.42791852127954044
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.1831142608540685,
+          "msd": 0.366228521708137,
+          "rms": 0.605168176384166,
+          "rms_quad_time": 1.210336352768332,
+          "rms_double_eta": 0.42791852127954044
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 0,
+        "rms": 0,
+        "rms_quad_time": 0,
+        "rms_double_eta": 0.0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 0,
+          "rms": 0,
+          "rms_quad_time": 0,
+          "rms_double_eta": 0
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "max_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 60
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 26.368453562985867,
+        "rms": 5.135022255354485,
+        "rms_quad_time": 10.27004451070897,
+        "rms_double_eta": 3.6310090583049957
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 26.368453562985867,
+          "rms": 5.135022255354485,
+          "rms_quad_time": 10.27004451070897,
+          "rms_double_eta": 3.631009058304996
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "minimum_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 0.1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 0.1,
+        "radius": 1,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 2.1973711302488224,
+        "msd": 4.394742260497645,
+        "rms": 2.096364057242359,
+        "rms_quad_time": 4.192728114484718,
+        "rms_double_eta": 1.4823532407118158
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 2.1973711302488224,
+          "msd": 4.394742260497645,
+          "rms": 2.096364057242359,
+          "rms_quad_time": 4.192728114484718,
+          "rms_double_eta": 1.4823532407118158
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "minimum_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 0.1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 0.1,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 2.1973711302488224,
+        "msd": 4.394742260497645,
+        "rms": 2.096364057242359,
+        "rms_quad_time": 4.192728114484718,
+        "rms_double_eta": 1.4823532407118158
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 2.1973711302488224,
+          "msd": 4.394742260497645,
+          "rms": 2.096364057242359,
+          "rms_quad_time": 4.192728114484718,
+          "rms_double_eta": 1.4823532407118158
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "maximum_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 5,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 5,
+        "radius": 1,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 0.04394742260497644,
+        "msd": 0.08789484520995287,
+        "rms": 0.2964706481423631,
+        "rms_quad_time": 0.5929412962847262,
+        "rms_double_eta": 0.20963640572423586
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.043947422604976444,
+          "msd": 0.08789484520995289,
+          "rms": 0.2964706481423631,
+          "rms_quad_time": 0.5929412962847262,
+          "rms_double_eta": 0.2096364057242359
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "maximum_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 5,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 5,
+        "time": 1
+      },
+      "expected": {
+        "diffusion": 0.043947422604976444,
+        "msd": 0.08789484520995289,
+        "rms": 0.2964706481423631,
+        "rms_quad_time": 0.5929412962847262,
+        "rms_double_eta": 0.20963640572423586
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.043947422604976444,
+          "msd": 0.08789484520995289,
+          "rms": 0.2964706481423631,
+          "rms_quad_time": 0.5929412962847262,
+          "rms_double_eta": 0.2096364057242359
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_viscosity",
+      "kind": "invalid_domain",
+      "state": {
+        "temp": 300,
+        "eta": 0,
+        "radius": 1,
+        "time": 1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Dynamic viscosity eta (mPa*s): value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_radius",
+      "kind": "invalid_domain",
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 0,
+        "time": 1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Particle radius a (micrometres): value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "negative_time",
+      "kind": "invalid_domain",
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": -1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Elapsed time t (s): value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "line:0",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 0.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 0.0,
+        "rms": 0.0,
+        "rms_quad_time": 0.0,
+        "rms_double_eta": 0.0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 0,
+          "rms": 0,
+          "rms_quad_time": 0,
+          "rms_double_eta": 0
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:3",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 1.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 0.6592113390746467,
+        "rms": 0.8119183081287469,
+        "rms_quad_time": 1.6238366162574938,
+        "rms_double_eta": 0.5741129414473457
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 0.6592113390746467,
+          "rms": 0.8119183081287469,
+          "rms_quad_time": 1.6238366162574938,
+          "rms_double_eta": 0.5741129414473457
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:5",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 2.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 2.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 1.0986855651244112,
+        "rms": 1.0481820286211796,
+        "rms_quad_time": 2.096364057242359,
+        "rms_double_eta": 0.7411766203559079
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 1.0986855651244112,
+          "rms": 1.0481820286211796,
+          "rms_quad_time": 2.096364057242359,
+          "rms_double_eta": 0.7411766203559079
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:8",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 4.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 1.7578969041990578,
+        "rms": 1.3258570451594915,
+        "rms_quad_time": 2.651714090318983,
+        "rms_double_eta": 0.937522507516235
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 1.7578969041990578,
+          "rms": 1.3258570451594915,
+          "rms_quad_time": 2.651714090318983,
+          "rms_double_eta": 0.937522507516235
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:10",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 5.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 5.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 2.1973711302488224,
+        "rms": 1.4823532407118158,
+        "rms_quad_time": 2.9647064814236317,
+        "rms_double_eta": 1.0481820286211796
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 2.1973711302488224,
+          "rms": 1.4823532407118158,
+          "rms_quad_time": 2.9647064814236317,
+          "rms_double_eta": 1.0481820286211796
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:13",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 6.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 6.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 2.856582469323469,
+        "rms": 1.6901427363756794,
+        "rms_quad_time": 3.3802854727513587,
+        "rms_double_eta": 1.1951113900644301
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 2.856582469323469,
+          "rms": 1.6901427363756794,
+          "rms_quad_time": 3.3802854727513587,
+          "rms_double_eta": 1.1951113900644301
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:15",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 7.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 7.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 3.2960566953732333,
+        "rms": 1.815504529152498,
+        "rms_quad_time": 3.631009058304996,
+        "rms_double_eta": 1.2837555638386213
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 3.2960566953732333,
+          "rms": 1.815504529152498,
+          "rms_quad_time": 3.631009058304996,
+          "rms_double_eta": 1.2837555638386213
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:18",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 9.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 9.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 3.95526803444788,
+        "rms": 1.9887855677392372,
+        "rms_quad_time": 3.9775711354784744,
+        "rms_double_eta": 1.4062837612743524
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 3.95526803444788,
+          "rms": 1.9887855677392372,
+          "rms_quad_time": 3.9775711354784744,
+          "rms_double_eta": 1.4062837612743524
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:20",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 10.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 10.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 4.394742260497645,
+        "rms": 2.096364057242359,
+        "rms_quad_time": 4.192728114484718,
+        "rms_double_eta": 1.4823532407118158
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 4.394742260497645,
+          "rms": 2.096364057242359,
+          "rms_quad_time": 4.192728114484718,
+          "rms_double_eta": 1.4823532407118158
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:23",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 11.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 11.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 5.053953599572291,
+        "rms": 2.248099997680773,
+        "rms_quad_time": 4.496199995361546,
+        "rms_double_eta": 1.5896467531455363
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 5.053953599572291,
+          "rms": 2.248099997680773,
+          "rms_quad_time": 4.496199995361546,
+          "rms_double_eta": 1.5896467531455363
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:26",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 13.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 13.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 5.713164938646938,
+        "rms": 2.3902227801288602,
+        "rms_quad_time": 4.7804455602577205,
+        "rms_double_eta": 1.6901427363756791
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 5.713164938646938,
+          "rms": 2.3902227801288602,
+          "rms_quad_time": 4.7804455602577205,
+          "rms_double_eta": 1.6901427363756794
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:28",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 14.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 14.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 6.152639164696702,
+        "rms": 2.480451403413641,
+        "rms_quad_time": 4.960902806827282,
+        "rms_double_eta": 1.7539440077574742
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 6.152639164696702,
+          "rms": 2.480451403413641,
+          "rms_quad_time": 4.960902806827282,
+          "rms_double_eta": 1.7539440077574744
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:31",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 15.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 15.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 6.811850503771349,
+        "rms": 2.6099522033499674,
+        "rms_quad_time": 5.219904406699935,
+        "rms_double_eta": 1.8455149015615329
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 6.811850503771349,
+          "rms": 2.6099522033499674,
+          "rms_quad_time": 5.219904406699935,
+          "rms_double_eta": 1.8455149015615329
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:33",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 16.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 16.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 7.251324729821113,
+        "rms": 2.692828388483216,
+        "rms_quad_time": 5.385656776966432,
+        "rms_double_eta": 1.9041172140681246
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 7.251324729821113,
+          "rms": 2.692828388483216,
+          "rms_quad_time": 5.385656776966432,
+          "rms_double_eta": 1.9041172140681246
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:36",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 18.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 18.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 7.91053606889576,
+        "rms": 2.812567522548705,
+        "rms_quad_time": 5.62513504509741,
+        "rms_double_eta": 1.988785567739237
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 7.91053606889576,
+          "rms": 2.812567522548705,
+          "rms_quad_time": 5.62513504509741,
+          "rms_double_eta": 1.9887855677392372
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:38",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 19.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 19.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 8.350010294945525,
+        "rms": 2.8896384367158334,
+        "rms_quad_time": 5.779276873431667,
+        "rms_double_eta": 2.04328293377906
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 8.350010294945525,
+          "rms": 2.8896384367158334,
+          "rms_quad_time": 5.779276873431667,
+          "rms_double_eta": 2.04328293377906
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:41",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 20.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 20.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 9.009221634020172,
+        "rms": 3.0015365455080123,
+        "rms_quad_time": 6.003073091016025,
+        "rms_double_eta": 2.12240684530796
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 9.009221634020172,
+          "rms": 3.0015365455080123,
+          "rms_quad_time": 6.003073091016025,
+          "rms_double_eta": 2.12240684530796
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:43",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 21.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 21.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 9.448695860069936,
+        "rms": 3.0738731040935856,
+        "rms_quad_time": 6.147746208187171,
+        "rms_double_eta": 2.1735565164115167
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 9.448695860069936,
+          "rms": 3.0738731040935856,
+          "rms_quad_time": 6.147746208187171,
+          "rms_double_eta": 2.1735565164115167
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:46",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 23.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 23.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 10.107907199144583,
+        "rms": 3.1792935062910725,
+        "rms_quad_time": 6.358587012582145,
+        "rms_double_eta": 2.248099997680773
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 10.107907199144583,
+          "rms": 3.1792935062910725,
+          "rms_quad_time": 6.358587012582145,
+          "rms_double_eta": 2.248099997680773
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:49",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 24.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 24.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 10.76711853821923,
+        "rms": 3.2813287763068226,
+        "rms_quad_time": 6.562657552613645,
+        "rms_double_eta": 2.32024982902911
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 10.76711853821923,
+          "rms": 3.2813287763068226,
+          "rms_quad_time": 6.562657552613645,
+          "rms_double_eta": 2.3202498290291103
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:51",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 25.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 25.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 11.206592764268994,
+        "rms": 3.347624943787609,
+        "rms_quad_time": 6.695249887575218,
+        "rms_double_eta": 2.367128298621453
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 11.206592764268994,
+          "rms": 3.347624943787609,
+          "rms_quad_time": 6.695249887575218,
+          "rms_double_eta": 2.3671282986214535
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:54",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 27.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 27.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 11.86580410334364,
+        "rms": 3.444677648684074,
+        "rms_quad_time": 6.889355297368148,
+        "rms_double_eta": 2.43575492438624
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 11.86580410334364,
+          "rms": 3.444677648684074,
+          "rms_quad_time": 6.889355297368148,
+          "rms_double_eta": 2.4357549243862406
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:56",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 28.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 28.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 12.305278329393404,
+        "rms": 3.5078880155149488,
+        "rms_quad_time": 7.0157760310298976,
+        "rms_double_eta": 2.480451403413641
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 12.305278329393404,
+          "rms": 3.5078880155149488,
+          "rms_quad_time": 7.0157760310298976,
+          "rms_double_eta": 2.480451403413641
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:59",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 29.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 29.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 12.964489668468051,
+        "rms": 3.600623511069722,
+        "rms_quad_time": 7.201247022139444,
+        "rms_double_eta": 2.546025301177116
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 12.964489668468051,
+          "rms": 3.600623511069722,
+          "rms_quad_time": 7.201247022139444,
+          "rms_double_eta": 2.5460253011771163
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:61",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 30.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 30.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 13.403963894517815,
+        "rms": 3.661142430241934,
+        "rms_quad_time": 7.322284860483868,
+        "rms_double_eta": 2.588818639313868
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 13.403963894517815,
+          "rms": 3.661142430241934,
+          "rms_quad_time": 7.322284860483868,
+          "rms_double_eta": 2.5888186393138684
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:64",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 32.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 32.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 14.063175233592462,
+        "rms": 3.75009003006494,
+        "rms_quad_time": 7.50018006012988,
+        "rms_double_eta": 2.6517140903189826
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 14.063175233592462,
+          "rms": 3.75009003006494,
+          "rms_quad_time": 7.50018006012988,
+          "rms_double_eta": 2.651714090318983
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:66",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 33.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 33.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 14.502649459642226,
+        "rms": 3.8082344281362492,
+        "rms_quad_time": 7.6164688562724985,
+        "rms_double_eta": 2.6928283884832154
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 14.502649459642226,
+          "rms": 3.8082344281362492,
+          "rms_quad_time": 7.6164688562724985,
+          "rms_double_eta": 2.692828388483216
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:69",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 34.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 34.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 15.161860798716873,
+        "rms": 3.8938234164785737,
+        "rms_quad_time": 7.787646832957147,
+        "rms_double_eta": 2.7533489425349695
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 15.161860798716873,
+          "rms": 3.8938234164785737,
+          "rms_quad_time": 7.787646832957147,
+          "rms_double_eta": 2.75334894253497
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:71",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 35.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 35.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 15.601335024766637,
+        "rms": 3.949852532027827,
+        "rms_quad_time": 7.899705064055654,
+        "rms_double_eta": 2.7929675100837312
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 15.601335024766637,
+          "rms": 3.949852532027827,
+          "rms_quad_time": 7.899705064055654,
+          "rms_double_eta": 2.7929675100837317
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:74",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 37.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 37.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 16.260546363841286,
+        "rms": 4.032436777414035,
+        "rms_quad_time": 8.06487355482807,
+        "rms_double_eta": 2.851363390015493
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 16.260546363841286,
+          "rms": 4.032436777414035,
+          "rms_quad_time": 8.06487355482807,
+          "rms_double_eta": 2.851363390015493
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:77",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 38.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 38.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 16.91975770291593,
+        "rms": 4.113363307916763,
+        "rms_quad_time": 8.226726615833526,
+        "rms_double_eta": 2.9085870885118714
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 16.91975770291593,
+          "rms": 4.113363307916763,
+          "rms_quad_time": 8.226726615833526,
+          "rms_double_eta": 2.9085870885118714
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:79",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 39.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 39.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 17.359231928965695,
+        "rms": 4.166441158706756,
+        "rms_quad_time": 8.332882317413512,
+        "rms_double_eta": 2.9461187967362834
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 17.359231928965695,
+          "rms": 4.166441158706756,
+          "rms_quad_time": 8.332882317413512,
+          "rms_double_eta": 2.9461187967362834
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:82",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 41.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 41.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 18.018443268040343,
+        "rms": 4.24481369061592,
+        "rms_quad_time": 8.48962738123184,
+        "rms_double_eta": 3.0015365455080123
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 18.018443268040343,
+          "rms": 4.24481369061592,
+          "rms_quad_time": 8.48962738123184,
+          "rms_double_eta": 3.0015365455080123
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:84",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 42.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 42.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 18.457917494090108,
+        "rms": 4.296267856417953,
+        "rms_quad_time": 8.592535712835906,
+        "rms_double_eta": 3.0379201350669267
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 18.457917494090108,
+          "rms": 4.296267856417953,
+          "rms_quad_time": 8.592535712835906,
+          "rms_double_eta": 3.0379201350669267
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:87",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 43.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 43.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 19.117128833164752,
+        "rms": 4.372313899203116,
+        "rms_quad_time": 8.744627798406231,
+        "rms_double_eta": 3.0916928076027177
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 19.117128833164752,
+          "rms": 4.372313899203116,
+          "rms_quad_time": 8.744627798406231,
+          "rms_double_eta": 3.0916928076027177
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:89",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 44.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 44.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 19.556603059214517,
+        "rms": 4.422284823393278,
+        "rms_quad_time": 8.844569646786557,
+        "rms_double_eta": 3.127027586959741
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 19.556603059214517,
+          "rms": 4.422284823393278,
+          "rms_quad_time": 8.844569646786557,
+          "rms_double_eta": 3.127027586959741
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:92",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 46.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 46.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 20.215814398289165,
+        "rms": 4.496199995361546,
+        "rms_quad_time": 8.992399990723092,
+        "rms_double_eta": 3.1792935062910725
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 20.215814398289165,
+          "rms": 4.496199995361546,
+          "rms_quad_time": 8.992399990723092,
+          "rms_double_eta": 3.1792935062910725
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:94",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 47.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 47.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 20.65528862433893,
+        "rms": 4.544808975560901,
+        "rms_quad_time": 9.089617951121802,
+        "rms_double_eta": 3.2136652458165993
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 20.65528862433893,
+          "rms": 4.544808975560901,
+          "rms_quad_time": 9.089617951121802,
+          "rms_double_eta": 3.2136652458165993
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:97",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 48.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 48.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 21.314499963413574,
+        "rms": 4.616762931255359,
+        "rms_quad_time": 9.233525862510717,
+        "rms_double_eta": 3.2645443758213464
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 21.314499963413574,
+          "rms": 4.616762931255359,
+          "rms_quad_time": 9.233525862510717,
+          "rms_double_eta": 3.264544375821347
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:100",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 50.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 50.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 21.973711302488223,
+        "rms": 4.687612537581175,
+        "rms_quad_time": 9.37522507516235,
+        "rms_double_eta": 3.3146426128987283
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 21.973711302488223,
+          "rms": 4.687612537581175,
+          "rms_quad_time": 9.37522507516235,
+          "rms_double_eta": 3.3146426128987287
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:102",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 51.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 51.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 22.413185528537987,
+        "rms": 4.734256597242907,
+        "rms_quad_time": 9.468513194485814,
+        "rms_double_eta": 3.347624943787609
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 22.413185528537987,
+          "rms": 4.734256597242907,
+          "rms_quad_time": 9.468513194485814,
+          "rms_double_eta": 3.347624943787609
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:105",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 52.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 52.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 23.072396867612632,
+        "rms": 4.803373488248924,
+        "rms_quad_time": 9.606746976497847,
+        "rms_double_eta": 3.396497966112495
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 23.072396867612632,
+          "rms": 4.803373488248924,
+          "rms_quad_time": 9.606746976497847,
+          "rms_double_eta": 3.396497966112495
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:107",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 53.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 53.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 23.511871093662396,
+        "rms": 4.848904112648794,
+        "rms_quad_time": 9.697808225297589,
+        "rms_double_eta": 3.4286929793773013
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 23.511871093662396,
+          "rms": 4.848904112648794,
+          "rms_quad_time": 9.697808225297589,
+          "rms_double_eta": 3.4286929793773018
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:110",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 55.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 55.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 24.171082432737045,
+        "rms": 4.916409506208473,
+        "rms_quad_time": 9.832819012416946,
+        "rms_double_eta": 3.4764265009300166
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 24.171082432737045,
+          "rms": 4.916409506208473,
+          "rms_quad_time": 9.832819012416946,
+          "rms_double_eta": 3.476426500930017
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:112",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 56.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 56.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 24.61055665878681,
+        "rms": 4.960902806827282,
+        "rms_quad_time": 9.921805613654564,
+        "rms_double_eta": 3.5078880155149483
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 24.61055665878681,
+          "rms": 4.960902806827282,
+          "rms_quad_time": 9.921805613654564,
+          "rms_double_eta": 3.5078880155149488
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:115",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 57.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 57.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 25.269767997861454,
+        "rms": 5.026904415031328,
+        "rms_quad_time": 10.053808830062655,
+        "rms_double_eta": 3.5545582002452463
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 25.269767997861454,
+          "rms": 5.026904415031328,
+          "rms_quad_time": 10.053808830062655,
+          "rms_double_eta": 3.5545582002452467
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:117",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 58.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 58.5
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 25.709242223911218,
+        "rms": 5.070428209127038,
+        "rms_quad_time": 10.140856418254076,
+        "rms_double_eta": 3.58533417019329
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 25.709242223911218,
+          "rms": 5.070428209127038,
+          "rms_quad_time": 10.140856418254076,
+          "rms_double_eta": 3.58533417019329
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:120",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 60.0
+      },
+      "expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 26.368453562985867,
+        "rms": 5.135022255354485,
+        "rms_quad_time": 10.27004451070897,
+        "rms_double_eta": 3.6310090583049957
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 26.368453562985867,
+          "rms": 5.135022255354485,
+          "rms_quad_time": 10.27004451070897,
+          "rms_double_eta": 3.631009058304996
+        }
+      },
+      "passed": true
+    }
+  ],
+  "preserved_generated_checks_review": [
+    {
+      "id": "default_case",
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 1
+      },
+      "preserved_generated_expected": {
+        "diffusion": 0.219744,
+        "msd": 0.439488,
+        "rms": 0.662939
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 0.43947422604976444,
+          "rms": 0.6629285225797458,
+          "rms_quad_time": 1.3258570451594915,
+          "rms_double_eta": 0.4687612537581175
+        }
+      },
+      "independent_physical_expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 0.43947422604976444,
+        "rms": 0.6629285225797458
+      },
+      "saved_expected_agree_with_core": false
+    },
+    {
+      "id": "zero_time_boundary",
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 0
+      },
+      "preserved_generated_expected": {
+        "diffusion": 0.219744,
+        "msd": 0,
+        "rms": 0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 0,
+          "rms": 0,
+          "rms_quad_time": 0,
+          "rms_double_eta": 0
+        }
+      },
+      "independent_physical_expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 0.0,
+        "rms": 0.0
+      },
+      "saved_expected_agree_with_core": false
+    },
+    {
+      "id": "quad_time_scaling",
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "radius": 1,
+        "time": 4
+      },
+      "preserved_generated_expected": {
+        "diffusion": 0.219744,
+        "msd": 1.757952,
+        "rms": 1.325878
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.21973711302488222,
+          "msd": 1.7578969041990578,
+          "rms": 1.3258570451594915,
+          "rms_quad_time": 2.651714090318983,
+          "rms_double_eta": 0.937522507516235
+        }
+      },
+      "independent_physical_expected": {
+        "diffusion": 0.21973711302488222,
+        "msd": 1.7578969041990578,
+        "rms": 1.3258570451594915
+      },
+      "saved_expected_agree_with_core": false
+    },
+    {
+      "id": "double_viscosity",
+      "state": {
+        "temp": 300,
+        "eta": 2,
+        "radius": 1,
+        "time": 1
+      },
+      "preserved_generated_expected": {
+        "diffusion": 0.109872,
+        "msd": 0.219744,
+        "rms": 0.468822
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "diffusion": 0.10986855651244111,
+          "msd": 0.21973711302488222,
+          "rms": 0.4687612537581175,
+          "rms_quad_time": 0.937522507516235,
+          "rms_double_eta": 0.3314642612898729
+        }
+      },
+      "independent_physical_expected": {
+        "diffusion": 0.10986855651244111,
+        "msd": 0.21973711302488222,
+        "rms": 0.4687612537581175
+      },
+      "saved_expected_agree_with_core": false
+    }
+  ],
+  "source_url": "https://sites.pitt.edu/~jdnorton/lectures/Rotman_Summer_School_2013/Einstein_1905_docs/Einstein_Brownian_English.pdf",
+  "findings": [
+    {
+      "severity": "generation_failure",
+      "field": "checks",
+      "finding": "The frozen model-authored values are close but outside their own tolerance: default D .219744 versus independent/executed .21973711302488222; default MSD .439488 versus .43947422604976444; RMS .662939 versus .6629285225797458. Repairs preserve these incorrect cases. CLI correctly rejects and produces no HTML. Unlike baseline, this is inaccurate guessed decimal expectations rather than omission of temperature."
+    },
+    {
+      "severity": "provenance_revision",
+      "field": "grounding.source_claims[id=mean_square_definition].quote",
+      "finding": "Authored excerpt-summary sentence is promoted as primary prose quotation; physical one-axis meaning remains correct."
+    },
+    {
+      "severity": "locator_revision",
+      "field": "grounding.source_claims[id=sqrt_time_proportionality].locator",
+      "finding": "Square-root-of-time prose is in Section4 printedpage17 PDFpage10, not Section3 printedpage12 PDFpage8."
+    }
+  ],
+  "primary_physical_equations_verdict": "pass",
+  "independent_science_verdict": "failed_generation_no_usable_page",
+  "benchmark_input_qualification": "The supplied benchmark excerpts mix a short authentic prose quote, explicitly transcribed equations and authored summaries of source-supported facts. These are focused, enriched inputs rather than raw-paper discovery tests. Several generated grounding quotes promote authored summaries into purported primary-paper quotations; this is a provenance finding and a limitation of benchmark-input representativeness. Inputs were not changed during trials.",
+  "scope": "Unchanged partial lesson only. Correct main physical computations do not establish a usable accepted page when preserved generated checks fail. No pages or check expectations were hand edited.",
+  "published_package_hashes": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "measured-run.json": {
+      "raw_sha256": "2d1e41ce7cd77d3857cd920b08a9a4940ddcd940676e5798ee53348a2700dca0",
+      "canonical_lf_sha256": "7009e79354989c7366060fa2b333120dd04321ffd2f9dafc9003b3667a8df0c0",
+      "bytes": 4667
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "6c28bda4ec7597ca3c1479a3443305c66abf0dc24160001f525126a65ddf4b39",
+      "canonical_lf_sha256": "54b9efea499641e905dd5f7a2d4d505d506e807712e76546392a1defe3f8a0f3",
+      "bytes": 15613
+    },
+    "trace.jsonl": {
+      "raw_sha256": "7c76467efb5c1b10c9b02e32c058b56cb9374b4a5b8711c1effd53fa7ee54f80",
+      "canonical_lf_sha256": "7c76467efb5c1b10c9b02e32c058b56cb9374b4a5b8711c1effd53fa7ee54f80",
+      "bytes": 31701
+    }
+  },
+  "publication_identity": {
+    "byte_preserving_copy": true,
+    "reviewed_partial_or_final_json_preserved": true,
+    "generated_files_modified_by_review": false
+  },
+  "quality_score_assigned": false,
+  "official_quality_or_efficiency_points_promised": false
+}

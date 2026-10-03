@@ -1,0 +1,2007 @@
+{
+  "package": "examples/generated/generalization-baseline/hubble-run01",
+  "case": "hubble_relation",
+  "lesson": "examples/generated/generalization-baseline/hubble-run01/lesson.json",
+  "sha256_before": "621cbe0212d6c2cbf3c31e5ec9f47af538e58c376ee3ca61c4b69571e5103a6d",
+  "sha256_after": "621cbe0212d6c2cbf3c31e5ec9f47af538e58c376ee3ca61c4b69571e5103a6d",
+  "package_hashes_before": {
+    "input.json": {
+      "raw_sha256": "2fb286b093676eed17063c63dbe282ffa60d6e050a5b088e99e18b5a1aa78f15",
+      "canonical_lf_sha256": "2fb286b093676eed17063c63dbe282ffa60d6e050a5b088e99e18b5a1aa78f15",
+      "bytes": 2531
+    },
+    "lesson.json": {
+      "raw_sha256": "621cbe0212d6c2cbf3c31e5ec9f47af538e58c376ee3ca61c4b69571e5103a6d",
+      "canonical_lf_sha256": "9dacf9a30cff765a1b024676babdb0e249eb039c5ccc158be04a570806ef273c",
+      "bytes": 12627
+    },
+    "index.html": {
+      "raw_sha256": "a1c8242b9b7cfe0f15828930d72812c099d507a6840a26d4dc3f4c7711c3e571",
+      "canonical_lf_sha256": "524d589474ebe6fb02b7b143ea33c735f8be0bd581390c93e3f84c615a2a33eb",
+      "bytes": 60305
+    },
+    "trace.jsonl": {
+      "raw_sha256": "2464cbe6e073f119ea454d81df79558cb0d2a0638599c43eb3c2a915f6b638b4",
+      "canonical_lf_sha256": "2464cbe6e073f119ea454d81df79558cb0d2a0638599c43eb3c2a915f6b638b4",
+      "bytes": 15294
+    }
+  },
+  "package_hashes_after": {
+    "input.json": {
+      "raw_sha256": "2fb286b093676eed17063c63dbe282ffa60d6e050a5b088e99e18b5a1aa78f15",
+      "canonical_lf_sha256": "2fb286b093676eed17063c63dbe282ffa60d6e050a5b088e99e18b5a1aa78f15",
+      "bytes": 2531
+    },
+    "lesson.json": {
+      "raw_sha256": "621cbe0212d6c2cbf3c31e5ec9f47af538e58c376ee3ca61c4b69571e5103a6d",
+      "canonical_lf_sha256": "9dacf9a30cff765a1b024676babdb0e249eb039c5ccc158be04a570806ef273c",
+      "bytes": 12627
+    },
+    "index.html": {
+      "raw_sha256": "a1c8242b9b7cfe0f15828930d72812c099d507a6840a26d4dc3f4c7711c3e571",
+      "canonical_lf_sha256": "524d589474ebe6fb02b7b143ea33c735f8be0bd581390c93e3f84c615a2a33eb",
+      "bytes": 60305
+    },
+    "trace.jsonl": {
+      "raw_sha256": "2464cbe6e073f119ea454d81df79558cb0d2a0638599c43eb3c2a915f6b638b4",
+      "canonical_lf_sha256": "2464cbe6e073f119ea454d81df79558cb0d2a0638599c43eb3c2a915f6b638b4",
+      "bytes": 15294
+    }
+  },
+  "unmodified": true,
+  "identities": {
+    "embedded_spec_equals_saved_json": true,
+    "embedded_compiled_equals_validator": true,
+    "saved_html_equals_current_renderer_and_assets": true,
+    "embedded_core_equals_current_exact_core": true
+  },
+  "explicit_scientific_control_mapping": {
+    "K": "k",
+    "d": "d"
+  },
+  "explicit_physical_output_mapping": {
+    "v_corrected_km_per_s": "v_pred"
+  },
+  "controls": [
+    {
+      "id": "k",
+      "label": "Historical slope K (km/s per Mpc)",
+      "kind": "range",
+      "default": 500,
+      "min": 50,
+      "max": 600,
+      "step": 1
+    },
+    {
+      "id": "d",
+      "label": "Distance d (Mpc)",
+      "kind": "range",
+      "default": 2,
+      "min": 0,
+      "max": 10,
+      "step": 0.1
+    }
+  ],
+  "atol": 1e-12,
+  "rtol": 1e-12,
+  "excluded_valid_fixture_states": [],
+  "fixture_valid_total": 8,
+  "fixture_valid_passed": 8,
+  "valid_total": 56,
+  "valid_passed": 56,
+  "invalid_total": 2,
+  "invalid_passed": 2,
+  "line_sweeps": [
+    {
+      "id": "line_view",
+      "source": "v_pred",
+      "sweep_control": "d",
+      "scientific_control": "d",
+      "samples": 48,
+      "min": 0,
+      "max": 10,
+      "step": 0.1
+    }
+  ],
+  "records": [
+    {
+      "id": "default",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "K": 500,
+        "d": 2
+      },
+      "state": {
+        "k": 500,
+        "d": 2
+      },
+      "expected": {
+        "v_pred": 1000,
+        "v_at_2d": 2000,
+        "v_465": 930,
+        "v_513": 1026,
+        "v_500": 1000,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1000,
+          "v_at_2d": 2000,
+          "ratio": 2,
+          "v_465": 930,
+          "v_513": 1026,
+          "v_500": 1000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "double_distance",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "K": 500,
+        "d": 4
+      },
+      "state": {
+        "k": 500,
+        "d": 4
+      },
+      "expected": {
+        "v_pred": 2000,
+        "v_at_2d": 4000,
+        "v_465": 1860,
+        "v_513": 2052,
+        "v_500": 2000,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2000,
+          "v_at_2d": 4000,
+          "ratio": 2,
+          "v_465": 1860,
+          "v_513": 2052,
+          "v_500": 2000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_distance",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "K": 500,
+        "d": 0
+      },
+      "state": {
+        "k": 500,
+        "d": 0
+      },
+      "expected": {
+        "v_pred": 0,
+        "v_at_2d": 0,
+        "v_465": 0,
+        "v_513": 0,
+        "v_500": 0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 0,
+          "v_at_2d": 0,
+          "ratio": 2,
+          "v_465": 0,
+          "v_513": 0,
+          "v_500": 0
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "historical_individual_fit",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "K": 465,
+        "d": 2
+      },
+      "state": {
+        "k": 465,
+        "d": 2
+      },
+      "expected": {
+        "v_pred": 930,
+        "v_at_2d": 1860,
+        "v_465": 930,
+        "v_513": 1026,
+        "v_500": 1000,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 930,
+          "v_at_2d": 1860,
+          "ratio": 2,
+          "v_465": 930,
+          "v_513": 1026,
+          "v_500": 1000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "historical_group_fit",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "K": 513,
+        "d": 2
+      },
+      "state": {
+        "k": 513,
+        "d": 2
+      },
+      "expected": {
+        "v_pred": 1026,
+        "v_at_2d": 2052,
+        "v_465": 930,
+        "v_513": 1026,
+        "v_500": 1000,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1026,
+          "v_at_2d": 2052,
+          "ratio": 2,
+          "v_465": 930,
+          "v_513": 1026,
+          "v_500": 1000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "minimum_slope",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "K": 50,
+        "d": 2
+      },
+      "state": {
+        "k": 50,
+        "d": 2
+      },
+      "expected": {
+        "v_pred": 100,
+        "v_at_2d": 200,
+        "v_465": 930,
+        "v_513": 1026,
+        "v_500": 1000,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 100,
+          "v_at_2d": 200,
+          "ratio": 2,
+          "v_465": 930,
+          "v_513": 1026,
+          "v_500": 1000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "maximum_slope",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "K": 600,
+        "d": 2
+      },
+      "state": {
+        "k": 600,
+        "d": 2
+      },
+      "expected": {
+        "v_pred": 1200,
+        "v_at_2d": 2400,
+        "v_465": 930,
+        "v_513": 1026,
+        "v_500": 1000,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1200,
+          "v_at_2d": 2400,
+          "ratio": 2,
+          "v_465": 930,
+          "v_513": 1026,
+          "v_500": 1000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "maximum_distance",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "K": 500,
+        "d": 10
+      },
+      "state": {
+        "k": 500,
+        "d": 10
+      },
+      "expected": {
+        "v_pred": 5000,
+        "v_at_2d": 10000,
+        "v_465": 4650,
+        "v_513": 5130,
+        "v_500": 5000,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 5000,
+          "v_at_2d": 10000,
+          "ratio": 2,
+          "v_465": 4650,
+          "v_513": 5130,
+          "v_500": 5000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "negative_distance",
+      "kind": "invalid_domain",
+      "scientific_state": {
+        "K": 500,
+        "d": -1
+      },
+      "state": {
+        "k": 500,
+        "d": -1
+      },
+      "expected": null,
+      "reason": "Reject; distance slider domain is nonnegative.",
+      "actual": {
+        "ok": false,
+        "error": "Distance d (Mpc): value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "negative_slope",
+      "kind": "invalid_domain",
+      "scientific_state": {
+        "K": -50,
+        "d": 2
+      },
+      "state": {
+        "k": -50,
+        "d": 2
+      },
+      "expected": null,
+      "reason": "Reject; outside the proposed positive historical-slope teaching range.",
+      "actual": {
+        "ok": false,
+        "error": "Historical slope K (km/s per Mpc): value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:0",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 0.0
+      },
+      "state": {
+        "k": 500,
+        "d": 0.0
+      },
+      "expected": {
+        "v_pred": 0.0,
+        "v_at_2d": 0.0,
+        "v_465": 0.0,
+        "v_513": 0.0,
+        "v_500": 0.0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 0,
+          "v_at_2d": 0,
+          "ratio": 2,
+          "v_465": 0,
+          "v_513": 0,
+          "v_500": 0
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:2",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 0.2
+      },
+      "state": {
+        "k": 500,
+        "d": 0.2
+      },
+      "expected": {
+        "v_pred": 100.0,
+        "v_at_2d": 200.0,
+        "v_465": 93.0,
+        "v_513": 102.60000000000001,
+        "v_500": 100.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 100,
+          "v_at_2d": 200,
+          "ratio": 2,
+          "v_465": 93,
+          "v_513": 102.60000000000001,
+          "v_500": 100
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:4",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 0.4
+      },
+      "state": {
+        "k": 500,
+        "d": 0.4
+      },
+      "expected": {
+        "v_pred": 200.0,
+        "v_at_2d": 400.0,
+        "v_465": 186.0,
+        "v_513": 205.20000000000002,
+        "v_500": 200.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 200,
+          "v_at_2d": 400,
+          "ratio": 2,
+          "v_465": 186,
+          "v_513": 205.20000000000002,
+          "v_500": 200
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:6",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 0.6000000000000001
+      },
+      "state": {
+        "k": 500,
+        "d": 0.6000000000000001
+      },
+      "expected": {
+        "v_pred": 300.00000000000006,
+        "v_at_2d": 600.0000000000001,
+        "v_465": 279.00000000000006,
+        "v_513": 307.80000000000007,
+        "v_500": 300.00000000000006,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 300.00000000000006,
+          "v_at_2d": 600.0000000000001,
+          "ratio": 2,
+          "v_465": 279.00000000000006,
+          "v_513": 307.80000000000007,
+          "v_500": 300.00000000000006
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:9",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 0.9
+      },
+      "state": {
+        "k": 500,
+        "d": 0.9
+      },
+      "expected": {
+        "v_pred": 450.0,
+        "v_at_2d": 900.0,
+        "v_465": 418.5,
+        "v_513": 461.7,
+        "v_500": 450.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 450,
+          "v_at_2d": 900,
+          "ratio": 2,
+          "v_465": 418.5,
+          "v_513": 461.7,
+          "v_500": 450
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:11",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 1.1
+      },
+      "state": {
+        "k": 500,
+        "d": 1.1
+      },
+      "expected": {
+        "v_pred": 550.0,
+        "v_at_2d": 1100.0,
+        "v_465": 511.50000000000006,
+        "v_513": 564.3000000000001,
+        "v_500": 550.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 550,
+          "v_at_2d": 1100,
+          "ratio": 2,
+          "v_465": 511.50000000000006,
+          "v_513": 564.3000000000001,
+          "v_500": 550
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:13",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 1.3
+      },
+      "state": {
+        "k": 500,
+        "d": 1.3
+      },
+      "expected": {
+        "v_pred": 650.0,
+        "v_at_2d": 1300.0,
+        "v_465": 604.5,
+        "v_513": 666.9,
+        "v_500": 650.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 650,
+          "v_at_2d": 1300,
+          "ratio": 2,
+          "v_465": 604.5,
+          "v_513": 666.9,
+          "v_500": 650
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:15",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 1.5
+      },
+      "state": {
+        "k": 500,
+        "d": 1.5
+      },
+      "expected": {
+        "v_pred": 750.0,
+        "v_at_2d": 1500.0,
+        "v_465": 697.5,
+        "v_513": 769.5,
+        "v_500": 750.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 750,
+          "v_at_2d": 1500,
+          "ratio": 2,
+          "v_465": 697.5,
+          "v_513": 769.5,
+          "v_500": 750
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:17",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 1.7000000000000002
+      },
+      "state": {
+        "k": 500,
+        "d": 1.7000000000000002
+      },
+      "expected": {
+        "v_pred": 850.0000000000001,
+        "v_at_2d": 1700.0000000000002,
+        "v_465": 790.5000000000001,
+        "v_513": 872.1000000000001,
+        "v_500": 850.0000000000001,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 850.0000000000001,
+          "v_at_2d": 1700.0000000000002,
+          "ratio": 2,
+          "v_465": 790.5000000000001,
+          "v_513": 872.1000000000001,
+          "v_500": 850.0000000000001
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:19",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 1.9000000000000001
+      },
+      "state": {
+        "k": 500,
+        "d": 1.9000000000000001
+      },
+      "expected": {
+        "v_pred": 950.0000000000001,
+        "v_at_2d": 1900.0000000000002,
+        "v_465": 883.5000000000001,
+        "v_513": 974.7,
+        "v_500": 950.0000000000001,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 950.0000000000001,
+          "v_at_2d": 1900.0000000000002,
+          "ratio": 2,
+          "v_465": 883.5000000000001,
+          "v_513": 974.7,
+          "v_500": 950.0000000000001
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:21",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 2.1
+      },
+      "state": {
+        "k": 500,
+        "d": 2.1
+      },
+      "expected": {
+        "v_pred": 1050.0,
+        "v_at_2d": 2100.0,
+        "v_465": 976.5,
+        "v_513": 1077.3,
+        "v_500": 1050.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1050,
+          "v_at_2d": 2100,
+          "ratio": 2,
+          "v_465": 976.5,
+          "v_513": 1077.3,
+          "v_500": 1050
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:23",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 2.3000000000000003
+      },
+      "state": {
+        "k": 500,
+        "d": 2.3000000000000003
+      },
+      "expected": {
+        "v_pred": 1150.0000000000002,
+        "v_at_2d": 2300.0000000000005,
+        "v_465": 1069.5000000000002,
+        "v_513": 1179.9,
+        "v_500": 1150.0000000000002,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1150.0000000000002,
+          "v_at_2d": 2300.0000000000005,
+          "ratio": 2,
+          "v_465": 1069.5000000000002,
+          "v_513": 1179.9,
+          "v_500": 1150.0000000000002
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:26",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 2.6
+      },
+      "state": {
+        "k": 500,
+        "d": 2.6
+      },
+      "expected": {
+        "v_pred": 1300.0,
+        "v_at_2d": 2600.0,
+        "v_465": 1209.0,
+        "v_513": 1333.8,
+        "v_500": 1300.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1300,
+          "v_at_2d": 2600,
+          "ratio": 2,
+          "v_465": 1209,
+          "v_513": 1333.8,
+          "v_500": 1300
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:28",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 2.8000000000000003
+      },
+      "state": {
+        "k": 500,
+        "d": 2.8000000000000003
+      },
+      "expected": {
+        "v_pred": 1400.0000000000002,
+        "v_at_2d": 2800.0000000000005,
+        "v_465": 1302.0000000000002,
+        "v_513": 1436.4,
+        "v_500": 1400.0000000000002,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1400.0000000000002,
+          "v_at_2d": 2800.0000000000005,
+          "ratio": 2,
+          "v_465": 1302.0000000000002,
+          "v_513": 1436.4,
+          "v_500": 1400.0000000000002
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:30",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 3.0
+      },
+      "state": {
+        "k": 500,
+        "d": 3.0
+      },
+      "expected": {
+        "v_pred": 1500.0,
+        "v_at_2d": 3000.0,
+        "v_465": 1395.0,
+        "v_513": 1539.0,
+        "v_500": 1500.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1500,
+          "v_at_2d": 3000,
+          "ratio": 2,
+          "v_465": 1395,
+          "v_513": 1539,
+          "v_500": 1500
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:32",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 3.2
+      },
+      "state": {
+        "k": 500,
+        "d": 3.2
+      },
+      "expected": {
+        "v_pred": 1600.0,
+        "v_at_2d": 3200.0,
+        "v_465": 1488.0,
+        "v_513": 1641.6000000000001,
+        "v_500": 1600.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1600,
+          "v_at_2d": 3200,
+          "ratio": 2,
+          "v_465": 1488,
+          "v_513": 1641.6000000000001,
+          "v_500": 1600
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:34",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 3.4000000000000004
+      },
+      "state": {
+        "k": 500,
+        "d": 3.4000000000000004
+      },
+      "expected": {
+        "v_pred": 1700.0000000000002,
+        "v_at_2d": 3400.0000000000005,
+        "v_465": 1581.0000000000002,
+        "v_513": 1744.2000000000003,
+        "v_500": 1700.0000000000002,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1700.0000000000002,
+          "v_at_2d": 3400.0000000000005,
+          "ratio": 2,
+          "v_465": 1581.0000000000002,
+          "v_513": 1744.2000000000003,
+          "v_500": 1700.0000000000002
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:36",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 3.6
+      },
+      "state": {
+        "k": 500,
+        "d": 3.6
+      },
+      "expected": {
+        "v_pred": 1800.0,
+        "v_at_2d": 3600.0,
+        "v_465": 1674.0,
+        "v_513": 1846.8,
+        "v_500": 1800.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1800,
+          "v_at_2d": 3600,
+          "ratio": 2,
+          "v_465": 1674,
+          "v_513": 1846.8,
+          "v_500": 1800
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:38",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 3.8000000000000003
+      },
+      "state": {
+        "k": 500,
+        "d": 3.8000000000000003
+      },
+      "expected": {
+        "v_pred": 1900.0000000000002,
+        "v_at_2d": 3800.0000000000005,
+        "v_465": 1767.0000000000002,
+        "v_513": 1949.4,
+        "v_500": 1900.0000000000002,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 1900.0000000000002,
+          "v_at_2d": 3800.0000000000005,
+          "ratio": 2,
+          "v_465": 1767.0000000000002,
+          "v_513": 1949.4,
+          "v_500": 1900.0000000000002
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:40",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 4.0
+      },
+      "state": {
+        "k": 500,
+        "d": 4.0
+      },
+      "expected": {
+        "v_pred": 2000.0,
+        "v_at_2d": 4000.0,
+        "v_465": 1860.0,
+        "v_513": 2052.0,
+        "v_500": 2000.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2000,
+          "v_at_2d": 4000,
+          "ratio": 2,
+          "v_465": 1860,
+          "v_513": 2052,
+          "v_500": 2000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:43",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 4.3
+      },
+      "state": {
+        "k": 500,
+        "d": 4.3
+      },
+      "expected": {
+        "v_pred": 2150.0,
+        "v_at_2d": 4300.0,
+        "v_465": 1999.5,
+        "v_513": 2205.9,
+        "v_500": 2150.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2150,
+          "v_at_2d": 4300,
+          "ratio": 2,
+          "v_465": 1999.5,
+          "v_513": 2205.9,
+          "v_500": 2150
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:45",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 4.5
+      },
+      "state": {
+        "k": 500,
+        "d": 4.5
+      },
+      "expected": {
+        "v_pred": 2250.0,
+        "v_at_2d": 4500.0,
+        "v_465": 2092.5,
+        "v_513": 2308.5,
+        "v_500": 2250.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2250,
+          "v_at_2d": 4500,
+          "ratio": 2,
+          "v_465": 2092.5,
+          "v_513": 2308.5,
+          "v_500": 2250
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:47",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 4.7
+      },
+      "state": {
+        "k": 500,
+        "d": 4.7
+      },
+      "expected": {
+        "v_pred": 2350.0,
+        "v_at_2d": 4700.0,
+        "v_465": 2185.5,
+        "v_513": 2411.1,
+        "v_500": 2350.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2350,
+          "v_at_2d": 4700,
+          "ratio": 2,
+          "v_465": 2185.5,
+          "v_513": 2411.1,
+          "v_500": 2350
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:49",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 4.9
+      },
+      "state": {
+        "k": 500,
+        "d": 4.9
+      },
+      "expected": {
+        "v_pred": 2450.0,
+        "v_at_2d": 4900.0,
+        "v_465": 2278.5,
+        "v_513": 2513.7000000000003,
+        "v_500": 2450.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2450,
+          "v_at_2d": 4900,
+          "ratio": 2,
+          "v_465": 2278.5,
+          "v_513": 2513.7000000000003,
+          "v_500": 2450
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:51",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 5.1000000000000005
+      },
+      "state": {
+        "k": 500,
+        "d": 5.1000000000000005
+      },
+      "expected": {
+        "v_pred": 2550.0000000000005,
+        "v_at_2d": 5100.000000000001,
+        "v_465": 2371.5000000000005,
+        "v_513": 2616.3,
+        "v_500": 2550.0000000000005,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2550.0000000000005,
+          "v_at_2d": 5100.000000000001,
+          "ratio": 2,
+          "v_465": 2371.5000000000005,
+          "v_513": 2616.3,
+          "v_500": 2550.0000000000005
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:53",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 5.300000000000001
+      },
+      "state": {
+        "k": 500,
+        "d": 5.300000000000001
+      },
+      "expected": {
+        "v_pred": 2650.0000000000005,
+        "v_at_2d": 5300.000000000001,
+        "v_465": 2464.5000000000005,
+        "v_513": 2718.9000000000005,
+        "v_500": 2650.0000000000005,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2650.0000000000005,
+          "v_at_2d": 5300.000000000001,
+          "ratio": 2,
+          "v_465": 2464.5000000000005,
+          "v_513": 2718.9000000000005,
+          "v_500": 2650.0000000000005
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:55",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 5.5
+      },
+      "state": {
+        "k": 500,
+        "d": 5.5
+      },
+      "expected": {
+        "v_pred": 2750.0,
+        "v_at_2d": 5500.0,
+        "v_465": 2557.5,
+        "v_513": 2821.5,
+        "v_500": 2750.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2750,
+          "v_at_2d": 5500,
+          "ratio": 2,
+          "v_465": 2557.5,
+          "v_513": 2821.5,
+          "v_500": 2750
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:57",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 5.7
+      },
+      "state": {
+        "k": 500,
+        "d": 5.7
+      },
+      "expected": {
+        "v_pred": 2850.0,
+        "v_at_2d": 5700.0,
+        "v_465": 2650.5,
+        "v_513": 2924.1,
+        "v_500": 2850.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 2850,
+          "v_at_2d": 5700,
+          "ratio": 2,
+          "v_465": 2650.5,
+          "v_513": 2924.1,
+          "v_500": 2850
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:60",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 6.0
+      },
+      "state": {
+        "k": 500,
+        "d": 6.0
+      },
+      "expected": {
+        "v_pred": 3000.0,
+        "v_at_2d": 6000.0,
+        "v_465": 2790.0,
+        "v_513": 3078.0,
+        "v_500": 3000.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3000,
+          "v_at_2d": 6000,
+          "ratio": 2,
+          "v_465": 2790,
+          "v_513": 3078,
+          "v_500": 3000
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:62",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 6.2
+      },
+      "state": {
+        "k": 500,
+        "d": 6.2
+      },
+      "expected": {
+        "v_pred": 3100.0,
+        "v_at_2d": 6200.0,
+        "v_465": 2883.0,
+        "v_513": 3180.6,
+        "v_500": 3100.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3100,
+          "v_at_2d": 6200,
+          "ratio": 2,
+          "v_465": 2883,
+          "v_513": 3180.6,
+          "v_500": 3100
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:64",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 6.4
+      },
+      "state": {
+        "k": 500,
+        "d": 6.4
+      },
+      "expected": {
+        "v_pred": 3200.0,
+        "v_at_2d": 6400.0,
+        "v_465": 2976.0,
+        "v_513": 3283.2000000000003,
+        "v_500": 3200.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3200,
+          "v_at_2d": 6400,
+          "ratio": 2,
+          "v_465": 2976,
+          "v_513": 3283.2000000000003,
+          "v_500": 3200
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:66",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 6.6000000000000005
+      },
+      "state": {
+        "k": 500,
+        "d": 6.6000000000000005
+      },
+      "expected": {
+        "v_pred": 3300.0000000000005,
+        "v_at_2d": 6600.000000000001,
+        "v_465": 3069.0000000000005,
+        "v_513": 3385.8,
+        "v_500": 3300.0000000000005,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3300.0000000000005,
+          "v_at_2d": 6600.000000000001,
+          "ratio": 2,
+          "v_465": 3069.0000000000005,
+          "v_513": 3385.8,
+          "v_500": 3300.0000000000005
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:68",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 6.800000000000001
+      },
+      "state": {
+        "k": 500,
+        "d": 6.800000000000001
+      },
+      "expected": {
+        "v_pred": 3400.0000000000005,
+        "v_at_2d": 6800.000000000001,
+        "v_465": 3162.0000000000005,
+        "v_513": 3488.4000000000005,
+        "v_500": 3400.0000000000005,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3400.0000000000005,
+          "v_at_2d": 6800.000000000001,
+          "ratio": 2,
+          "v_465": 3162.0000000000005,
+          "v_513": 3488.4000000000005,
+          "v_500": 3400.0000000000005
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:70",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 7.0
+      },
+      "state": {
+        "k": 500,
+        "d": 7.0
+      },
+      "expected": {
+        "v_pred": 3500.0,
+        "v_at_2d": 7000.0,
+        "v_465": 3255.0,
+        "v_513": 3591.0,
+        "v_500": 3500.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3500,
+          "v_at_2d": 7000,
+          "ratio": 2,
+          "v_465": 3255,
+          "v_513": 3591,
+          "v_500": 3500
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:72",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 7.2
+      },
+      "state": {
+        "k": 500,
+        "d": 7.2
+      },
+      "expected": {
+        "v_pred": 3600.0,
+        "v_at_2d": 7200.0,
+        "v_465": 3348.0,
+        "v_513": 3693.6,
+        "v_500": 3600.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3600,
+          "v_at_2d": 7200,
+          "ratio": 2,
+          "v_465": 3348,
+          "v_513": 3693.6,
+          "v_500": 3600
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:74",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 7.4
+      },
+      "state": {
+        "k": 500,
+        "d": 7.4
+      },
+      "expected": {
+        "v_pred": 3700.0,
+        "v_at_2d": 7400.0,
+        "v_465": 3441.0,
+        "v_513": 3796.2000000000003,
+        "v_500": 3700.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3700,
+          "v_at_2d": 7400,
+          "ratio": 2,
+          "v_465": 3441,
+          "v_513": 3796.2000000000003,
+          "v_500": 3700
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:77",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 7.7
+      },
+      "state": {
+        "k": 500,
+        "d": 7.7
+      },
+      "expected": {
+        "v_pred": 3850.0,
+        "v_at_2d": 7700.0,
+        "v_465": 3580.5,
+        "v_513": 3950.1,
+        "v_500": 3850.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3850,
+          "v_at_2d": 7700,
+          "ratio": 2,
+          "v_465": 3580.5,
+          "v_513": 3950.1,
+          "v_500": 3850
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:79",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 7.9
+      },
+      "state": {
+        "k": 500,
+        "d": 7.9
+      },
+      "expected": {
+        "v_pred": 3950.0,
+        "v_at_2d": 7900.0,
+        "v_465": 3673.5,
+        "v_513": 4052.7000000000003,
+        "v_500": 3950.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 3950,
+          "v_at_2d": 7900,
+          "ratio": 2,
+          "v_465": 3673.5,
+          "v_513": 4052.7000000000003,
+          "v_500": 3950
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:81",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 8.1
+      },
+      "state": {
+        "k": 500,
+        "d": 8.1
+      },
+      "expected": {
+        "v_pred": 4050.0,
+        "v_at_2d": 8100.0,
+        "v_465": 3766.5,
+        "v_513": 4155.3,
+        "v_500": 4050.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4050,
+          "v_at_2d": 8100,
+          "ratio": 2,
+          "v_465": 3766.5,
+          "v_513": 4155.3,
+          "v_500": 4050
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:83",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 8.3
+      },
+      "state": {
+        "k": 500,
+        "d": 8.3
+      },
+      "expected": {
+        "v_pred": 4150.0,
+        "v_at_2d": 8300.0,
+        "v_465": 3859.5000000000005,
+        "v_513": 4257.900000000001,
+        "v_500": 4150.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4150,
+          "v_at_2d": 8300,
+          "ratio": 2,
+          "v_465": 3859.5000000000005,
+          "v_513": 4257.900000000001,
+          "v_500": 4150
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:85",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 8.5
+      },
+      "state": {
+        "k": 500,
+        "d": 8.5
+      },
+      "expected": {
+        "v_pred": 4250.0,
+        "v_at_2d": 8500.0,
+        "v_465": 3952.5,
+        "v_513": 4360.5,
+        "v_500": 4250.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4250,
+          "v_at_2d": 8500,
+          "ratio": 2,
+          "v_465": 3952.5,
+          "v_513": 4360.5,
+          "v_500": 4250
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:87",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 8.700000000000001
+      },
+      "state": {
+        "k": 500,
+        "d": 8.700000000000001
+      },
+      "expected": {
+        "v_pred": 4350.000000000001,
+        "v_at_2d": 8700.000000000002,
+        "v_465": 4045.5000000000005,
+        "v_513": 4463.1,
+        "v_500": 4350.000000000001,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4350.000000000001,
+          "v_at_2d": 8700.000000000002,
+          "ratio": 2,
+          "v_465": 4045.5000000000005,
+          "v_513": 4463.1,
+          "v_500": 4350.000000000001
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:89",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 8.9
+      },
+      "state": {
+        "k": 500,
+        "d": 8.9
+      },
+      "expected": {
+        "v_pred": 4450.0,
+        "v_at_2d": 8900.0,
+        "v_465": 4138.5,
+        "v_513": 4565.7,
+        "v_500": 4450.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4450,
+          "v_at_2d": 8900,
+          "ratio": 2,
+          "v_465": 4138.5,
+          "v_513": 4565.7,
+          "v_500": 4450
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:91",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 9.1
+      },
+      "state": {
+        "k": 500,
+        "d": 9.1
+      },
+      "expected": {
+        "v_pred": 4550.0,
+        "v_at_2d": 9100.0,
+        "v_465": 4231.5,
+        "v_513": 4668.3,
+        "v_500": 4550.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4550,
+          "v_at_2d": 9100,
+          "ratio": 2,
+          "v_465": 4231.5,
+          "v_513": 4668.3,
+          "v_500": 4550
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:94",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 9.4
+      },
+      "state": {
+        "k": 500,
+        "d": 9.4
+      },
+      "expected": {
+        "v_pred": 4700.0,
+        "v_at_2d": 9400.0,
+        "v_465": 4371.0,
+        "v_513": 4822.2,
+        "v_500": 4700.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4700,
+          "v_at_2d": 9400,
+          "ratio": 2,
+          "v_465": 4371,
+          "v_513": 4822.2,
+          "v_500": 4700
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:96",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 9.600000000000001
+      },
+      "state": {
+        "k": 500,
+        "d": 9.600000000000001
+      },
+      "expected": {
+        "v_pred": 4800.000000000001,
+        "v_at_2d": 9600.000000000002,
+        "v_465": 4464.000000000001,
+        "v_513": 4924.800000000001,
+        "v_500": 4800.000000000001,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4800.000000000001,
+          "v_at_2d": 9600.000000000002,
+          "ratio": 2,
+          "v_465": 4464.000000000001,
+          "v_513": 4924.800000000001,
+          "v_500": 4800.000000000001
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:98",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 9.8
+      },
+      "state": {
+        "k": 500,
+        "d": 9.8
+      },
+      "expected": {
+        "v_pred": 4900.0,
+        "v_at_2d": 9800.0,
+        "v_465": 4557.0,
+        "v_513": 5027.400000000001,
+        "v_500": 4900.0,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 4900,
+          "v_at_2d": 9800,
+          "ratio": 2,
+          "v_465": 4557,
+          "v_513": 5027.400000000001,
+          "v_500": 4900
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:line_view:100",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "K": 500,
+        "d": 10
+      },
+      "state": {
+        "k": 500,
+        "d": 10
+      },
+      "expected": {
+        "v_pred": 5000,
+        "v_at_2d": 10000,
+        "v_465": 4650,
+        "v_513": 5130,
+        "v_500": 5000,
+        "ratio": 2
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "v_pred": 5000,
+          "v_at_2d": 10000,
+          "ratio": 2,
+          "v_465": 4650,
+          "v_513": 5130,
+          "v_500": 5000
+        }
+      },
+      "passed": true
+    }
+  ],
+  "numeric_verdict": "pass",
+  "source_and_explanation_review": "Core physical relationship/units/historical scope pass; source paraphrase labeling and the zero-distance ratio need revision.",
+  "browser_verification": "Separate Chromium control and visualization operation is required; these numerical sweeps do not certify UI.",
+  "all_other_computed_readouts_checked": true,
+  "ratio_at_zero_distance": {
+    "state": {
+      "k": 500,
+      "d": 0
+    },
+    "readout_id": "ratio",
+    "expected": "undefined: v(0)/v(0) is 0/0",
+    "observed": 2,
+    "scientifically_correct": false
+  },
+  "findings": [
+    {
+      "severity": "science_revision",
+      "field": "computations[ratio]",
+      "finding": "The visible ratio v(2d)/v(d) is hardcoded as 2 even at legal d=0. Both velocities then equal zero and their ratio is undefined. Rename as a linear doubling factor without a division claim or explain/handle the zero-distance case."
+    },
+    {
+      "severity": "provenance_revision",
+      "field": "grounding.source_claims",
+      "finding": "Several evidence quotes are authored excerpt summaries rather than exact paper prose: fitted coefficients, rounded K, residuals and first-approximation summaries. The facts are supported by the primary source, but summaries should be marked paraphrases/transcriptions instead of presented as verbatim evidence."
+    },
+    {
+      "severity": "locator_revision",
+      "field": "grounding.source_claims[id=fitted_coeffs].locator",
+      "finding": "The two fitted values appear with the solutions table on PDF page 2; PDF page 3 contains the rounded intermediate K paragraph."
+    }
+  ],
+  "source_url": "https://www.astro.rug.nl/~weygaert/tim1publication/cosmo2007/literature/hubble.1929.pdf",
+  "independent_science_verdict": "needs_revision",
+  "usable_generated_html": true,
+  "benchmark_input_qualification": "The supplied benchmark excerpts mix a short authentic prose quote, explicitly transcribed equations and authored summaries of source-supported facts. These are focused, enriched inputs rather than raw-paper discovery tests. Several generated grounding quotes promote authored summaries into purported primary-paper quotations; this is a provenance finding and a limitation of benchmark-input representativeness. Inputs were not changed during trials.",
+  "variant": "baseline",
+  "published_package_hashes": {
+    "index.html": {
+      "raw_sha256": "a1c8242b9b7cfe0f15828930d72812c099d507a6840a26d4dc3f4c7711c3e571",
+      "canonical_lf_sha256": "524d589474ebe6fb02b7b143ea33c735f8be0bd581390c93e3f84c615a2a33eb",
+      "bytes": 60305
+    },
+    "input.json": {
+      "raw_sha256": "2fb286b093676eed17063c63dbe282ffa60d6e050a5b088e99e18b5a1aa78f15",
+      "canonical_lf_sha256": "2fb286b093676eed17063c63dbe282ffa60d6e050a5b088e99e18b5a1aa78f15",
+      "bytes": 2531
+    },
+    "lesson.json": {
+      "raw_sha256": "621cbe0212d6c2cbf3c31e5ec9f47af538e58c376ee3ca61c4b69571e5103a6d",
+      "canonical_lf_sha256": "9dacf9a30cff765a1b024676babdb0e249eb039c5ccc158be04a570806ef273c",
+      "bytes": 12627
+    },
+    "measured-run.json": {
+      "raw_sha256": "6bffc5ae045f457210620e8208807d6baba0e99ef73d65b2f0ce0e1e06e19e7a",
+      "canonical_lf_sha256": "f151709cc30ac36e91944529c56ef6654e16d9c50552c5abd958d9926b147139",
+      "bytes": 4718
+    },
+    "trace.jsonl": {
+      "raw_sha256": "2464cbe6e073f119ea454d81df79558cb0d2a0638599c43eb3c2a915f6b638b4",
+      "canonical_lf_sha256": "2464cbe6e073f119ea454d81df79558cb0d2a0638599c43eb3c2a915f6b638b4",
+      "bytes": 15294
+    }
+  },
+  "publication_identity": {
+    "byte_preserving_copy": true,
+    "reviewed_partial_or_final_json_preserved": true,
+    "generated_files_modified_by_review": false
+  },
+  "quality_score_assigned": false,
+  "official_quality_or_efficiency_points_promised": false,
+  "numeric_verdict_scope": "Independent non-ratio physical readouts and legal line samples. The ratio at zero is separately scientifically false and makes overall acceptance needs_revision."
+}

@@ -1,0 +1,283 @@
+{
+  "reviewed_run_commit": "61ddce2bac24eb705d7a26a0ec541b09689b506f",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "scope": "Six unchanged model-generated CLI runs on two new primary-paper mechanisms. Four baseline trials (two per paper) and two compact-JSON experiments (one per paper) ran sequentially. Independent source/math review is separated from CLI success and browser observations.",
+  "scientific_fixture_source": "tests/science/generalization_inputs.json",
+  "scientific_fixture_sha256": "8b913342476585f4f4a5df3f55cbf86bc1fd0007dc7223c3e1ea2c469548c18b",
+  "full_token_latency_and_lineage_audit": "tests/science/reviews/efficiency-measurements.json",
+  "browser_evidence": "Root P2 Chromium review of the two usable baseline Hubble pages is separate; the four failed generations have no HTML to operate.",
+  "atol": 1e-12,
+  "rtol": 1e-12,
+  "totals": {
+    "runs": 6,
+    "independent_fixture_evaluations_passed": 60,
+    "independent_fixture_evaluations_total": 60,
+    "primary_physical_and_line_evaluations_passed": 348,
+    "primary_physical_and_line_evaluations_total": 348,
+    "invalid_domain_rejections_passed": 15,
+    "invalid_domain_rejections_total": 15,
+    "promoted_html": 2,
+    "independently_accepted_complete_pages": 0,
+    "all_reviewed_generated_files_unchanged": true
+  },
+  "benchmark_input_qualification": "The supplied benchmark excerpts mix a short authentic prose quote, explicitly transcribed equations and authored summaries of source-supported facts. These are focused, enriched inputs rather than raw-paper discovery tests. Several generated grounding quotes promote authored summaries into purported primary-paper quotations; this is a provenance finding and a limitation of benchmark-input representativeness. Inputs were not changed during trials.",
+  "runs": [
+    {
+      "package": "examples/generated/generalization-baseline/brownian-run01",
+      "case": "brownian_diffusion",
+      "variant": "baseline",
+      "review": "tests/science/reviews/generalization-baseline-brownian-run01.json",
+      "measured_run": "examples/generated/generalization-baseline/brownian-run01/measured-run.json",
+      "usable_generated_html": false,
+      "process_exit_code": 1,
+      "requests_all_attempts": 3,
+      "T_prompt_plus_completion_all_attempts": 30500,
+      "L_external_seconds": 92.29385859984905,
+      "fixture_valid_passed": 12,
+      "fixture_valid_total": 12,
+      "valid_passed": 60,
+      "valid_total": 60,
+      "invalid_passed": 3,
+      "invalid_total": 3,
+      "unmodified": true,
+      "independent_science_verdict": "failed_generation_no_usable_page",
+      "findings": [
+        {
+          "severity": "generation_failure",
+          "field": "checks",
+          "finding": "Preserved model-authored expected values omit the default temperature factor 300: expected D about .000732 versus independent/core .2197371130. MSD and RMS expectations inherit this error. CLI gates correctly reject these inconsistent cases; the package has no usable HTML."
+        },
+        {
+          "severity": "unit_revision",
+          "field": "computations[id=d_coeff].unit",
+          "finding": "The auxiliary conversion-coefficient unit is dimensionally inconsistent with D=C*T/(eta*a). The coefficient must carry diffusivity*viscosity*radius/temperature in the chosen units, equivalently mPa*micrometre^3/K; main D/MSD/RMS units are correct."
+        },
+        {
+          "severity": "science_revision",
+          "field": "computations[id=d_double_eta]",
+          "finding": "The visible auxiliary readout labeled D after doubling viscosity (halves D) evaluates D*2; it should evaluate D/2. The three primary D/MSD/RMS equations remain correct."
+        },
+        {
+          "severity": "teaching_revision",
+          "field": "explorations and checks[id=double_radius].name",
+          "finding": "Guided numerical prose repeats the erroneous default values; the double-radius check title says RMS halves, whereas RMS divides by sqrt(2)."
+        }
+      ]
+    },
+    {
+      "package": "examples/generated/generalization-baseline/brownian-run02",
+      "case": "brownian_diffusion",
+      "variant": "baseline",
+      "review": "tests/science/reviews/generalization-baseline-brownian-run02.json",
+      "measured_run": "examples/generated/generalization-baseline/brownian-run02/measured-run.json",
+      "usable_generated_html": false,
+      "process_exit_code": 1,
+      "requests_all_attempts": 3,
+      "T_prompt_plus_completion_all_attempts": 29050,
+      "L_external_seconds": 68.50256470008753,
+      "fixture_valid_passed": 12,
+      "fixture_valid_total": 12,
+      "valid_passed": 60,
+      "valid_total": 60,
+      "invalid_passed": 3,
+      "invalid_total": 3,
+      "unmodified": true,
+      "independent_science_verdict": "failed_generation_no_usable_page",
+      "findings": [
+        {
+          "severity": "generation_failure",
+          "field": "checks",
+          "finding": "Preserved model-authored expected values omit the default temperature factor 300: expected D about .000732 versus independent/core .2197371130. MSD and RMS expectations inherit this error. CLI gates correctly reject these inconsistent cases; the package has no usable HTML."
+        },
+        {
+          "severity": "unit_revision",
+          "field": "computations[id=d_coeff].unit",
+          "finding": "The auxiliary conversion-coefficient unit is dimensionally inconsistent with D=C*T/(eta*a). The coefficient must carry diffusivity*viscosity*radius/temperature in the chosen units, equivalently mPa*micrometre^3/K; main D/MSD/RMS units are correct."
+        },
+        {
+          "severity": "teaching_revision",
+          "field": "checks[id=double_eta].name and expected",
+          "finding": "The preserved case title claims MSD/RMS unchanged when viscosity doubles at fixed time; physically MSD halves and RMS divides by sqrt(2). The main explanation/explorations elsewhere state the correct scaling."
+        },
+        {
+          "severity": "provenance_revision",
+          "field": "grounding.source_claims[id=msd_definition].quote",
+          "finding": "Evidence uses the authored sentence introducing what the preceding passage identifies, not verbatim primary-paper prose. The one-axis RMS meaning is correct, but this quote must be marked as a paraphrase."
+        }
+      ]
+    },
+    {
+      "package": "examples/generated/generalization-baseline/hubble-run01",
+      "case": "hubble_relation",
+      "variant": "baseline",
+      "review": "tests/science/reviews/generalization-baseline-hubble-run01.json",
+      "measured_run": "examples/generated/generalization-baseline/hubble-run01/measured-run.json",
+      "usable_generated_html": true,
+      "process_exit_code": 0,
+      "requests_all_attempts": 3,
+      "T_prompt_plus_completion_all_attempts": 21783,
+      "L_external_seconds": 43.01701460010372,
+      "fixture_valid_passed": 8,
+      "fixture_valid_total": 8,
+      "valid_passed": 56,
+      "valid_total": 56,
+      "invalid_passed": 2,
+      "invalid_total": 2,
+      "unmodified": true,
+      "independent_science_verdict": "needs_revision",
+      "findings": [
+        {
+          "severity": "science_revision",
+          "field": "computations[ratio]",
+          "finding": "The visible ratio v(2d)/v(d) is hardcoded as 2 even at legal d=0. Both velocities then equal zero and their ratio is undefined. Rename as a linear doubling factor without a division claim or explain/handle the zero-distance case."
+        },
+        {
+          "severity": "provenance_revision",
+          "field": "grounding.source_claims",
+          "finding": "Several evidence quotes are authored excerpt summaries rather than exact paper prose: fitted coefficients, rounded K, residuals and first-approximation summaries. The facts are supported by the primary source, but summaries should be marked paraphrases/transcriptions instead of presented as verbatim evidence."
+        },
+        {
+          "severity": "locator_revision",
+          "field": "grounding.source_claims[id=fitted_coeffs].locator",
+          "finding": "The two fitted values appear with the solutions table on PDF page 2; PDF page 3 contains the rounded intermediate K paragraph."
+        }
+      ]
+    },
+    {
+      "package": "examples/generated/generalization-baseline/hubble-run02",
+      "case": "hubble_relation",
+      "variant": "baseline",
+      "review": "tests/science/reviews/generalization-baseline-hubble-run02.json",
+      "measured_run": "examples/generated/generalization-baseline/hubble-run02/measured-run.json",
+      "usable_generated_html": true,
+      "process_exit_code": 0,
+      "requests_all_attempts": 3,
+      "T_prompt_plus_completion_all_attempts": 22653,
+      "L_external_seconds": 25.397800399921834,
+      "fixture_valid_passed": 8,
+      "fixture_valid_total": 8,
+      "valid_passed": 56,
+      "valid_total": 56,
+      "invalid_passed": 2,
+      "invalid_total": 2,
+      "unmodified": true,
+      "independent_science_verdict": "needs_revision",
+      "findings": [
+        {
+          "severity": "science_revision",
+          "field": "computations[ratio_double]",
+          "finding": "The visible ratio v(2d)/v(d) is hardcoded as 2 even at legal d=0. Both velocities then equal zero and their ratio is undefined. Rename as a linear doubling factor without a division claim or explain/handle the zero-distance case."
+        },
+        {
+          "severity": "provenance_revision",
+          "field": "grounding.source_claims",
+          "finding": "Several evidence quotes are authored excerpt summaries rather than exact paper prose: fitted coefficients, rounded K, residuals and first-approximation summaries. The facts are supported by the primary source, but summaries should be marked paraphrases/transcriptions instead of presented as verbatim evidence."
+        },
+        {
+          "severity": "locator_revision",
+          "field": "grounding.source_claims[id=residuals].locator",
+          "finding": "Residuals discussion is on PDF page 3, not the claimed final paragraph on PDF page 5."
+        },
+        {
+          "severity": "locator_revision",
+          "field": "grounding.source_claims[id=fitted_coeffs].locator",
+          "finding": "The two fitted values appear with the solutions table on PDF page 2; PDF page 3 contains the rounded intermediate K paragraph."
+        }
+      ]
+    },
+    {
+      "package": "examples/generated/generalization-compact/brownian-run01",
+      "case": "brownian_diffusion",
+      "variant": "compact-json",
+      "review": "tests/science/reviews/generalization-compact-brownian-run01.json",
+      "measured_run": "examples/generated/generalization-compact/brownian-run01/measured-run.json",
+      "usable_generated_html": false,
+      "process_exit_code": 1,
+      "requests_all_attempts": 3,
+      "T_prompt_plus_completion_all_attempts": 24378,
+      "L_external_seconds": 26.40789440018125,
+      "fixture_valid_passed": 12,
+      "fixture_valid_total": 12,
+      "valid_passed": 60,
+      "valid_total": 60,
+      "invalid_passed": 3,
+      "invalid_total": 3,
+      "unmodified": true,
+      "independent_science_verdict": "failed_generation_no_usable_page",
+      "findings": [
+        {
+          "severity": "generation_failure",
+          "field": "checks",
+          "finding": "The frozen model-authored values are close but outside their own tolerance: default D .219744 versus independent/executed .21973711302488222; default MSD .439488 versus .43947422604976444; RMS .662939 versus .6629285225797458. Repairs preserve these incorrect cases. CLI correctly rejects and produces no HTML. Unlike baseline, this is inaccurate guessed decimal expectations rather than omission of temperature."
+        },
+        {
+          "severity": "provenance_revision",
+          "field": "grounding.source_claims[id=mean_square_definition].quote",
+          "finding": "Authored excerpt-summary sentence is promoted as primary prose quotation; physical one-axis meaning remains correct."
+        },
+        {
+          "severity": "locator_revision",
+          "field": "grounding.source_claims[id=sqrt_time_proportionality].locator",
+          "finding": "Square-root-of-time prose is in Section4 printedpage17 PDFpage10, not Section3 printedpage12 PDFpage8."
+        }
+      ]
+    },
+    {
+      "package": "examples/generated/generalization-compact/hubble-run01",
+      "case": "hubble_relation",
+      "variant": "compact-json",
+      "review": "tests/science/reviews/generalization-compact-hubble-run01.json",
+      "measured_run": "examples/generated/generalization-compact/hubble-run01/measured-run.json",
+      "usable_generated_html": false,
+      "process_exit_code": 1,
+      "requests_all_attempts": 3,
+      "T_prompt_plus_completion_all_attempts": 19221,
+      "L_external_seconds": 38.25754090002738,
+      "fixture_valid_passed": 8,
+      "fixture_valid_total": 8,
+      "valid_passed": 56,
+      "valid_total": 56,
+      "invalid_passed": 2,
+      "invalid_total": 2,
+      "unmodified": true,
+      "independent_science_verdict": "failed_generation_no_usable_page",
+      "findings": [
+        {
+          "severity": "generation_failure",
+          "field": "checks[id=boundary_case]",
+          "finding": "The saved zero-distance boundary expects ratio_check=0, while repaired expression is constant2. Both main velocities correctly evaluate zero. Preserved contradictory ratio expectation leaves the numerical gate failed and no HTML is produced."
+        },
+        {
+          "severity": "science_revision",
+          "field": "computations[id=ratio_check]",
+          "finding": "The visible doubled-distance/current-velocity ratio is mathematically undefined at legal zero distance; neither saved expected0 nor constant observed2 represents 0/0."
+        },
+        {
+          "severity": "provenance_revision",
+          "field": "grounding.source_claims",
+          "finding": "Equation/summary evidence lacks a clear transcription/paraphrase label in some locators; short genuine first-approximation text and genuine correlation prose are distinguished from authored summaries."
+        },
+        {
+          "severity": "locator_revision",
+          "field": "grounding.source_claims[id=fitted_coefficients].locator",
+          "finding": "The fitted465/513solutions table is PDFpage2; rounded intermediateK is PDFpage3."
+        }
+      ]
+    }
+  ],
+  "concrete_findings": [
+    "All three Brownian runs have correct primary diffusion/MSD/one-axis RMS computations, yet frozen model-authored expected values are wrong. Baseline guesses omit the temperature factor; compact guesses are close but exceed their own tolerance. All three fail CLI gates and produce no HTML.",
+    "Baseline Brownian run01 also doubles D in an auxiliary readout labeled as the result of doubling viscosity, and its radius-case title wrongly says RMS halves. Baseline run02 has a preserved viscosity-case title claiming MSD/RMS stay unchanged. Both baseline coefficient readout units are dimensionally inconsistent.",
+    "Both baseline Hubble pages pass the CLI and independently compute every primary/doubled/historical velocity readout. They still display ratio v(2d)/v(d)=2 at d=0, where the ratio is undefined, so they need science revision.",
+    "Compact Hubble preserves a zero-distance ratio expectation of0 while its repaired expression is constant2; neither represents the undefined0/0 ratio, and the CLI gate fails with no HTML.",
+    "Generated grounding sometimes promotes authored source summaries as verbatim evidence and has fitted-value/residual/RMS quote locator errors. Underlying primary physical facts are supported, but provenance presentation needs repair."
+  ],
+  "quality_qualification": {
+    "minimum_50_established": false,
+    "official_score_assigned": false,
+    "quality_or_efficiency_points_promised": false,
+    "reason": "Successful generation or passing selected equations is not full independent scientific/teaching/browser acceptance. No complete new-paper page was independently accepted; no quality-qualified efficiency denominator or official score is established."
+  },
+  "comparison_conclusion": "Compact trials used fewer total tokens than the corresponding baseline paper trials, but both compact trials failed with no HTML. Baseline produced two usable Hubble pages, which still need science/provenance revision. Repeats differ and latency varies; these measurements do not establish a quality-qualified optimization or causality. Keep the production prompt unchanged.",
+  "reproduction": "Use measured-run.json and exact trace.jsonl in each public package; original historical command paths remain unchanged there and need local adaptation. Detailed scientific reports use portable relative paths and explicit generated-ID mappings. No generated output or frozen expected case was edited during review."
+}

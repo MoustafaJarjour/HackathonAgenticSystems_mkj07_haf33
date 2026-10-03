@@ -1,0 +1,332 @@
+{
+  "checks": [
+    {
+      "atol": 1e-06,
+      "expected": {
+        "d_coeff": 0.01380649,
+        "d_value": 0.000732,
+        "msd": 0.001464,
+        "rms": 0.038262
+      },
+      "id": "default_case",
+      "name": "Default state: T=300 K, eta=1 mPa*s, a=1 um, t=1 s",
+      "rtol": 1e-06,
+      "state": {
+        "a": 1,
+        "eta": 1,
+        "t": 1,
+        "temp": 300
+      }
+    },
+    {
+      "atol": 1e-06,
+      "expected": {
+        "d_value": 0.000732,
+        "msd": 0,
+        "rms": 0
+      },
+      "id": "zero_time",
+      "name": "t=0 gives zero MSD and RMS while D stays positive",
+      "rtol": 1e-06,
+      "state": {
+        "a": 1,
+        "eta": 1,
+        "t": 0,
+        "temp": 300
+      }
+    },
+    {
+      "atol": 1e-06,
+      "expected": {
+        "d_value": 0.000366,
+        "msd": 0.000732,
+        "rms": 0.027055
+      },
+      "id": "double_radius",
+      "name": "Doubling radius halves D and RMS at fixed t",
+      "rtol": 1e-06,
+      "state": {
+        "a": 2,
+        "eta": 1,
+        "t": 1,
+        "temp": 300
+      }
+    }
+  ],
+  "computations": [
+    {
+      "id": "d_value",
+      "label": "Diffusion coefficient D (converted units)",
+      "expression": "0.01380649*temp/(6*3.141592653589793*eta*a)",
+      "unit": "um^2/s",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "diffusion_expression"
+      ]
+    },
+    {
+      "id": "d_coeff",
+      "label": "Converted prefactor 0.01380649/(6*pi)",
+      "expression": "0.01380649/(6*3.141592653589793)",
+      "unit": "um^2*K/(s*mPa*s*um)",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "diffusion_expression"
+      ]
+    },
+    {
+      "id": "msd",
+      "label": "Mean-square displacement along one axis, 2*D*t",
+      "expression": "2*d_value*t",
+      "unit": "um^2",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "rms_expression"
+      ]
+    },
+    {
+      "id": "rms",
+      "label": "One-axis root-mean-square displacement, sqrt(2*D*t)",
+      "expression": "sqrt(2*d_value*t)",
+      "unit": "um",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "rms_expression"
+      ]
+    },
+    {
+      "id": "time_factor",
+      "label": "RMS time-scaling factor sqrt(t2/t1) for quadrupled time",
+      "expression": "sqrt(4)",
+      "unit": "dimensionless",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "sqrt_time"
+      ]
+    },
+    {
+      "id": "d_double_eta",
+      "label": "D after doubling viscosity (halves D)",
+      "expression": "d_value*2",
+      "unit": "um^2/s",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "diffusion_expression"
+      ]
+    }
+  ],
+  "concept_summary": "Einstein's 1905 analysis shows that a small sphere suspended in a stationary liquid is buffeted by molecular-kinetic fluctuations, so its displacement is random rather than deterministic. The diffusion coefficient D = (R*T/N)/(6*pi*k*P) depends on absolute temperature, the liquid's viscosity, and the sphere's radius. The observable consequence is a mean-square displacement along one axis that grows linearly with elapsed time, so the one-axis root-mean-square displacement grows as the square root of time. This lesson computes D, MSD = 2*D*t, and RMS = sqrt(2*D*t) in micrometre-based units and lets you vary T, eta, a, and t.",
+  "controls": [
+    {
+      "default": 300,
+      "id": "temp",
+      "kind": "range",
+      "label": "Absolute temperature T",
+      "max": 400,
+      "meaning": "Temperature in kelvin; D is proportional to T, so raising T raises D and RMS.",
+      "min": 250,
+      "step": 1
+    },
+    {
+      "default": 1,
+      "id": "eta",
+      "kind": "range",
+      "label": "Dynamic viscosity eta",
+      "max": 5,
+      "meaning": "Liquid viscosity in mPa*s; D is inversely proportional to eta, so raising eta lowers D and RMS.",
+      "min": 0.1,
+      "step": 0.1
+    },
+    {
+      "default": 1,
+      "id": "a",
+      "kind": "range",
+      "label": "Particle radius a",
+      "max": 5,
+      "meaning": "Sphere radius in micrometres; D is inversely proportional to a, so larger particles diffuse more slowly.",
+      "min": 0.1,
+      "step": 0.1
+    },
+    {
+      "default": 1,
+      "id": "t",
+      "kind": "range",
+      "label": "Elapsed time t",
+      "max": 60,
+      "meaning": "Observation time in seconds; MSD grows linearly with t and RMS grows as sqrt(t).",
+      "min": 0,
+      "step": 0.5
+    }
+  ],
+  "equations": [
+    {
+      "expression": "D = (R*T/N)/(6*pi*k*P)",
+      "explanation": "Einstein's diffusion expression in the paper's symbols: R is the gas constant, T absolute temperature, N Avogadro's number, k the liquid's viscosity coefficient, and P the sphere's radius. The source excerpt supplies this as a transcription of Section 3.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "diffusion_expression"
+      ]
+    },
+    {
+      "expression": "D = 0.01380649*T/(6*pi*eta*a)",
+      "explanation": "Teaching conversion to convenient units: replace R/N by the modern Boltzmann constant k_B = 1.380649e-23 J/K, write eta for viscosity in mPa*s and a for radius in micrometres, and convert SI factors so D comes out in micrometres squared per second. The decimal coefficient 0.01380649 and the pi approximation are modern unit-conversion artifacts, not numbers fitted by Einstein.",
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "diffusion_expression"
+      ]
+    },
+    {
+      "expression": "lambda_x = sqrt(mean(x^2)) = sqrt(2*D*t)",
+      "explanation": "Equation (11) of Section 4 defines lambda_x as the square root of the arithmetic mean of squared displacements along the x-axis. The mean-square displacement is 2*D*t, so the one-axis RMS is its square root.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "rms_expression"
+      ]
+    },
+    {
+      "expression": "RMS(t2)/RMS(t1) = sqrt(t2/t1)",
+      "explanation": "Because RMS = sqrt(2*D*t), quadrupling t multiplies RMS by sqrt(4) = 2. The source states the mean displacement is proportional to the square root of the time.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "sqrt_time"
+      ]
+    }
+  ],
+  "explanation_steps": [
+    {
+      "heading": "Diffusion coefficient from molecular-kinetic theory",
+      "body": "A small sphere in a stationary liquid is hit by molecular-kinetic fluctuations, so its motion is random. Einstein's Section 3 expression D = (R*T/N)/(6*pi*k*P) ties the diffusion coefficient to temperature, the liquid's viscosity coefficient k, and the sphere's radius P.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "diffusion_expression"
+      ]
+    },
+    {
+      "heading": "Converted working expression",
+      "body": "For convenient micrometre-scale numbers we convert to D = 0.01380649*T/(6*pi*eta*a), with T in K, eta in mPa*s, a in micrometres, and D in micrometres squared per second. The coefficient 0.01380649 and the pi approximation are modern unit conversions, not values fitted by Einstein.",
+      "provenance": "teaching_simplification",
+      "evidence_ids": [
+        "diffusion_expression"
+      ]
+    },
+    {
+      "heading": "From mean-square displacement to one-axis RMS",
+      "body": "Section 4, equation (11) gives lambda_x = sqrt(mean(x^2)) = sqrt(2*D*t). The mean-square displacement along one axis is 2*D*t, and its square root is the one-axis RMS. Because the source notes the mean displacement is proportional to the square root of the time, quadrupling t doubles RMS.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "rms_expression",
+        "sqrt_time"
+      ]
+    }
+  ],
+  "explorations": [
+    {
+      "change": "Set t = 0 s while keeping T = 300 K, eta = 1 mPa*s, and a = 1 um.",
+      "observe": "MSD and RMS both become exactly 0, while D remains 0.000732 um^2/s.",
+      "why": "MSD = 2*D*t and RMS = sqrt(2*D*t) both contain a factor t, so they vanish at t = 0; D itself does not depend on t, so it stays positive."
+    },
+    {
+      "change": "Quadruple t from 1 s to 4 s at fixed T = 300 K, eta = 1 mPa*s, a = 1 um.",
+      "observe": "MSD grows by a factor of 4, from 0.001464 to 0.005856 um^2, while RMS grows only by a factor of 2, from 0.038262 to 0.076524 um.",
+      "why": "MSD is linear in t, but RMS = sqrt(2*D*t) is proportional to sqrt(t); the source states the mean displacement is proportional to the square root of the time."
+    },
+    {
+      "change": "Double eta from 1 to 2 mPa*s, or double a from 1 to 2 um, at fixed T = 300 K and t = 1 s.",
+      "observe": "D halves from 0.000732 to 0.000366 um^2/s, and RMS falls from 0.038262 to 0.027055 um.",
+      "why": "D is inversely proportional to both eta and a, so doubling either denominator factor halves D and reduces RMS by sqrt(2)."
+    }
+  ],
+  "grounding": {
+    "paper_title": "On the Movement of Small Particles Suspended in a Stationary Liquid Demanded by the Molecular-Kinetic Theory of Heat (1905)",
+    "source_url": "https://sites.pitt.edu/~jdnorton/lectures/Rotman_Summer_School_2013/Einstein_1905_docs/Einstein_Brownian_English.pdf",
+    "source_claims": [
+      {
+        "id": "diffusion_expression",
+        "claim": "Einstein's Section 3 gives the diffusion coefficient of a spherical particle in terms of temperature, Avogadro's number, the liquid's viscosity coefficient, and the sphere's radius.",
+        "locator": "Section 3, printed page 12 (PDF page 8), equation transcription",
+        "quote": "D = (R*T/N)/(6*pi*k*P)"
+      },
+      {
+        "id": "rms_expression",
+        "claim": "Section 4, equation (11) defines the one-axis root-mean-square displacement as the square root of the arithmetic mean of squared x-displacements, equal to sqrt(2*D*t).",
+        "locator": "Section 4, equation (11), printed page 17 (PDF page 10), equation transcription",
+        "quote": "lambda_x = sqrt(mean(x^2)) = sqrt(2*D*t)"
+      },
+      {
+        "id": "sqrt_time",
+        "claim": "The mean displacement grows as the square root of the elapsed time.",
+        "locator": "Prose excerpt, Sections 3-4",
+        "quote": "The mean displacement is therefore proportional to the square root of the time."
+      }
+    ],
+    "teaching_simplifications": [
+      "The decimal coefficient 0.01380649 and the pi approximation 3.141592653589793 are modern unit-conversion artifacts, not numbers fitted by Einstein.",
+      "The modern Boltzmann constant k_B = 1.380649e-23 J/K is supplied from NIST and is not quoted from the 1905 paper.",
+      "Writing eta for viscosity and a for radius, and expressing D in micrometres squared per second, is a teaching notation and unit choice.",
+      "All slider values are teaching examples, not reproductions of any measurement or experimental result.",
+      "The line view sweeps t for RMS at the current T, eta, and a; it is a toy demonstration of the scaling relation, not a simulated particle trajectory."
+    ]
+  },
+  "limitations": [
+    "This lesson computes the ensemble mean-square and root-mean-square displacement; it does not simulate a deterministic particle trajectory.",
+    "RMS is not the mean signed displacement, the mean absolute displacement, the total path length, or the three-dimensional RMS displacement.",
+    "The converted expression uses a modern Boltzmann constant and unit conversions that are not part of the 1905 paper's original symbols.",
+    "The slider ranges and default values are teaching choices, not experimental conditions from the source.",
+    "The line view is a toy scaling demonstration and does not reproduce any measured data."
+  ],
+  "schema_version": 2,
+  "terms": [
+    {
+      "symbol": "T",
+      "meaning": "Absolute temperature of the liquid in kelvin."
+    },
+    {
+      "symbol": "eta",
+      "meaning": "Dynamic viscosity of the liquid, entered in mPa*s."
+    },
+    {
+      "symbol": "a",
+      "meaning": "Radius of the suspended spherical particle, entered in micrometres."
+    },
+    {
+      "symbol": "t",
+      "meaning": "Elapsed observation time in seconds."
+    },
+    {
+      "symbol": "D",
+      "meaning": "Diffusion coefficient of the particle, computed in micrometres squared per second."
+    },
+    {
+      "symbol": "MSD",
+      "meaning": "Mean-square displacement along one axis, equal to 2*D*t, in micrometres squared."
+    },
+    {
+      "symbol": "RMS",
+      "meaning": "One-axis root-mean-square displacement, sqrt(2*D*t), in micrometres."
+    },
+    {
+      "symbol": "R/N",
+      "meaning": "Gas constant divided by Avogadro's number, replaced here by the modern Boltzmann constant for unit conversion."
+    }
+  ],
+  "title": "Einstein 1905: Diffusion and One-Axis RMS Displacement of a Small Sphere",
+  "visualizations": [
+    {
+      "id": "rms_vs_time",
+      "kind": "line",
+      "title": "One-axis RMS displacement vs elapsed time",
+      "source": "rms",
+      "x_label": "Elapsed time t (s)",
+      "y_label": "RMS displacement (um)",
+      "sweep_control": "t",
+      "value_label": "RMS (um)"
+    }
+  ],
+  "why_it_matters": "Einstein's result connects an observable, random-looking displacement of a microscopic particle to molecular-kinetic theory. It shows that measuring D, together with T, eta, and a, gives a route to Avogadro's number and to testing the kinetic theory of heat. The square-root-of-time scaling is a signature of diffusive spreading: quadrupling the observation time only doubles the typical one-axis displacement, so RMS is not a speed and not a deterministic path length."
+}

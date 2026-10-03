@@ -1,0 +1,232 @@
+{
+  "schema_version": 2,
+  "title": "Hubble 1929: The Linear Distance–Velocity Relation as a First Approximation",
+  "concept_summary": "Hubble's 1929 paper reports a linear correlation between distances and radial velocities of extra-galactic nebulae. After solar-motion terms are removed, the simplified relation is v_corrected = K·d, where d is distance in Mpc and K is a historical slope in km/s/Mpc. The paper's fitted coefficients were 465 and 513, and it used a rounded intermediate value K = 500. This lesson lets you vary K and d to see that predicted corrected velocity is proportional to distance at fixed K, and that raising K steepens the line. The displayed line is a simplified mean relation, not a fit to or reproduction of observed nebular velocities.",
+  "why_it_matters": "The distance–velocity relation is a foundational observational result in extragalactic astronomy. Understanding it as a linear first approximation over a restricted distance range — with scatter from peculiar motions and solar-motion corrections — is essential before encountering modern cosmological interpretations. The historical K = 500 is a rounded teaching value from 1929, not a present-day measurement of the Hubble constant.",
+  "explanation_steps": [
+    {
+      "heading": "A linear correlation in the data",
+      "body": "Hubble's paper states that the data indicate a linear correlation between distances and velocities. The relation is expressed through an equation of condition that includes solar-motion terms; once those angular terms are removed, the remaining distance term is v_corrected = r·K. In this lesson we rename r to d and treat K as an editable historical slope.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "linear_correlation",
+        "equation_of_condition"
+      ]
+    },
+    {
+      "heading": "The historical slope values",
+      "body": "The paper reports two fitted historical coefficients, 465 and 513 km/s per million parsecs, and then adopts the rounded intermediate value K = 500. These are 1929 numbers, not current estimates. In the demo, K is a slider from 50 to 600 km/s/Mpc with default 500, so you can see how the predicted line changes with the slope.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "fitted_coefficients",
+        "rounded_k"
+      ]
+    },
+    {
+      "heading": "A first approximation over a restricted range",
+      "body": "The final paragraph calls the linear relation a first approximation over a restricted distance range. The plotted corrected velocities still include residuals, and individual nebulae can deviate from the line because of peculiar motions. The exact line shown here is a simplified mean relation after solar-motion correction, not a fit to or reproduction of observed nebular velocities.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "first_approximation"
+      ]
+    }
+  ],
+  "terms": [
+    {
+      "symbol": "d",
+      "meaning": "Distance to a nebula in megaparsecs (Mpc); the source uses r in units of 10^6 parsecs."
+    },
+    {
+      "symbol": "K",
+      "meaning": "Historical slope in km/s per Mpc; the paper's fitted values were 465 and 513, and it used the rounded value 500."
+    },
+    {
+      "symbol": "v_corrected",
+      "meaning": "Radial velocity after removing solar-motion terms, in km/s; the simplified distance term is v_corrected = K·d."
+    },
+    {
+      "symbol": "solar motion",
+      "meaning": "The Sun's motion through space, described in the equation of condition by angular terms involving alpha and delta."
+    },
+    {
+      "symbol": "peculiar motion",
+      "meaning": "A galaxy's own motion relative to the mean expansion, which contributes scatter around the mean line."
+    }
+  ],
+  "equations": [
+    {
+      "expression": "v_corrected = K * d",
+      "explanation": "Simplified distance term after solar-motion correction: corrected radial velocity equals slope times distance. This is the teaching form of the paper's distance term.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "equation_of_condition"
+      ]
+    },
+    {
+      "expression": "r*K + X*cos(alpha)*cos(delta) + Y*sin(alpha)*cos(delta) + Z*sin(delta) = v",
+      "explanation": "Equation of condition from the paper, including solar-motion terms. The angular terms describe solar motion; after removing them, the simplified distance term is v_corrected = r*K.",
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "equation_of_condition"
+      ]
+    }
+  ],
+  "controls": [
+    {
+      "id": "k_slope",
+      "label": "Historical slope K (km/s/Mpc)",
+      "meaning": "Editable historical slope. Default 500 is the paper's rounded intermediate value; 465 and 513 are the fitted coefficients.",
+      "kind": "range",
+      "default": 500,
+      "min": 50,
+      "max": 600,
+      "step": 1
+    },
+    {
+      "id": "d_distance",
+      "label": "Distance d (Mpc)",
+      "meaning": "Distance to the nebula in megaparsecs. The line view sweeps this control from 0 to 10 Mpc.",
+      "kind": "range",
+      "default": 2,
+      "min": 0,
+      "max": 10,
+      "step": 0.1
+    }
+  ],
+  "computations": [
+    {
+      "id": "v_predicted",
+      "label": "Predicted corrected radial velocity",
+      "expression": "k_slope * d_distance",
+      "unit": "km/s",
+      "show": true,
+      "provenance": "source_supported",
+      "evidence_ids": [
+        "equation_of_condition"
+      ]
+    },
+    {
+      "id": "v_at_double",
+      "label": "Predicted velocity at double the distance",
+      "expression": "k_slope * (2 * d_distance)",
+      "unit": "km/s",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    },
+    {
+      "id": "ratio_check",
+      "label": "Ratio of doubled-distance velocity to current velocity",
+      "expression": "2",
+      "unit": "dimensionless",
+      "show": true,
+      "provenance": "teaching_simplification",
+      "evidence_ids": []
+    }
+  ],
+  "visualizations": [
+    {
+      "id": "line_view",
+      "kind": "line",
+      "title": "Predicted corrected velocity vs distance (sweeping d)",
+      "source": "v_predicted",
+      "x_label": "Distance d (Mpc)",
+      "y_label": "Predicted corrected velocity (km/s)",
+      "sweep_control": "d_distance",
+      "value_label": "km/s"
+    }
+  ],
+  "explorations": [
+    {
+      "change": "Set K = 500 and d = 2 Mpc, then change d to 4 Mpc.",
+      "observe": "The predicted velocity doubles from 1000 km/s to 2000 km/s, and the ratio_check computation stays at 2.",
+      "why": "At fixed K, v_corrected is proportional to d, so doubling distance doubles the predicted velocity. This is the linearity stated in the paper."
+    },
+    {
+      "change": "Keep d = 2 Mpc and raise K from 500 to 600 km/s/Mpc.",
+      "observe": "The predicted velocity rises from 1000 km/s to 1200 km/s, and the line in the view becomes steeper.",
+      "why": "Increasing K increases the slope of the line, so every distance maps to a larger predicted velocity. The paper's fitted values 465 and 513 bracket the rounded 500."
+    }
+  ],
+  "limitations": [
+    "The displayed exact line is a simplified mean relation after solar-motion correction, not a fit to or reproduction of observed nebular velocities.",
+    "The plotted corrected velocities still include residuals; individual nebulae can deviate from the line because of peculiar motions.",
+    "The paper calls the linear relation a first approximation over a restricted distance range; do not extrapolate relativistically or infer universe age.",
+    "K = 500 is the paper's rounded historical teaching value, not a present-day measurement of the Hubble constant.",
+    "This source did not establish an exact modern cosmology; the lesson is about the 1929 linear correlation and its stated limitations."
+  ],
+  "grounding": {
+    "paper_title": "A Relation Between Distance and Radial Velocity Among Extra-Galactic Nebulae",
+    "source_url": "https://www.astro.rug.nl/~weygaert/tim1publication/cosmo2007/literature/hubble.1929.pdf",
+    "source_claims": [
+      {
+        "id": "linear_correlation",
+        "claim": "The data indicate a linear correlation between distances and velocities.",
+        "locator": "Paragraph immediately preceding the equations of condition, PDF page 2",
+        "quote": "The data in the table indicate a linear correlation between distances and velocities"
+      },
+      {
+        "id": "equation_of_condition",
+        "claim": "The equation of condition includes solar-motion terms; after removing them, the simplified distance term is v_corrected = r*K.",
+        "locator": "Equations-of-condition paragraph, PDF page 2",
+        "quote": "r*K + X*cos(alpha)*cos(delta) + Y*sin(alpha)*cos(delta) + Z*sin(delta) = v"
+      },
+      {
+        "id": "fitted_coefficients",
+        "claim": "The paper gives two fitted historical coefficients, 465 and 513 km/s per million parsecs.",
+        "locator": "Rounded values paragraph, PDF page 3",
+        "quote": "465 and 513"
+      },
+      {
+        "id": "rounded_k",
+        "claim": "The paper uses the rounded intermediate value K=500.",
+        "locator": "Rounded values paragraph, PDF page 3",
+        "quote": "K=500"
+      },
+      {
+        "id": "first_approximation",
+        "claim": "The final paragraph calls the linear relation a first approximation over a restricted distance range.",
+        "locator": "Final paragraph, PDF page 5",
+        "quote": "first approximation"
+      }
+    ],
+    "teaching_simplifications": [
+      "The sliders and exact predicted line are teaching constructions, not observational data.",
+      "The ratio_check and v_at_double computations are derived teaching aids, not source equations.",
+      "Renaming r to d for the teaching example is a simplification; the source uses r in units of 10^6 parsecs.",
+      "The line view sweeps d from 0 to 10 Mpc, which is a teaching range, not the paper's restricted distance range."
+    ]
+  },
+  "checks": [
+    {
+      "id": "default_case",
+      "name": "Default K=500, d=2 Mpc",
+      "state": {
+        "k_slope": 500,
+        "d_distance": 2
+      },
+      "expected": {
+        "v_predicted": 1000,
+        "v_at_double": 2000,
+        "ratio_check": 2
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    },
+    {
+      "id": "boundary_case",
+      "name": "Minimum K and d=0",
+      "state": {
+        "k_slope": 50,
+        "d_distance": 0
+      },
+      "expected": {
+        "v_predicted": 0,
+        "v_at_double": 0,
+        "ratio_check": 0
+      },
+      "atol": 1e-06,
+      "rtol": 1e-06
+    }
+  ]
+}

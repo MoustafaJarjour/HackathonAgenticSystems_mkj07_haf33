@@ -1,0 +1,119 @@
+{
+  "commit": "61ddce2bac24eb705d7a26a0ec541b09689b506f",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "input_path": "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\examples\\science_cases\\hubble_relation.json",
+  "command": [
+    "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\agent.py",
+    "--input",
+    "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\examples\\science_cases\\hubble_relation.json",
+    "--output",
+    "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\review-out\\new-papers-baseline\\hubble_relation-2fb286b0-run02",
+    "--model",
+    "deepseek/deepseek-v4.1-flash"
+  ],
+  "process_started_utc": "2026-10-03T13:39:14.880179+00:00",
+  "process_exit_code": 0,
+  "external_process_elapsed_seconds": 25.397800399921834,
+  "timing_scope": "Before subprocess launch through child wait/exit; includes child startup, imports, checks, retries and cleanup; excludes harness setup and later report writing.",
+  "external_timeout": false,
+  "launch_error": null,
+  "hashes": {
+    "input.json": {
+      "raw_sha256": "2fb286b093676eed17063c63dbe282ffa60d6e050a5b088e99e18b5a1aa78f15",
+      "canonical_lf_sha256": "2fb286b093676eed17063c63dbe282ffa60d6e050a5b088e99e18b5a1aa78f15",
+      "bytes": 2531
+    },
+    "lesson.json": {
+      "raw_sha256": "d885e74a4f77fb4621ee60215235783d2fbb6908d8b44ddd3ac59b199d8420de",
+      "canonical_lf_sha256": "bbf5bb9673e9870b320a6910aef095b709412783f288167af8c693ee49c3d910",
+      "bytes": 14120
+    },
+    "index.html": {
+      "raw_sha256": "546af9c81eb3019a2051f780f7d63959f6868b11c74bcd0eb3956d0f937b00f3",
+      "canonical_lf_sha256": "3d47ebce6ed4877647b9864fa3c53db83bc202504c812b0e4c0897cfa2364c8c",
+      "bytes": 63843
+    },
+    "trace.jsonl": {
+      "raw_sha256": "df63631b50d3e17eca25c65a2f04823ceb9abd78fd976f5471b53b46385ab10f",
+      "canonical_lf_sha256": "df63631b50d3e17eca25c65a2f04823ceb9abd78fd976f5471b53b46385ab10f",
+      "bytes": 14720
+    }
+  },
+  "trace": {
+    "requests": 3,
+    "responses": [
+      {
+        "request_number": 1,
+        "response_id": "gen-1791034757-BqRkM97PqVcHMbPq4TSv",
+        "usage": {
+          "prompt_tokens": 4391,
+          "completion_tokens": 2903,
+          "total_tokens": 7294,
+          "cached_tokens": null,
+          "reasoning_tokens": 0
+        },
+        "total_equals_prompt_plus_completion": true
+      },
+      {
+        "request_number": 2,
+        "response_id": "gen-1791034772-whMyGjFfDXDC8RpIKpuO",
+        "usage": {
+          "prompt_tokens": 7146,
+          "completion_tokens": 169,
+          "total_tokens": 7315,
+          "cached_tokens": null,
+          "reasoning_tokens": 0
+        },
+        "total_equals_prompt_plus_completion": true
+      },
+      {
+        "request_number": 3,
+        "response_id": "gen-1791034774-bvTpVy0aPR4FjQuupAbU",
+        "usage": {
+          "prompt_tokens": 7820,
+          "completion_tokens": 224,
+          "total_tokens": 8044,
+          "cached_tokens": null,
+          "reasoning_tokens": 0
+        },
+        "total_equals_prompt_plus_completion": true
+      }
+    ],
+    "observed_usage": {
+      "prompt_tokens": 19357,
+      "completion_tokens": 3296,
+      "total_tokens": 22653
+    },
+    "missing_usage_attempts": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0
+    },
+    "usage_complete": true,
+    "T_prompt_plus_completion": 22653,
+    "T_observed_lower_bound": 22653,
+    "accounting_note": "T includes all attempts and cached input; reasoning is already included in completion and is not added again. Missing cache/usage fields are unknown.",
+    "trace_finish_result": "success",
+    "trace_finish_elapsed_seconds": 25.11,
+    "trace_finish_usage_matches_attempts": true,
+    "parse_errors": []
+  },
+  "usable_html": true,
+  "quality_status": "unreviewed",
+  "quality_qualification": "Usable HTML only establishes successful CLI output, not scientific, teaching, visual, control or autonomous quality; no official score is promised.",
+  "manual_quality_review": {
+    "criteria_maxima": {
+      "scientific_accuracy": 25,
+      "teaching": 20,
+      "visuals": 15,
+      "meaningful_controls": 15,
+      "autonomous_operation": 10
+    },
+    "scores": null,
+    "sources": [],
+    "states": [],
+    "findings": [],
+    "reviewer": null
+  }
+}

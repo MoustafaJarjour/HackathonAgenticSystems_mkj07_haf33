@@ -1,0 +1,2237 @@
+{
+  "package": "examples/generated/generalization-baseline/brownian-run02",
+  "case": "brownian_diffusion",
+  "partial_lesson": "examples/generated/generalization-baseline/brownian-run02/partial.lesson.json",
+  "usable_generated_html": false,
+  "final_lesson_exists": false,
+  "html_exists": false,
+  "unmodified": true,
+  "package_hashes_before": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "cdf44010ada41a5027d75b0deddb7bb733013881ed78756a9fc86ef0fafec1dd",
+      "canonical_lf_sha256": "2befbd8ae98ff61f847067b993e81ac6e2475b6e6dd1b9da746c2af6645c0b67",
+      "bytes": 15560
+    },
+    "trace.jsonl": {
+      "raw_sha256": "adff5a6cc866b97b5fdd93928b5c15b6a354489135dcc0901eff60d475da7360",
+      "canonical_lf_sha256": "adff5a6cc866b97b5fdd93928b5c15b6a354489135dcc0901eff60d475da7360",
+      "bytes": 33248
+    }
+  },
+  "package_hashes_after": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "cdf44010ada41a5027d75b0deddb7bb733013881ed78756a9fc86ef0fafec1dd",
+      "canonical_lf_sha256": "2befbd8ae98ff61f847067b993e81ac6e2475b6e6dd1b9da746c2af6645c0b67",
+      "bytes": 15560
+    },
+    "trace.jsonl": {
+      "raw_sha256": "adff5a6cc866b97b5fdd93928b5c15b6a354489135dcc0901eff60d475da7360",
+      "canonical_lf_sha256": "adff5a6cc866b97b5fdd93928b5c15b6a354489135dcc0901eff60d475da7360",
+      "bytes": 33248
+    }
+  },
+  "atol": 1e-12,
+  "rtol": 1e-12,
+  "explicit_scientific_control_mapping": {
+    "T": "temp",
+    "eta": "eta",
+    "a": "a",
+    "t": "t"
+  },
+  "explicit_physical_output_mapping": {
+    "D_um2_per_s": "d_micrometre2_per_s",
+    "MSD_um2": "msd_micrometre2",
+    "RMS_x_um": "rms_micrometre"
+  },
+  "fixture_valid_total": 12,
+  "fixture_valid_passed": 12,
+  "valid_total": 60,
+  "valid_passed": 60,
+  "invalid_total": 3,
+  "invalid_passed": 3,
+  "records": [
+    {
+      "id": "default",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 0.43947422604976444,
+        "rms_micrometre": 0.6629285225797458
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.43947422604976444,
+          "rms_micrometre": 0.6629285225797458,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "four_times_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 1.7578969041990578,
+        "rms_micrometre": 1.3258570451594915
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 1.7578969041990578,
+          "rms_micrometre": 1.3258570451594915,
+          "sqrt_t": 2
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "twice_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 2,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 2,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.10986855651244111,
+        "msd_micrometre2": 0.21973711302488222,
+        "rms_micrometre": 0.4687612537581175
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.10986855651244111,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.21973711302488222,
+          "rms_micrometre": 0.4687612537581175,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "twice_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 2,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 2,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.10986855651244111,
+        "msd_micrometre2": 0.21973711302488222,
+        "rms_micrometre": 0.4687612537581175
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.10986855651244111,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.21973711302488222,
+          "rms_micrometre": 0.4687612537581175,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "higher_temperature",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 400,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 400,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.29298281736650966,
+        "msd_micrometre2": 0.5859656347330193,
+        "rms_micrometre": 0.7654839219297942
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.2929828173665096,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.5859656347330192,
+          "rms_micrometre": 0.7654839219297942,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "lower_temperature",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 250,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 250,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.18311426085406854,
+        "msd_micrometre2": 0.3662285217081371,
+        "rms_micrometre": 0.605168176384166
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.1831142608540685,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.366228521708137,
+          "rms_micrometre": 0.605168176384166,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 0,
+        "rms_micrometre": 0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0,
+          "rms_micrometre": 0,
+          "sqrt_t": 0
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "max_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 26.368453562985867,
+        "rms_micrometre": 5.135022255354485
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 26.368453562985867,
+          "rms_micrometre": 5.135022255354485,
+          "sqrt_t": 7.745966692414834
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "minimum_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 0.1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 0.1,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 2.1973711302488224,
+        "msd_micrometre2": 4.394742260497645,
+        "rms_micrometre": 2.096364057242359
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 2.1973711302488224,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 4.394742260497645,
+          "rms_micrometre": 2.096364057242359,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "minimum_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 0.1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 0.1,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 2.1973711302488224,
+        "msd_micrometre2": 4.394742260497645,
+        "rms_micrometre": 2.096364057242359
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 2.1973711302488224,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 4.394742260497645,
+          "rms_micrometre": 2.096364057242359,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "maximum_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 5,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 5,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.04394742260497644,
+        "msd_micrometre2": 0.08789484520995287,
+        "rms_micrometre": 0.2964706481423631
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.043947422604976444,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.08789484520995289,
+          "rms_micrometre": 0.2964706481423631,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "maximum_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 5,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 5,
+        "t": 1
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.043947422604976444,
+        "msd_micrometre2": 0.08789484520995289,
+        "rms_micrometre": 0.2964706481423631
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.043947422604976444,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.08789484520995289,
+          "rms_micrometre": 0.2964706481423631,
+          "sqrt_t": 1
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_viscosity",
+      "kind": "invalid_domain",
+      "scientific_state": {
+        "T": 300,
+        "eta": 0,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 0,
+        "a": 1,
+        "t": 1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Dynamic viscosity eta: value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_radius",
+      "kind": "invalid_domain",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 0,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 0,
+        "t": 1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Particle radius a: value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "negative_time",
+      "kind": "invalid_domain",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": -1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": -1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Elapsed time t: value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "line:0",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 0.0,
+        "rms_micrometre": 0.0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0,
+          "rms_micrometre": 0,
+          "sqrt_t": 0
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:3",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 0.6592113390746467,
+        "rms_micrometre": 0.8119183081287469
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.6592113390746467,
+          "rms_micrometre": 0.8119183081287469,
+          "sqrt_t": 1.224744871391589
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:5",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 2.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 2.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 1.0986855651244112,
+        "rms_micrometre": 1.0481820286211796
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 1.0986855651244112,
+          "rms_micrometre": 1.0481820286211796,
+          "sqrt_t": 1.5811388300841898
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:8",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 1.7578969041990578,
+        "rms_micrometre": 1.3258570451594915
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 1.7578969041990578,
+          "rms_micrometre": 1.3258570451594915,
+          "sqrt_t": 2
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:10",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 5.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 5.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 2.1973711302488224,
+        "rms_micrometre": 1.4823532407118158
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 2.1973711302488224,
+          "rms_micrometre": 1.4823532407118158,
+          "sqrt_t": 2.23606797749979
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:13",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 6.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 6.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 2.856582469323469,
+        "rms_micrometre": 1.6901427363756794
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 2.856582469323469,
+          "rms_micrometre": 1.6901427363756794,
+          "sqrt_t": 2.5495097567963922
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:15",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 7.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 7.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 3.2960566953732333,
+        "rms_micrometre": 1.815504529152498
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 3.2960566953732333,
+          "rms_micrometre": 1.815504529152498,
+          "sqrt_t": 2.7386127875258306
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:18",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 9.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 9.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 3.95526803444788,
+        "rms_micrometre": 1.9887855677392372
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 3.95526803444788,
+          "rms_micrometre": 1.9887855677392372,
+          "sqrt_t": 3
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:20",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 10.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 10.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 4.394742260497645,
+        "rms_micrometre": 2.096364057242359
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 4.394742260497645,
+          "rms_micrometre": 2.096364057242359,
+          "sqrt_t": 3.1622776601683795
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:23",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 11.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 11.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 5.053953599572291,
+        "rms_micrometre": 2.248099997680773
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 5.053953599572291,
+          "rms_micrometre": 2.248099997680773,
+          "sqrt_t": 3.391164991562634
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:26",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 13.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 13.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 5.713164938646938,
+        "rms_micrometre": 2.3902227801288602
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 5.713164938646938,
+          "rms_micrometre": 2.3902227801288602,
+          "sqrt_t": 3.605551275463989
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:28",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 14.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 14.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 6.152639164696702,
+        "rms_micrometre": 2.480451403413641
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 6.152639164696702,
+          "rms_micrometre": 2.480451403413641,
+          "sqrt_t": 3.7416573867739413
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:31",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 15.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 15.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 6.811850503771349,
+        "rms_micrometre": 2.6099522033499674
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 6.811850503771349,
+          "rms_micrometre": 2.6099522033499674,
+          "sqrt_t": 3.9370039370059056
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:33",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 16.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 16.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 7.251324729821113,
+        "rms_micrometre": 2.692828388483216
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 7.251324729821113,
+          "rms_micrometre": 2.692828388483216,
+          "sqrt_t": 4.06201920231798
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:36",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 18.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 18.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 7.91053606889576,
+        "rms_micrometre": 2.812567522548705
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 7.91053606889576,
+          "rms_micrometre": 2.812567522548705,
+          "sqrt_t": 4.242640687119285
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:38",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 19.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 19.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 8.350010294945525,
+        "rms_micrometre": 2.8896384367158334
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 8.350010294945525,
+          "rms_micrometre": 2.8896384367158334,
+          "sqrt_t": 4.358898943540674
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:41",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 20.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 20.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 9.009221634020172,
+        "rms_micrometre": 3.0015365455080123
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 9.009221634020172,
+          "rms_micrometre": 3.0015365455080123,
+          "sqrt_t": 4.527692569068709
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:43",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 21.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 21.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 9.448695860069936,
+        "rms_micrometre": 3.0738731040935856
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 9.448695860069936,
+          "rms_micrometre": 3.0738731040935856,
+          "sqrt_t": 4.636809247747852
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:46",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 23.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 23.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 10.107907199144583,
+        "rms_micrometre": 3.1792935062910725
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 10.107907199144583,
+          "rms_micrometre": 3.1792935062910725,
+          "sqrt_t": 4.795831523312719
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:49",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 24.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 24.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 10.76711853821923,
+        "rms_micrometre": 3.2813287763068226
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 10.76711853821923,
+          "rms_micrometre": 3.2813287763068226,
+          "sqrt_t": 4.949747468305833
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:51",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 25.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 25.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 11.206592764268994,
+        "rms_micrometre": 3.347624943787609
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 11.206592764268994,
+          "rms_micrometre": 3.347624943787609,
+          "sqrt_t": 5.049752469181039
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:54",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 27.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 27.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 11.86580410334364,
+        "rms_micrometre": 3.444677648684074
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 11.86580410334364,
+          "rms_micrometre": 3.444677648684074,
+          "sqrt_t": 5.196152422706632
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:56",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 28.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 28.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 12.305278329393404,
+        "rms_micrometre": 3.5078880155149488
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 12.305278329393404,
+          "rms_micrometre": 3.5078880155149488,
+          "sqrt_t": 5.291502622129181
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:59",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 29.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 29.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 12.964489668468051,
+        "rms_micrometre": 3.600623511069722
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 12.964489668468051,
+          "rms_micrometre": 3.600623511069722,
+          "sqrt_t": 5.431390245600108
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:61",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 30.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 30.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 13.403963894517815,
+        "rms_micrometre": 3.661142430241934
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 13.403963894517815,
+          "rms_micrometre": 3.661142430241934,
+          "sqrt_t": 5.522680508593631
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:64",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 32.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 32.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 14.063175233592462,
+        "rms_micrometre": 3.75009003006494
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 14.063175233592462,
+          "rms_micrometre": 3.75009003006494,
+          "sqrt_t": 5.656854249492381
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:66",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 33.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 33.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 14.502649459642226,
+        "rms_micrometre": 3.8082344281362492
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 14.502649459642226,
+          "rms_micrometre": 3.8082344281362492,
+          "sqrt_t": 5.744562646538029
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:69",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 34.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 34.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 15.161860798716873,
+        "rms_micrometre": 3.8938234164785737
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 15.161860798716873,
+          "rms_micrometre": 3.8938234164785737,
+          "sqrt_t": 5.873670062235365
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:71",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 35.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 35.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 15.601335024766637,
+        "rms_micrometre": 3.949852532027827
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 15.601335024766637,
+          "rms_micrometre": 3.949852532027827,
+          "sqrt_t": 5.958187643906492
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:74",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 37.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 37.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 16.260546363841286,
+        "rms_micrometre": 4.032436777414035
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 16.260546363841286,
+          "rms_micrometre": 4.032436777414035,
+          "sqrt_t": 6.082762530298219
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:77",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 38.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 38.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 16.91975770291593,
+        "rms_micrometre": 4.113363307916763
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 16.91975770291593,
+          "rms_micrometre": 4.113363307916763,
+          "sqrt_t": 6.2048368229954285
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:79",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 39.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 39.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 17.359231928965695,
+        "rms_micrometre": 4.166441158706756
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 17.359231928965695,
+          "rms_micrometre": 4.166441158706756,
+          "sqrt_t": 6.284902544988268
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:82",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 41.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 41.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 18.018443268040343,
+        "rms_micrometre": 4.24481369061592
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 18.018443268040343,
+          "rms_micrometre": 4.24481369061592,
+          "sqrt_t": 6.4031242374328485
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:84",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 42.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 42.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 18.457917494090108,
+        "rms_micrometre": 4.296267856417953
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 18.457917494090108,
+          "rms_micrometre": 4.296267856417953,
+          "sqrt_t": 6.48074069840786
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:87",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 43.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 43.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 19.117128833164752,
+        "rms_micrometre": 4.372313899203116
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 19.117128833164752,
+          "rms_micrometre": 4.372313899203116,
+          "sqrt_t": 6.59545297913646
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:89",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 44.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 44.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 19.556603059214517,
+        "rms_micrometre": 4.422284823393278
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 19.556603059214517,
+          "rms_micrometre": 4.422284823393278,
+          "sqrt_t": 6.670832032063167
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:92",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 46.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 46.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 20.215814398289165,
+        "rms_micrometre": 4.496199995361546
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 20.215814398289165,
+          "rms_micrometre": 4.496199995361546,
+          "sqrt_t": 6.782329983125268
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:94",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 47.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 47.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 20.65528862433893,
+        "rms_micrometre": 4.544808975560901
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 20.65528862433893,
+          "rms_micrometre": 4.544808975560901,
+          "sqrt_t": 6.855654600401044
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:97",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 48.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 48.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 21.314499963413574,
+        "rms_micrometre": 4.616762931255359
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 21.314499963413574,
+          "rms_micrometre": 4.616762931255359,
+          "sqrt_t": 6.96419413859206
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:100",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 50.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 50.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 21.973711302488223,
+        "rms_micrometre": 4.687612537581175
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 21.973711302488223,
+          "rms_micrometre": 4.687612537581175,
+          "sqrt_t": 7.0710678118654755
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:102",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 51.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 51.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 22.413185528537987,
+        "rms_micrometre": 4.734256597242907
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 22.413185528537987,
+          "rms_micrometre": 4.734256597242907,
+          "sqrt_t": 7.14142842854285
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:105",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 52.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 52.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 23.072396867612632,
+        "rms_micrometre": 4.803373488248924
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 23.072396867612632,
+          "rms_micrometre": 4.803373488248924,
+          "sqrt_t": 7.245688373094719
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:107",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 53.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 53.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 23.511871093662396,
+        "rms_micrometre": 4.848904112648794
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 23.511871093662396,
+          "rms_micrometre": 4.848904112648794,
+          "sqrt_t": 7.314369419163897
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:110",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 55.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 55.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 24.171082432737045,
+        "rms_micrometre": 4.916409506208473
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 24.171082432737045,
+          "rms_micrometre": 4.916409506208473,
+          "sqrt_t": 7.416198487095663
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:112",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 56.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 56.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 24.61055665878681,
+        "rms_micrometre": 4.960902806827282
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 24.61055665878681,
+          "rms_micrometre": 4.960902806827282,
+          "sqrt_t": 7.483314773547883
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:115",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 57.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 57.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 25.269767997861454,
+        "rms_micrometre": 5.026904415031328
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 25.269767997861454,
+          "rms_micrometre": 5.026904415031328,
+          "sqrt_t": 7.582875444051551
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:117",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 58.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 58.5
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 25.709242223911218,
+        "rms_micrometre": 5.070428209127038
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 25.709242223911218,
+          "rms_micrometre": 5.070428209127038,
+          "sqrt_t": 7.648529270389178
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:120",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60.0
+      },
+      "expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 26.368453562985867,
+        "rms_micrometre": 5.135022255354485
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 26.368453562985867,
+          "rms_micrometre": 5.135022255354485,
+          "sqrt_t": 7.745966692414834
+        }
+      },
+      "passed": true
+    }
+  ],
+  "preserved_generated_checks_review": [
+    {
+      "id": "default_case",
+      "name": "Default state: T=300, eta=1, a=1, t=1",
+      "state": {
+        "a": 1,
+        "eta": 1,
+        "t": 1,
+        "temp": 300
+      },
+      "preserved_generated_expected": {
+        "d_coeff": 0.01380649,
+        "d_micrometre2_per_s": 0.000732,
+        "msd_micrometre2": 0.001464,
+        "rms_micrometre": 0.038262578
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.43947422604976444,
+          "rms_micrometre": 0.6629285225797458,
+          "sqrt_t": 1
+        }
+      },
+      "independent_physical_expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 0.43947422604976444,
+        "rms_micrometre": 0.6629285225797458
+      },
+      "saved_expected_agree_with_core": false
+    },
+    {
+      "id": "zero_time",
+      "name": "t=0 gives zero MSD and RMS while D stays positive",
+      "state": {
+        "a": 1,
+        "eta": 1,
+        "t": 0,
+        "temp": 300
+      },
+      "preserved_generated_expected": {
+        "d_coeff": 0.01380649,
+        "d_micrometre2_per_s": 0.000732,
+        "msd_micrometre2": 0,
+        "rms_micrometre": 0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0,
+          "rms_micrometre": 0,
+          "sqrt_t": 0
+        }
+      },
+      "independent_physical_expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 0.0,
+        "rms_micrometre": 0.0
+      },
+      "saved_expected_agree_with_core": false
+    },
+    {
+      "id": "double_eta",
+      "name": "Doubling viscosity halves D but leaves MSD and RMS unchanged at fixed t",
+      "state": {
+        "a": 1,
+        "eta": 2,
+        "t": 1,
+        "temp": 300
+      },
+      "preserved_generated_expected": {
+        "d_coeff": 0.01380649,
+        "d_micrometre2_per_s": 0.000366,
+        "msd_micrometre2": 0.001464,
+        "rms_micrometre": 0.038262578
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.10986855651244111,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 0.21973711302488222,
+          "rms_micrometre": 0.4687612537581175,
+          "sqrt_t": 1
+        }
+      },
+      "independent_physical_expected": {
+        "d_micrometre2_per_s": 0.10986855651244111,
+        "msd_micrometre2": 0.21973711302488222,
+        "rms_micrometre": 0.4687612537581175
+      },
+      "saved_expected_agree_with_core": false
+    },
+    {
+      "id": "quadruple_time",
+      "name": "Quadrupling time doubles RMS",
+      "state": {
+        "a": 1,
+        "eta": 1,
+        "t": 4,
+        "temp": 300
+      },
+      "preserved_generated_expected": {
+        "d_coeff": 0.01380649,
+        "d_micrometre2_per_s": 0.000732,
+        "msd_micrometre2": 0.005856,
+        "rms_micrometre": 0.076525156
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_micrometre2_per_s": 0.21973711302488222,
+          "d_coeff": 0.01380649,
+          "msd_micrometre2": 1.7578969041990578,
+          "rms_micrometre": 1.3258570451594915,
+          "sqrt_t": 2
+        }
+      },
+      "independent_physical_expected": {
+        "d_micrometre2_per_s": 0.21973711302488222,
+        "msd_micrometre2": 1.7578969041990578,
+        "rms_micrometre": 1.3258570451594915
+      },
+      "saved_expected_agree_with_core": false
+    }
+  ],
+  "source_url": "https://sites.pitt.edu/~jdnorton/lectures/Rotman_Summer_School_2013/Einstein_1905_docs/Einstein_Brownian_English.pdf",
+  "findings": [
+    {
+      "severity": "generation_failure",
+      "field": "checks",
+      "finding": "Preserved model-authored expected values omit the default temperature factor 300: expected D about .000732 versus independent/core .2197371130. MSD and RMS expectations inherit this error. CLI gates correctly reject these inconsistent cases; the package has no usable HTML."
+    },
+    {
+      "severity": "unit_revision",
+      "field": "computations[id=d_coeff].unit",
+      "finding": "The auxiliary conversion-coefficient unit is dimensionally inconsistent with D=C*T/(eta*a). The coefficient must carry diffusivity*viscosity*radius/temperature in the chosen units, equivalently mPa*micrometre^3/K; main D/MSD/RMS units are correct."
+    },
+    {
+      "severity": "teaching_revision",
+      "field": "checks[id=double_eta].name and expected",
+      "finding": "The preserved case title claims MSD/RMS unchanged when viscosity doubles at fixed time; physically MSD halves and RMS divides by sqrt(2). The main explanation/explorations elsewhere state the correct scaling."
+    },
+    {
+      "severity": "provenance_revision",
+      "field": "grounding.source_claims[id=msd_definition].quote",
+      "finding": "Evidence uses the authored sentence introducing what the preceding passage identifies, not verbatim primary-paper prose. The one-axis RMS meaning is correct, but this quote must be marked as a paraphrase."
+    }
+  ],
+  "main_physical_equations_verdict": "pass",
+  "independent_science_verdict": "failed_generation_no_usable_page",
+  "scope": "These are numerical/source reviews of an unchanged partial lesson only. No page was created or hand-repaired; passing primary computations cannot override failed generated expectations and absent HTML.",
+  "variant": "baseline",
+  "published_package_hashes": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "measured-run.json": {
+      "raw_sha256": "60204c69e9413faf2bd037b49cdf856b9a97ad38dae8e629ba9ea93f98da2f8d",
+      "canonical_lf_sha256": "15850b3413116b21d9aea41e0390801c4843c7d2a1e8d9624d6ad73d38de52be",
+      "bytes": 4249
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "cdf44010ada41a5027d75b0deddb7bb733013881ed78756a9fc86ef0fafec1dd",
+      "canonical_lf_sha256": "2befbd8ae98ff61f847067b993e81ac6e2475b6e6dd1b9da746c2af6645c0b67",
+      "bytes": 15560
+    },
+    "trace.jsonl": {
+      "raw_sha256": "adff5a6cc866b97b5fdd93928b5c15b6a354489135dcc0901eff60d475da7360",
+      "canonical_lf_sha256": "adff5a6cc866b97b5fdd93928b5c15b6a354489135dcc0901eff60d475da7360",
+      "bytes": 33248
+    }
+  },
+  "publication_identity": {
+    "byte_preserving_copy": true,
+    "reviewed_partial_or_final_json_preserved": true,
+    "generated_files_modified_by_review": false
+  },
+  "benchmark_input_qualification": "The supplied benchmark excerpts mix a short authentic prose quote, explicitly transcribed equations and authored summaries of source-supported facts. These are focused, enriched inputs rather than raw-paper discovery tests. Several generated grounding quotes promote authored summaries into purported primary-paper quotations; this is a provenance finding and a limitation of benchmark-input representativeness. Inputs were not changed during trials.",
+  "quality_score_assigned": false,
+  "official_quality_or_efficiency_points_promised": false
+}
