@@ -10,7 +10,8 @@
       {"id": "fair_pair", "state": {"weights": [1, 1]}, "expected": {"probabilities": [0.5, 0.5], "entropy_bits": 1, "max_entropy_bits": 1}},
       {"id": "fair_four", "state": {"weights": [1, 1, 1, 1]}, "expected": {"probabilities": [0.25, 0.25, 0.25, 0.25], "entropy_bits": 2, "max_entropy_bits": 2}},
       {"id": "zero_outcome", "state": {"weights": [1, 1, 0]}, "expected": {"probabilities": [0.5, 0.5, 0], "entropy_bits": 1, "max_entropy_bits": 1.584962500721156}},
-      {"id": "uneven", "state": {"weights": [1, 3]}, "expected": {"probabilities": [0.25, 0.75], "entropy_bits": 0.8112781244591328, "max_entropy_bits": 1}}
+      {"id": "uneven", "state": {"weights": [1, 3]}, "expected": {"probabilities": [0.25, 0.75], "entropy_bits": 0.8112781244591328, "max_entropy_bits": 1}},
+      {"id": "proportional_weights", "state": {"weights": [2, 6]}, "expected": {"probabilities": [0.25, 0.75], "entropy_bits": 0.8112781244591328, "max_entropy_bits": 1}}
     ],
     "invalid_states": [{"weights": [0, 0]}, {"weights": [-1, 2]}]
   },
@@ -25,7 +26,10 @@
       {"id": "identity_scaled", "state": {"q": [[1, 0], [0, 1]], "k": [[1, 0], [0, 1]], "v": [[10, 0], [0, 20]], "scaled": 1}, "expected": {"scores": [[0.7071067811865475, 0], [0, 0.7071067811865475]], "weights": [[0.6697615493266569, 0.3302384506733431], [0.3302384506733431, 0.6697615493266569]], "attention_output": [[6.697615493266569, 6.604769013466862], [3.302384506733431, 13.395230986533138]]}},
       {"id": "identity_unscaled", "state": {"q": [[1, 0], [0, 1]], "k": [[1, 0], [0, 1]], "v": [[10, 0], [0, 20]], "scaled": 0}, "expected": {"scores": [[1, 0], [0, 1]], "weights": [[0.7310585786300049, 0.2689414213699951], [0.2689414213699951, 0.7310585786300049]], "attention_output": [[7.310585786300049, 5.378828427399902], [2.689414213699951, 14.621171572600098]]}},
       {"id": "dominant_score", "state": {"q": [[1000, 0]], "k": [[1, 0], [0, 1]], "v": [[10, 0], [0, 20]], "scaled": 0}, "expected": {"scores": [[1000, 0]], "weights": [[1, 0]], "attention_output": [[10, 0]]}},
-      {"id": "four_key_dimensions", "state": {"q": [[2, 0, 0, 0]], "k": [[1, 0, 0, 0], [0, 1, 0, 0]], "v": [[10], [20]], "scaled": 1}, "expected": {"scores": [[1, 0]], "weights": [[0.7310585786300049, 0.2689414213699951]], "attention_output": [[12.689414213699951]]}}
+      {"id": "four_key_dimensions", "state": {"q": [[2, 0, 0, 0]], "k": [[1, 0, 0, 0], [0, 1, 0, 0]], "v": [[10], [20]], "scaled": 1}, "expected": {"scores": [[1, 0]], "weights": [[0.7310585786300049, 0.2689414213699951]], "attention_output": [[12.689414213699951]]}},
+      {"id": "equal_two_queries", "state": {"q": [[0, 0], [0, 0]], "k": [[1, 0], [0, 1]], "v": [[10, 0], [0, 20]], "scaled": 1}, "expected": {"scores": [[0, 0], [0, 0]], "weights": [[0.5, 0.5], [0.5, 0.5]], "attention_output": [[5, 10], [5, 10]]}},
+      {"id": "edited_key_unscaled", "state": {"q": [[1, 0], [0, 1]], "k": [[2, 0], [0, 1]], "v": [[10, 0], [0, 20]], "scaled": 0}, "expected": {"scores": [[2, 0], [0, 1]], "weights": [[0.8807970779778823, 0.11920292202211769], [0.2689414213699951, 0.7310585786300049]], "attention_output": [[8.807970779778824, 2.3840584404423537], [2.689414213699951, 14.621171572600098]]}},
+      {"id": "edited_value_unscaled", "state": {"q": [[1, 0], [0, 1]], "k": [[1, 0], [0, 1]], "v": [[20, 0], [0, 20]], "scaled": 0}, "expected": {"scores": [[1, 0], [0, 1]], "weights": [[0.7310585786300049, 0.2689414213699951], [0.2689414213699951, 0.7310585786300049]], "attention_output": [[14.621171572600098, 5.378828427399902], [5.378828427399902, 14.621171572600098]]}}
     ],
     "invalid_states": [{"q": [[1, 0]], "k": [[1, 0, 0], [0, 1, 0]], "v": [[10], [20]], "scaled": 1}]
   },
@@ -40,14 +44,16 @@
       {"id": "half_maximum", "state": {"substrate": 2, "km": 2, "vmax": 10}, "expected": {"rate": 5, "fraction": 0.5}},
       {"id": "three_quarters", "state": {"substrate": 6, "km": 2, "vmax": 10}, "expected": {"rate": 7.5, "fraction": 0.75}},
       {"id": "higher_km", "state": {"substrate": 2, "km": 6, "vmax": 10}, "expected": {"rate": 2.5, "fraction": 0.25}},
-      {"id": "zero_enzyme", "state": {"substrate": 2, "km": 2, "vmax": 0}, "expected": {"rate": 0, "fraction": 0.5}}
+      {"id": "zero_enzyme", "state": {"substrate": 2, "km": 2, "vmax": 0}, "expected": {"rate": 0, "fraction": 0.5}},
+      {"id": "double_vmax", "state": {"substrate": 2, "km": 2, "vmax": 20}, "expected": {"rate": 10, "fraction": 0.5}},
+      {"id": "upper_substrate", "state": {"substrate": 20, "km": 2, "vmax": 10}, "expected": {"rate": 9.090909090909092, "fraction": 0.9090909090909091}}
     ],
     "invalid_states": [{"substrate": 0, "km": 0, "vmax": 10}, {"substrate": -1, "km": 2, "vmax": 10}]
   },
   "logistic_map": {
-    "source_url": "https://www.esalq.usp.br/departamentos/leb/aulas/lce164/simple.pdf",
+    "source_url": "https://ned.ipac.caltech.edu/level5/Sept01/May/May2.html",
     "source_title": "Simple mathematical models with very complicated dynamics",
-    "locator": "Equation (3), section 1",
+    "locator": "Section 2, equation (3)",
     "quote": "This is sometimes called the \"logistic\" difference equation.",
     "relationship": "Equation (3) transcribed: X_(t+1) = a*X_t*(1-X_t). Rename a to r for the teaching example.",
     "cases": [
@@ -55,7 +61,8 @@
       {"id": "half_to_extinction", "state": {"growth": 4, "initial": 0.5}, "expected": {"next_value": 1, "trajectory": [0.5, 1, 0, 0, 0]}},
       {"id": "zero_boundary", "state": {"growth": 4, "initial": 0}, "expected": {"next_value": 0, "trajectory": [0, 0, 0, 0, 0]}},
       {"id": "one_boundary", "state": {"growth": 4, "initial": 1}, "expected": {"next_value": 0, "trajectory": [1, 0, 0, 0, 0]}},
-      {"id": "different_growth", "state": {"growth": 2, "initial": 0.5}, "expected": {"next_value": 0.5, "trajectory": [0.5, 0.5, 0.5, 0.5, 0.5]}}
+      {"id": "different_growth", "state": {"growth": 2, "initial": 0.5}, "expected": {"next_value": 0.5, "trajectory": [0.5, 0.5, 0.5, 0.5, 0.5]}},
+      {"id": "interior_four_updates", "state": {"growth": 3, "initial": 0.2}, "expected": {"next_value": 0.48, "trajectory": [0.2, 0.48, 0.7488, 0.56429568, 0.7375981966000128]}}
     ],
     "invalid_states": [{"growth": 5, "initial": 0.5}, {"growth": 4, "initial": -0.1}]
   }

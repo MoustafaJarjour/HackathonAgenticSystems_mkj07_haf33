@@ -105,7 +105,11 @@ def saved_lesson(name):
         "logistic_map": [{"id": "successive_states", "kind": "bars", "title": "Initial state and four updates", "source": "trajectory", "x_label": "Update number", "y_label": "State x", "labels": ["x0", "x1", "x2", "x3", "x4"], "value_label": "State"}],
     }
     spec["visualizations"] = views[name]
-    accepted_cases = fixture["cases"] if name != "attention" else fixture["cases"][1:3]
+    # Attention lessons declare fixed 2x2 matrices: do not insert 1x2/1x4 cases.
+    accepted_cases = fixture["cases"] if name != "attention" else [
+        c for c in fixture["cases"] if c["id"] in {
+            "identity_scaled", "identity_unscaled", "equal_two_queries",
+            "edited_key_unscaled", "edited_value_unscaled"}]
     spec["checks"] = [{"id": c["id"], "name": c["id"].replace("_", " "), "state": copy.deepcopy(c["state"]), "expected": copy.deepcopy(c["expected"]), "atol": 1e-10, "rtol": 1e-10} for c in accepted_cases]
     return spec
 
