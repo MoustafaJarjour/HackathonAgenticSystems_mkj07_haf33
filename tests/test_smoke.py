@@ -33,7 +33,7 @@ class SmokeTests(unittest.TestCase):
         self.assertEqual(response["metadata"]["usage"],
                          {"prompt_tokens": 100, "completion_tokens": 50, "total_tokens": 150})
         self.assertEqual(events[-1]["result"], "success")
-        self.assertEqual(events[-1]["metadata"]["observed_total_tokens"], 150)
+        self.assertEqual(events[-1]["metadata"]["observed_total_tokens"], 300)
         self.assertNotIn("offline-test-key-never-valid", (self.output / "trace.jsonl").read_text())
 
     def test_url_only_fails_without_network_or_stale_page(self):
@@ -55,7 +55,7 @@ class SmokeTests(unittest.TestCase):
                        "teaching": {"why_it_matters": lesson()["why_it_matters"]}}
         code, events, requests = run_fixture(self.output, [completion(invalid), completion(replacement)])
         self.assertEqual(code, 0)
-        self.assertEqual(len(requests), 2)
+        self.assertEqual(len(requests), 3)
         self.assertIn("TARGETED REPAIR CONTRACT", requests[1]["messages"][1]["content"])
         self.assertTrue(any(e["action"] == "revise" for e in events))
         self.assertTrue(any(e["action"] == "candidate" and e["result"] == "failed" for e in events))

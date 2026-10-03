@@ -12,7 +12,7 @@ from pathlib import Path
 
 from src.models import SpecError, load_case
 from src.openrouter_client import Budget, BudgetError, OpenRouterClient, OpenRouterError, TruncatedCompletion
-from src.planner import generate, repair, select_context, can_repair
+from src.planner import generate, repair, select_context, can_repair, audit_source, SourceReviewError
 from src.renderer import render
 from src.source import SourceError, obtain_source
 from src.trace import Trace
@@ -55,7 +55,7 @@ def main(argv=None) -> int:
         trace.event("source", "select_context", "ok", source_characters=len(source.text),
                     context_characters=len(context), method="lexical_windows" if context != source.text else "complete_excerpt")
         client = OpenRouterClient(args.model, trace, budget)
-        spec, errors, compact = None, None, False
+        spec, errors, compact, source_reviewed = None, None, False, False
         for attempt in range(3):
             budget.check()
             trace.event("planning", "generate" if attempt == 0 else "revise", "started", attempt=attempt + 1)
@@ -86,6 +86,29 @@ def main(argv=None) -> int:
                 errors = [record for record in runtime_checks if record["status"] != "passed"]
                 if errors:
                     raise SpecError("Executed numerical/control checks failed; see expected/actual evidence.")
+                if not source_reviewed:
+                    stage = "source_review"
+                    trace.event("planning", "source_semantics_review", "started",
+                                independent_science_verified=False)
+                    reviewed = audit_source(client, case, context, spec, runtime_checks)
+                    changed = reviewed != spec
+                    spec = reviewed
+                    source_reviewed = True
+                    trace.event("planning", "source_semantics_review", "revised" if changed else "unchanged",
+                                preserved_numerical_cases=True, independent_science_verified=False)
+                    if changed:
+                        try:
+                            compiled, spec_checks = validate_spec(spec, source.text, case["source_url"])
+                            trace.event("validation", "reviewed_spec_checks", "passed", checks=spec_checks)
+                            runtime_checks = check_runtime(spec, compiled, timeout=min(5.0, budget.remaining()))
+                            for record in runtime_checks:
+                                trace.event("validation", "runtime_case", record["status"], check=record,
+                                            after_source_review=True)
+                            errors = [record for record in runtime_checks if record["status"] != "passed"]
+                            if errors:
+                                raise SpecError("Executed checks failed after source review; expectations remain preserved.")
+                        except SpecError as exc:
+                            raise SourceReviewError(str(exc)) from exc
                 stage = "html"
                 html = render(spec, compiled)
                 html_checks = validate_html(html, spec)
@@ -95,6 +118,10 @@ def main(argv=None) -> int:
                             browser_executed=False, scientific_fidelity_verified=False)
                 break
             except TruncatedCompletion as exc:
+                if stage == "source_review":
+                    trace.event("planning", "source_semantics_review", "failed",
+                                reason="Source critique was truncated; no reviewed output can be promoted.")
+                    raise
                 errors = [{"name": "completion_length", "stage": "generation", "status": "failed", "details": str(exc)}]
                 # A compact full generation already changed the output strategy.
                 # Repeating it would spend another cap without a new recovery.
@@ -106,6 +133,13 @@ def main(argv=None) -> int:
                                    "Compact full generation was already tried or no repair attempts remain.")
                 if not recover_length:
                     raise
+            except SourceReviewError as exc:
+                trace.event("validation", "source_semantics_review", "failed", reason=str(exc),
+                            preserved_numerical_cases=True)
+                if isinstance(spec, dict):
+                    (args.output / "partial.lesson.json").write_text(
+                        json.dumps(spec, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
+                raise
             except SpecError as exc:
                 if stage != "runtime" or not errors:
                     errors = [{"name": "candidate_validation", "stage": stage,

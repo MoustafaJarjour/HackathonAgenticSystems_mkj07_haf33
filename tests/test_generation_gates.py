@@ -30,7 +30,7 @@ class GenerationGates(unittest.TestCase):
         replacement = {"controls": [], "computations": lesson()["computations"], "visualizations": [], "teaching": {}}
         code, events, payloads = run_fixture(self.output, [completion(wrong), completion(replacement)])
         self.assertEqual(code, 0)
-        self.assertEqual([p["max_tokens"] for p in payloads], [8000, 3500])
+        self.assertEqual([p["max_tokens"] for p in payloads], [8000, 3500, 3500])
         cases = [e["metadata"]["check"] for e in events if e["action"] == "runtime_case"]
         failed = next(c for c in cases if c["name"] == "default_case" and c["status"] == "failed")
         self.assertEqual(failed["actual"]["result"], 7)
@@ -65,8 +65,8 @@ class GenerationGates(unittest.TestCase):
         self.assertEqual(code, 0)
         self.assertNotEqual(payloads[0]["messages"], payloads[1]["messages"])
         self.assertIn("smaller package", payloads[1]["messages"][1]["content"])
-        self.assertEqual(events[-1]["metadata"]["reserved_completion_tokens"], 16000)
-        self.assertEqual(events[-1]["metadata"]["observed_completion_tokens"], 100)
+        self.assertEqual(events[-1]["metadata"]["reserved_completion_tokens"], 19500)
+        self.assertEqual(events[-1]["metadata"]["observed_completion_tokens"], 150)
         self.assertTrue(any(e["action"] == "length_recovery" for e in events))
 
     def test_missing_case_output_regenerates_and_preserves_the_expectation(self):
@@ -78,7 +78,7 @@ class GenerationGates(unittest.TestCase):
         regenerated["computations"].append(extra)
         code, events, payloads = run_fixture(self.output, [completion(wrong), completion(regenerated)])
         self.assertEqual(code, 0)
-        self.assertEqual([payload["max_tokens"] for payload in payloads], [8000, 8000])
+        self.assertEqual([payload["max_tokens"] for payload in payloads], [8000, 8000, 3500])
         self.assertTrue(any(event["action"] == "full_regeneration" for event in events))
         saved = json.loads((self.output / "lesson.json").read_text())
         self.assertEqual(saved["checks"], wrong["checks"])

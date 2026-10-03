@@ -87,20 +87,34 @@ def mock_http(handler):
         yield
 
 
-def run_fixture(output: Path, responses=None, input_case=None, model="offline/test-model"):
+def run_fixture(output: Path, responses=None, input_case=None, model="offline/test-model", audit_responses=None):
     """Exercise actual agent.main and client; intercept every HTTP request in memory."""
     output = Path(output)
     output.mkdir(parents=True, exist_ok=True)
     input_path = output / "case.json"
     input_path.write_text(json.dumps(case() if input_case is None else input_case), encoding="utf-8")
     responses = [completion(lesson())] if responses is None else list(responses)
+    # Successful paths now include one bounded source-critique request. Failure
+    # paths never reach it. The empty patch models a reviewer finding no change;
+    # separate tests exercise concrete semantic repairs and rechecking.
+    audit_responses = [completion({"status": "correct", "reason": "Matches synthetic evidence.",
+                                  "patch": {"controls": [], "computations": [], "visualizations": [], "teaching": {}}})] if audit_responses is None else list(audit_responses)
     payloads = []
+    audit_count = 0
+    generation_count = 0
 
     def handler(request):
+        nonlocal audit_count, generation_count
         assert str(request.url) == "https://openrouter.ai/api/v1/chat/completions"
         payloads.append(json.loads(request.content))
-        assert len(payloads) <= len(responses), "Unexpected extra API request"
-        return httpx.Response(200, json=responses[len(payloads) - 1])
+        is_audit = "SOURCE AUDIT CONTRACT" in payloads[-1]["messages"][1]["content"]
+        if is_audit:
+            audit_count += 1
+            assert audit_count <= len(audit_responses), "Unexpected extra audit request"
+            return httpx.Response(200, json=audit_responses[audit_count - 1])
+        generation_count += 1
+        assert generation_count <= len(responses), "Unexpected extra API request"
+        return httpx.Response(200, json=responses[generation_count - 1])
 
     env = {"OPENROUTER_API_KEY": "offline-test-key-never-valid", "PTP_ALLOW_SOURCE_FETCH": "",
            "PTP_SOURCE_FILE": "", "PTP_SOURCE_DIR": ""}
