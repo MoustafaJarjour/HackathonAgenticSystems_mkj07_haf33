@@ -6,11 +6,11 @@
     "quote": "Thus only when we are certain of the outcome does H vanish.",
     "relationship": "H = -sum(p_i * log2(p_i)); contribution at p_i = 0 is 0.",
     "cases": [
-      {"id": "certain", "state": {"weights": [1, 0, 0, 0]}, "expected": {"probabilities": [1, 0, 0, 0], "entropy_bits": 0}},
-      {"id": "fair_pair", "state": {"weights": [1, 1]}, "expected": {"probabilities": [0.5, 0.5], "entropy_bits": 1}},
-      {"id": "fair_four", "state": {"weights": [1, 1, 1, 1]}, "expected": {"probabilities": [0.25, 0.25, 0.25, 0.25], "entropy_bits": 2}},
-      {"id": "zero_outcome", "state": {"weights": [1, 1, 0]}, "expected": {"probabilities": [0.5, 0.5, 0], "entropy_bits": 1}},
-      {"id": "uneven", "state": {"weights": [1, 3]}, "expected": {"probabilities": [0.25, 0.75], "entropy_bits": 0.8112781244591328}}
+      {"id": "certain", "state": {"weights": [1, 0, 0, 0]}, "expected": {"probabilities": [1, 0, 0, 0], "entropy_bits": 0, "max_entropy_bits": 2}},
+      {"id": "fair_pair", "state": {"weights": [1, 1]}, "expected": {"probabilities": [0.5, 0.5], "entropy_bits": 1, "max_entropy_bits": 1}},
+      {"id": "fair_four", "state": {"weights": [1, 1, 1, 1]}, "expected": {"probabilities": [0.25, 0.25, 0.25, 0.25], "entropy_bits": 2, "max_entropy_bits": 2}},
+      {"id": "zero_outcome", "state": {"weights": [1, 1, 0]}, "expected": {"probabilities": [0.5, 0.5, 0], "entropy_bits": 1, "max_entropy_bits": 1.584962500721156}},
+      {"id": "uneven", "state": {"weights": [1, 3]}, "expected": {"probabilities": [0.25, 0.75], "entropy_bits": 0.8112781244591328, "max_entropy_bits": 1}}
     ],
     "invalid_states": [{"weights": [0, 0]}, {"weights": [-1, 2]}]
   },

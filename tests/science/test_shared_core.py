@@ -30,7 +30,8 @@ def mechanism_spec(name, state):
         controls.append(c)
     expressions = {
         "entropy": [("probabilities", "weights / sum(weights)"),
-                    ("entropy_bits", "-sum(xlogx(probabilities))")],
+                    ("entropy_bits", "-sum(xlogx(probabilities))"),
+                    ("max_entropy_bits", "log2(length(weights))")],
         "attention": [("scores", "matmul(q, transpose(k)) / (1 + scaled * (sqrt(ncols(q)) - 1))"),
                       ("weights", "softmax(scores)"),
                       ("attention_output", "matmul(weights, v)")],
