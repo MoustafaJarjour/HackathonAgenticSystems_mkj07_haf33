@@ -114,7 +114,7 @@
     switch (node[0]) {
       case "num": return number(node[1]);
       case "var": if (!Object.hasOwn(env, node[1])) fail(`Unknown variable: ${node[1]}`); return env[node[1]];
-      case "list": return node[1].map(next);
+      case "list": { const value = node[1].map(next); checkValue(value); return value; }
       case "neg": return unary(next(node[1]), x => -x, b);
       case "pos": return next(node[1]);
       case "call": return call(node[1], node[2].map(next), b);
@@ -154,7 +154,7 @@
     for (const computation of spec.computations) {
       try {
         const value = evaluate(compiled[computation.id], env, b);
-        checkValue(value);
+        if (checkValue(value).length > 2) fail("Outputs must be scalars, vectors or matrices.");
         env[computation.id] = value; outputs[computation.id] = value;
       } catch (error) { fail(`${computation.label}: ${error.message}`); }
     }

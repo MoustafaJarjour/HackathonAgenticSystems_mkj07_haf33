@@ -71,7 +71,9 @@ def perturbations(spec, state):
         values = []
         value = state[control["id"]]
         if control["kind"] != "array":
-            values = [control["min"], control["max"], (control["min"] + control["max"]) / 2]
+            end = control["min"] + math.floor((control["max"] - control["min"]) / control["step"] + 1e-9) * control["step"]
+            middle = control["min"] + math.floor((end - control["min"]) / (2 * control["step"])) * control["step"]
+            values = [control["min"], min(end, control["max"]), middle]
             if control["kind"] == "toggle":
                 values = [0, 1]
         else:
@@ -99,8 +101,31 @@ def check_runtime(spec, compiled, timeout=5.0):
     default = {control["id"]: control["default"] for control in spec["controls"]}
     cases = spec["checks"]
     records = []
-    probes = list(perturbations(spec, default))
-    states = [default] + [case["state"] for case in cases] + [state for _, state in probes]
+    # Try backgrounds from the declared cases as well: multiplicative controls
+    # can correctly be flat at zero, and equal attention scores can hide effects.
+    probes = []
+    for background in [default] + [case["state"] for case in cases[:2]]:
+        for key, candidate in perturbations(spec, background):
+            if (key, candidate, background) not in probes:
+                probes.append((key, candidate, background))
+    backgrounds = [background for _, _, background in probes]
+    sweeps = []
+    for view in spec["visualizations"]:
+        if view["kind"] != "line":
+            continue
+        control = next(c for c in spec["controls"] if c["id"] == view["sweep_control"])
+        end = math.floor((control["max"] - control["min"]) / control["step"])
+        samples = sorted({math.floor(i * end / 47 + .5) for i in range(48)})
+        if len(samples) < 2:
+            raise SpecError("Line sweep needs at least two distinct legal settings.")
+        for sample in samples:
+            value = control["min"] + sample * control["step"]
+            if value > control["max"]:
+                value = control["min"] + max(0, sample - 1) * control["step"]
+            state = copy.deepcopy(default)
+            state[control["id"]] = value
+            sweeps.append((view["id"], state))
+    states = [default] + [case["state"] for case in cases] + [state for _, state, _ in probes] + backgrounds + [s for _, s in sweeps]
     results = execute_states(spec, compiled, states, timeout)
     for index, result in enumerate(results[:1 + len(cases)]):
         case = cases[index - 1] if index else None
@@ -125,14 +150,38 @@ def check_runtime(spec, compiled, timeout=5.0):
     visible = {item["id"] for item in spec["computations"] if item["show"]}
     visible.update(view["source"] for view in spec["visualizations"])
     baseline = results[0].get("outputs")
+    probe_results = results[1 + len(cases):1 + len(cases) + len(probes)]
+    background_results = results[1 + len(cases) + len(probes):1 + len(cases) + 2 * len(probes)]
     for control in spec["controls"]:
-        observations = [(state, result) for (key, state), result in zip(probes, results[1 + len(cases):])
+        observations = [(state, result, background, background_result)
+                        for (key, state, background), result, background_result in zip(probes, probe_results, background_results)
                         if key == control["id"]]
-        changed = [(state, result["outputs"]) for state, result in observations if result["ok"] and baseline
-                   and any(not close(result["outputs"][key], baseline[key], 1e-10, 1e-10) for key in visible)]
+        changed = [(state, result["outputs"]) for state, result, _, original in observations if result["ok"] and original["ok"]
+                   and any(not close(result["outputs"][key], original["outputs"][key], 1e-10, 1e-10) for key in visible)]
         records.append({"name": "control_effect:" + control["id"], "stage": "runtime",
                         "status": "passed" if changed else "failed",
                         "details": "Legal perturbation changed a visible output." if changed else
                                    "No visible effect found in bounded legal probes; review the control/domain.",
-                        "actual": changed[:1], "probe_failures": [r["error"] for _, r in observations if not r["ok"]]})
+                        "actual": changed[:1], "probe_failures": [r["error"] for _, r, _, _ in observations if not r["ok"]]})
+        if len(spec["controls"]) == 1 and control["kind"] == "array":
+            resized = [(state, result["outputs"]) for state, result, background, original in observations
+                       if len(state[control["id"]]) != len(background[control["id"]]) and result["ok"] and original["ok"]
+                       and any(not close(result["outputs"][key], original["outputs"][key], 1e-10, 1e-10) for key in visible)]
+            records.append({"name": "resize_effect:" + control["id"], "stage": "runtime",
+                            "status": "passed" if resized else "failed",
+                            "details": "Resizing changed a visible output." if resized else "Resizing had no measured visible effect.",
+                            "actual": resized[:1]})
+    sweep_results = results[1 + len(cases) + 2 * len(probes):]
+    for view in spec["visualizations"]:
+        if view["kind"] != "line":
+            continue
+        samples = [(state, result) for (key, state), result in zip(sweeps, sweep_results) if key == view["id"]]
+        failures = [{"state": state, "exception": result["error"]} for state, result in samples if not result["ok"]]
+        for state, result in samples:
+            if result["ok"] and len(shape(result["outputs"][view["source"]])) != 0:
+                failures.append({"state": state, "details": "Line source is not scalar."})
+        records.append({"name": "line_sweep:" + view["id"], "stage": "runtime",
+                        "status": "failed" if failures else "passed", "sample_count": len(samples),
+                        "details": "Legal step-grid samples executed." if not failures else "Line sweep contains invalid calculations.",
+                        "actual": failures[:4]})
     return records

@@ -10,6 +10,7 @@ from typing import Any
 import httpx
 
 from .trace import Trace
+from .models import provider_schema
 
 
 class OpenRouterError(RuntimeError):
@@ -20,17 +21,23 @@ class BudgetError(RuntimeError):
     """The next action would exceed an assessment resource limit."""
 
 
+class TruncatedCompletion(OpenRouterError):
+    """Spent attempt reached its cap; caller must change the generation strategy."""
+
+
 @dataclass
 class Budget:
     """Elapsed time uses time.monotonic(); every HTTP attempt consumes a request."""
 
     started: float
     max_seconds: float = 570.0
+    soft_seconds: float = 540.0
     requests: int = 0
     prompt_tokens: int = 0
     completion_tokens: int = 0
     total_tokens: int = 0
     reserved_completion_tokens: int = 0
+    reasoning_tokens: int = 0
     _usage_responses: int = field(default=0, init=False)
     _unknown_prompt: int = field(default=0, init=False)
     _unknown_completion: int = field(default=0, init=False)
@@ -51,6 +58,8 @@ class Budget:
 
     def begin_attempt(self, max_tokens: int) -> None:
         self.check()
+        if time.monotonic() - self.started >= self.soft_seconds:
+            raise BudgetError("The 540-second soft stop forbids further API attempts; reserve time for rechecks/writes.")
         if isinstance(max_tokens, bool) or not isinstance(max_tokens, int) or max_tokens < 1:
             raise ValueError("max_tokens must be a positive integer.")
         if self.requests >= 10:
@@ -75,6 +84,11 @@ class Budget:
                         getattr(self, "_unknown_" + name.removesuffix("_tokens")) + 1)
                 recorded[name] = None
         # completion_tokens already includes reasoning tokens when billed that way.
+        details = usage.get("completion_tokens_details")
+        reasoning = details.get("reasoning_tokens") if isinstance(details, dict) else None
+        if type(reasoning) is int and reasoning >= 0:
+            self.reasoning_tokens += reasoning
+            recorded["reasoning_tokens"] = reasoning
         return recorded
 
     def summary(self) -> dict[str, Any]:
@@ -85,6 +99,7 @@ class Budget:
             "observed_prompt_tokens": self.prompt_tokens,
             "observed_completion_tokens": self.completion_tokens,
             "observed_total_tokens": self.total_tokens,
+            "observed_reasoning_tokens": self.reasoning_tokens,
             "usage_is_complete": (
                 self._usage_responses == self.requests
                 and not any((self._unknown_prompt, self._unknown_completion, self._unknown_total))
@@ -122,7 +137,7 @@ class OpenRouterClient:
             timeout=120.0,
         )
 
-    def complete(self, messages: list[dict], max_tokens: int = 6000) -> str:
+    def complete(self, messages: list[dict], max_tokens: int = 8000, schema: dict | None = None) -> str:
         payload = {
             "model": self.model,
             "messages": messages,
@@ -130,14 +145,20 @@ class OpenRouterClient:
             "temperature": 0.2,
             "response_format": {"type": "json_object"},
             "provider": {"require_parameters": True},
+            "reasoning": {"effort": "low", "exclude": True},
         }
-        for attempt in range(2):
+        if schema is not None:
+            payload["response_format"] = {"type": "json_schema", "json_schema": {
+                "name": "lesson", "strict": True, "schema": provider_schema(schema)}}
+        transient_retries, schema_fallback = 0, False
+        for attempt in range(3):
             self.budget.begin_attempt(max_tokens)
             started = time.monotonic()
             number = self.budget.requests
             self.trace.event(
                 "openrouter", "request", "started", request_number=number,
                 model=self.model, retry=attempt, max_tokens=max_tokens,
+                format=payload["response_format"]["type"], reasoning_effort="low",
                 reserved_completion_tokens=self.budget.reserved_completion_tokens,
             )
             response: httpx.Response | None = None
@@ -159,17 +180,31 @@ class OpenRouterClient:
             usage = self.budget.record_usage(body.get("usage") if isinstance(body, dict) else None)
             status = response.status_code if response is not None else None
             response_id = body.get("id") if isinstance(body, dict) else None
+            resolved_model = body.get("model") if isinstance(body, dict) else None
             if not isinstance(response_id, str):
                 response_id = None
             self.trace.event(
                 "openrouter", "response", "transport_error" if transport_failed else "received",
                 request_number=number, status_code=status,
                 response_id=response_id, elapsed_seconds=round(elapsed, 3), usage=usage,
+                resolved_model=resolved_model if isinstance(resolved_model, str) else None,
             )
             self.budget.check()
+            error = body.get("error") if isinstance(body, dict) else None
+            error_message = error.get("message", "") if isinstance(error, dict) else ""
+            # Deliberate same-model fallback only for an explicit schema/format incompatibility.
+            format_error = isinstance(error_message, str) and any(word in error_message.lower()
+                           for word in ("json_schema", "response_format", "structured output", "schema"))
+            if status in (400, 404, 422) and schema is not None and not schema_fallback and format_error:
+                schema_fallback = True
+                payload["response_format"] = {"type": "json_object"}
+                self.trace.event("openrouter", "schema_fallback", "scheduled",
+                                 reason="Provider rejected schema format; use JSON mode and local schema validation.")
+                continue
             transient = transport_failed or status == 429 or (status is not None and 500 <= status <= 599)
             if transient:
-                if attempt == 0:
+                if transient_retries == 0:
+                    transient_retries += 1
                     if self.budget.remaining() <= 1.0:
                         raise BudgetError("Insufficient time remains for an API retry.")
                     self.trace.event("openrouter", "retry", "scheduled", request_number=number)
@@ -191,8 +226,15 @@ class OpenRouterClient:
             if not isinstance(choices, list) or not choices or not isinstance(choices[0], dict):
                 raise OpenRouterError("OpenRouter returned no completion choices.")
             choice = choices[0]
+            finish_reason = choice.get("finish_reason")
+            self.trace.event("openrouter", "completion", "received", request_number=number,
+                             finish_reason=finish_reason)
             if choice.get("finish_reason") == "length":
-                raise OpenRouterError("The model reached its token cap; no partial lesson will be rendered.")
+                raise TruncatedCompletion("The model reached its token cap; change output size before another attempt.")
+            if finish_reason not in ("stop", "end_turn"):
+                raise OpenRouterError("OpenRouter completion did not finish normally.")
+            if isinstance(resolved_model, str) and resolved_model != self.model:
+                raise OpenRouterError("OpenRouter returned a different model from the requested ID.")
             message = choice.get("message")
             content = message.get("content") if isinstance(message, dict) else None
             if not isinstance(content, str) or not content.strip():

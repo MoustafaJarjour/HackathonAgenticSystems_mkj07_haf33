@@ -7,7 +7,7 @@ import sys
 import time
 import unittest
 
-from src.expressions import compile_computations
+from src.expressions import compile_computations, compile_expression
 from src.models import SpecError
 from src.runtime_checker import check_runtime, execute_states
 from tests.fixtures import lesson
@@ -91,6 +91,38 @@ for code in ('const =', 'while(true){}', 'new Array(10000000).fill(1)'):
         compiled, _ = compile_computations(spec)
         with self.assertRaisesRegex(SpecError, "wall timeout"):
             execute_states(spec, compiled, [spec["checks"][0]["state"]], timeout=.0001)
+
+    def test_line_sweep_detects_domain_failure_outside_expected_cases(self):
+        spec = lesson()
+        spec["computations"][0]["expression"] = "log(slope + 2) + intercept"
+        spec["checks"] = [
+            {"id": "one", "state": {"slope": 2, "intercept": 1}, "expected": {"result": math.log(4) + 1}},
+            {"id": "two", "state": {"slope": 0, "intercept": 1}, "expected": {"result": math.log(2) + 1}}]
+        compiled, _ = compile_computations(spec)
+        records = check_runtime(spec, compiled)
+        self.assertTrue(all(r["status"] == "passed" for r in records if r["name"] in {"one", "two"}))
+        sweep = next(r for r in records if r["name"] == "line_sweep:relationship")
+        self.assertEqual(sweep["status"], "failed")
+        self.assertEqual(sweep["sample_count"], 48)
+
+    def test_resize_exception_requires_measured_effect(self):
+        spec = lesson()
+        spec["controls"] = [{"id": "values", "label": "Values", "kind": "array", "default": [1, 2],
+                             "min_items": 1, "max_items": 3}]
+        spec["computations"][0]["expression"] = "sum(values)"
+        spec["visualizations"] = []
+        spec["checks"] = [{"id": "one", "state": {"values": [1, 2]}, "expected": {"result": 3}},
+                          {"id": "two", "state": {"values": [1]}, "expected": {"result": 1}}]
+        compiled, _ = compile_computations(spec)
+        self.assertTrue(any(r["name"] == "resize_effect:values" and r["status"] == "passed"
+                            for r in check_runtime(spec, compiled)))
+
+    def test_oversized_intermediate_arrays_and_constants_are_rejected(self):
+        with self.assertRaises(SpecError):
+            compile_expression("9" * 400, set())
+        rows = "[" + ",".join("[" + ",".join("1" for _ in range(32)) + "]" for _ in range(4)) + "]"
+        spec = math_spec([], {"output": "ncols(" + rows + ")"})
+        self.assertFalse(self.run_math(spec, [{}])[0]["ok"])
 
 
 if __name__ == "__main__":

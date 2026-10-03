@@ -51,12 +51,15 @@ class SmokeTests(unittest.TestCase):
     def test_invalid_spec_is_repaired_once(self):
         invalid = lesson()
         del invalid["why_it_matters"]
-        code, events, requests = run_fixture(self.output, [completion(invalid), completion(lesson())])
+        replacement = {"controls": [], "computations": [], "visualizations": [],
+                       "teaching": {"why_it_matters": lesson()["why_it_matters"]}}
+        code, events, requests = run_fixture(self.output, [completion(invalid), completion(replacement)])
         self.assertEqual(code, 0)
         self.assertEqual(len(requests), 2)
-        self.assertIn("Repair the previous JSON", requests[1]["messages"][1]["content"])
+        self.assertIn("TARGETED REPAIR CONTRACT", requests[1]["messages"][1]["content"])
         self.assertTrue(any(e["action"] == "revise" for e in events))
-        self.assertEqual([e["result"] for e in events if e["stage"] == "validation"], ["failed", "passed"])
+        self.assertTrue(any(e["action"] == "candidate" and e["result"] == "failed" for e in events))
+        self.assertTrue(any(e["action"] == "runtime_case" and e["result"] == "passed" for e in events))
 
     def test_arbitrary_code_is_not_math(self):
         for expression in ("__import__('os')", "slope.__class__", "(lambda: 1)()", "slope[0]"):
@@ -122,7 +125,7 @@ class SmokeTests(unittest.TestCase):
             finally:
                 client.close()
         self.assertEqual(budget.requests, 2)
-        self.assertEqual(budget.reserved_completion_tokens, 12000)
+        self.assertEqual(budget.reserved_completion_tokens, 16000)
         self.assertFalse(budget.summary()["usage_is_complete"])
         events = [json.loads(line) for line in trace.path.read_text().splitlines()]
         self.assertEqual(sum(e["action"] == "retry" for e in events), 1)

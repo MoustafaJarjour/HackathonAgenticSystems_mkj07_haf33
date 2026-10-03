@@ -83,6 +83,46 @@ LESSON_SCHEMA = obj({
 })
 
 
+TEACHING_FIELDS = ("title", "concept_summary", "why_it_matters", "explanation_steps", "terms",
+                   "equations", "explorations", "limitations", "grounding")
+REPAIR_SCHEMA = obj({
+    **{field: items(LESSON_SCHEMA["properties"][field]["items"], minimum=0, maximum=24)
+       for field in ("controls", "computations", "visualizations")},
+    "teaching": obj({field: LESSON_SCHEMA["properties"][field] for field in TEACHING_FIELDS}, []),
+})
+
+
+def normalize_optional(spec):
+    """Provider schemas represent optional properties as null; local schema omits them."""
+    if isinstance(spec, dict):
+        return {key: normalize_optional(value) for key, value in spec.items() if value is not None}
+    if isinstance(spec, list):
+        return [normalize_optional(value) for value in spec]
+    return spec
+
+
+def provider_schema(schema):
+    """Make optional fields explicitly nullable for providers requiring all properties."""
+    import copy
+    result = copy.deepcopy(schema)
+    def visit(node):
+        if not isinstance(node, dict):
+            return
+        if node.get("type") == "object" and "properties" in node:
+            required = node.get("required", [])
+            for key, value in node["properties"].items():
+                visit(value)
+                if key not in required:
+                    node["properties"][key] = {"anyOf": [value, {"type": "null"}]}
+            node["required"] = list(node["properties"])
+        if isinstance(node.get("items"), dict):
+            visit(node["items"])
+        for value in node.get("anyOf", []):
+            visit(value)
+    visit(result)
+    return result
+
+
 def load_case(path: Path) -> dict:
     try:
         case = json.loads(path.read_text(encoding="utf-8-sig"))
