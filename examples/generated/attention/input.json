@@ -1,0 +1,8 @@
+{
+  "source_url": "https://arxiv.org/html/1706.03762v7",
+  "focus": "Explain scaled dot-product attention with editable tiny Q, K, and V matrices. Derive d_k from their actual feature columns. Show the raw scores, scaled scores, softmax weights, and weighted outputs. Include a legal equal-score edge case. Treat the matrices as supplied teaching inputs rather than learned projections. Use matrix heatmaps. Numerical cases should include zero queries and identical keys, whose weights are analytically exact; the default may show nonuniform attention without a guessed decimal test expectation.",
+  "audience": "Undergraduate learner",
+  "excerpt": "Attention Is All You Need. Sections 3.2 and 3.2.1, equation (1).\nThe output is computed as a weighted sum of the values, where the weight assigned to each value is computed by a compatibility function of the query with the corresponding key.\nThe input consists of queries and keys of dimension d_k, and values of dimension d_v. We compute the dot products of the query with all keys, divide each by sqrt(d_k), and apply a softmax function to obtain the weights on the values.\nIn practice, we compute the attention function on a set of queries simultaneously, packed together into a matrix Q. The keys and values are also packed together into matrices K and V.\nEquation transcription: Attention(Q,K,V) = softmax(Q*K^T/sqrt(d_k))*V; softmax is applied to each row.",
+  "paper_title": "Attention Is All You Need",
+  "source_locator": "Section 3.2.1, equation (1)"
+}
