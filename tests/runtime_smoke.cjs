@@ -6,7 +6,7 @@ const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
 const vm = require("node:vm");
-const runtime = fs.readFileSync(path.join(__dirname, "../src/runtime.js"), "utf8");
+const runtime = fs.readFileSync(path.join(__dirname, "../src/math_runtime.js"), "utf8") + "\n" + fs.readFileSync(path.join(__dirname, "../src/runtime.js"), "utf8");
 const num = x => ["num", x], variable = x => ["var", x];
 const call = (name, ...args) => ["call", name, args];
 const jsonEqual = (actual, expected) => assert.equal(JSON.stringify(actual), JSON.stringify(expected));

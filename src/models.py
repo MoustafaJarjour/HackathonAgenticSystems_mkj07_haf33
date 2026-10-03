@@ -13,6 +13,7 @@ class SpecError(ValueError):
 TEXT = {"type": "string", "minLength": 1, "maxLength": 5000}
 ID = {"type": "string", "pattern": "^[a-z][a-z0-9_]{0,39}$"}
 NUMBER = {"type": "number", "minimum": -1e6, "maximum": 1e6}
+FINITE = {"type": "number"}
 ARRAY = {"type": "array", "minItems": 1, "maxItems": 64, "items": {
     "anyOf": [NUMBER, {"type": "array", "minItems": 1, "maxItems": 64, "items": NUMBER}]}}
 
@@ -32,19 +33,22 @@ PROVENANCE = {
 }
 
 LESSON_SCHEMA = obj({
-    "schema_version": {"const": 1},
+    "schema_version": {"const": 2},
     "title": TEXT,
     "concept_summary": TEXT,
     "why_it_matters": TEXT,
+    "explanation_steps": items(obj({"heading": TEXT, "body": TEXT, **PROVENANCE}), maximum=8),
     "terms": items(obj({"symbol": TEXT, "meaning": TEXT})),
     "equations": items(obj({"expression": TEXT, "explanation": TEXT, **PROVENANCE})),
     "controls": items(obj({
         "id": ID, "label": TEXT, "meaning": TEXT,
-        "kind": {"enum": ["range", "number", "array"]},
+        "kind": {"enum": ["range", "number", "array", "toggle"]},
         "default": {"anyOf": [NUMBER, ARRAY]},
         "min": NUMBER, "max": NUMBER,
         "step": {"type": "number", "exclusiveMinimum": 0, "maximum": 1e6},
-    }, ["id", "label", "meaning", "kind", "default"]), minimum=2, maximum=24),
+        "min_items": {"type": "integer", "minimum": 1, "maximum": 64},
+        "max_items": {"type": "integer", "minimum": 1, "maximum": 64},
+    }, ["id", "label", "meaning", "kind", "default"]), minimum=1, maximum=24),
     "computations": items(obj({
         "id": ID, "label": TEXT, "expression": TEXT,
         "unit": {"type": "string", "maxLength": 100}, "show": {"type": "boolean"},
@@ -54,14 +58,28 @@ LESSON_SCHEMA = obj({
         "id": ID, "kind": {"enum": ["line", "bars", "heatmap"]},
         "title": TEXT, "source": ID, "x_label": TEXT, "y_label": TEXT,
         "sweep_control": ID,
+        "labels": items(TEXT, maximum=64), "value_label": TEXT,
+        "row_labels": items(TEXT, maximum=64), "column_labels": items(TEXT, maximum=64),
     }, ["id", "kind", "title", "source", "x_label", "y_label"]), maximum=3),
     "explorations": items(obj({"change": TEXT, "observe": TEXT, "why": TEXT}), minimum=2, maximum=3),
     "limitations": items(TEXT, maximum=8),
     "grounding": obj({
         "paper_title": TEXT, "source_url": TEXT,
-        "source_claims": items(obj({"id": ID, "claim": TEXT, "locator": TEXT, "quote": TEXT})),
+        "source_claims": items(obj({"id": ID, "claim": TEXT, "locator": TEXT, "quote": TEXT,
+                                  "source_start": {"type": "integer", "minimum": 0},
+                                  "source_end": {"type": "integer", "minimum": 1}},
+                                 ["id", "claim", "locator", "quote"])),
         "teaching_simplifications": items(TEXT, maximum=8),
     }),
+    "checks": items(obj({
+        "id": ID, "name": TEXT,
+        "state": {"type": "object", "minProperties": 1,
+                  "additionalProperties": {"anyOf": [FINITE, ARRAY]}},
+        "expected": {"type": "object", "minProperties": 1,
+                     "additionalProperties": {"anyOf": [FINITE, ARRAY]}},
+        "atol": {"type": "number", "minimum": 0, "maximum": 1e-3},
+        "rtol": {"type": "number", "minimum": 0, "maximum": 1e-3},
+    }, ["id", "name", "state", "expected"]), minimum=2, maximum=8),
 })
 
 

@@ -54,7 +54,7 @@ def _control(control: dict) -> str:
 def render(spec: dict, compiled: dict) -> str:
     """Render an already validated spec and computation-id -> checked AST mapping."""
     style = (ASSETS / "style.css").read_text(encoding="utf-8")
-    runtime = (ASSETS / "runtime.js").read_text(encoding="utf-8")
+    runtime = (ASSETS / "math_runtime.js").read_text(encoding="utf-8") + "\n" + (ASSETS / "runtime.js").read_text(encoding="utf-8")
     terms = "".join(f'<dt>{_text(item["symbol"])}</dt><dd>{_text(item["meaning"])}</dd>' for item in spec["terms"])
     equations = "".join(
         f'<article><p class="formula">{_text(item["expression"])}</p><p>{_text(item["explanation"])}</p>'

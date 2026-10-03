@@ -24,10 +24,12 @@ _HTTP_CLIENT = httpx.Client
 def lesson():
     """Return fresh test data so tests can mutate it independently."""
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "title": "Synthetic test fixture: affine relationship",
         "concept_summary": "In this synthetic test, a scales x and b adds an offset: y = a*x + b.",
         "why_it_matters": "A small calculation makes changes in scale and offset visible.",
+        "explanation_steps": [{"heading": "Scale and shift", "body": "Multiply x by a, then add b.",
+                               "provenance": "source_supported", "evidence_ids": ["relation"]}],
         "terms": [{"symbol": "a", "meaning": "Scale coefficient"},
                   {"symbol": "b", "meaning": "Offset"},
                   {"symbol": "x", "meaning": "Input, fixed at 2 in this demo"},
@@ -51,6 +53,11 @@ def lesson():
             {"change": "Increase b by one.", "observe": "The output and entire curve rise by one.",
              "why": "The offset is added to every calculated value."}],
         "limitations": ["This is synthetic test data; x is fixed at 2 and no experiment is reproduced."],
+        "checks": [
+            {"id": "default_case", "name": "Scale then offset", "state": {"slope": 2, "intercept": 1},
+             "expected": {"result": 5}, "atol": 1e-6, "rtol": 1e-6},
+            {"id": "legal_boundary", "name": "Negative scale endpoint", "state": {"slope": -4, "intercept": 1},
+             "expected": {"result": -7}, "atol": 1e-6, "rtol": 1e-6}],
         "grounding": {
             "paper_title": "Synthetic fixture, not a research paper", "source_url": SOURCE_URL,
             "source_claims": [{"id": "relation", "claim": "The fixture defines an affine relation.",

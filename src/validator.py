@@ -25,6 +25,9 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
             require(all(k in c for k in ("min", "max", "step")), "Scalar controls need min/max/step.")
             require(c["min"] < c["max"] and c["min"] <= c["default"] <= c["max"], "Invalid control bounds.")
             require(c["step"] <= c["max"] - c["min"], "Control step must fit within its bounds.")
+            if c["kind"] == "toggle":
+                require(c["default"] in (0, 1) and (c["min"], c["max"], c["step"]) == (0, 1, 1),
+                        "Toggle metadata must be min=0, max=1, step=1 and default 0/1.")
         else:
             a = c["default"]
             require(isinstance(a, list), "Array controls need array defaults.")
@@ -33,6 +36,18 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
                     "Matrix control must have equal row lengths.")
             count = sum(len(v) for v in a) if matrix else len(a)
             require(count <= 64, "Array control exceeds 64 numeric cells.")
+            if "min_items" in c or "max_items" in c:
+                require(not matrix and "min_items" in c and "max_items" in c,
+                        "Vector resizing needs both min_items and max_items; matrices stay fixed.")
+                require(c["min_items"] <= len(a) <= c["max_items"], "Default vector length is outside resize bounds.")
+            if "min" in c or "max" in c:
+                require("min" in c and "max" in c and c["min"] < c["max"], "Array bounds need min < max.")
+                values = [v for row in a for v in row] if matrix else a
+                require(all(c["min"] <= v <= c["max"] for v in values), "Array default is outside bounds.")
+    if len(controls) == 1:
+        c = next(iter(controls.values()))
+        require(c["kind"] == "array" and c.get("min_items", 1) < c.get("max_items", 1),
+                "One control is sufficient only for an explicitly resizable vector with value editing.")
     # JSON Schema's numeric validation is not a guarantee against nonstandard NaN.
     def finite(value):
         if isinstance(value, dict):
@@ -42,6 +57,14 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
         return math.isfinite(value) if type(value) in (int, float) else True
     require(finite(spec), "LessonSpec contains a nonfinite number.")
     compiled, dependencies = compile_computations(spec)
+    check_ids = [case["id"] for case in spec["checks"]]
+    require(len(check_ids) == len(set(check_ids)), "Numerical case ids must be unique.")
+    for case in spec["checks"]:
+        require(set(case["state"]) == set(controls), "Numerical cases need complete control state with no unknown keys.")
+        require(set(case["expected"]) <= set(compiled), "Numerical expectations must reference computations.")
+        from .runtime_checker import shape
+        for value in case["expected"].values():
+            require(len(shape(value)) <= 2, "Expectations must be scalars, vectors or matrices.")
     visible = {c["id"] for c in spec["computations"] if c["show"]}
     for v in spec["visualizations"]:
         require(v["source"] in compiled, "Visualization source must reference a computation.")
@@ -59,8 +82,13 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
     normalized_source = " ".join(source_text.split())
     for claim in grounding["source_claims"]:
         quote = " ".join(claim["quote"].split())
-        require(len(quote) >= 12 and quote in normalized_source, "Evidence quote must occur in supplied source text.")
-    for item in spec["equations"] + spec["computations"]:
+        require(bool(quote) and quote in normalized_source, "Evidence quote must occur in supplied source text.")
+        if "source_start" in claim or "source_end" in claim:
+            require("source_start" in claim and "source_end" in claim, "Evidence offsets need both endpoints.")
+            start, end = claim["source_start"], claim["source_end"]
+            require(0 <= start < end <= len(source_text), "Evidence offsets are outside full source bounds.")
+            require(" ".join(source_text[start:end].split()) == quote, "Evidence offsets do not match the quoted span.")
+    for item in spec["equations"] + spec["computations"] + spec["explanation_steps"]:
         require(set(item["evidence_ids"]) <= evidence, "Unknown evidence reference.")
         if item["provenance"] == "source_supported":
             require(bool(item["evidence_ids"]), "Source-supported items need evidence references.")

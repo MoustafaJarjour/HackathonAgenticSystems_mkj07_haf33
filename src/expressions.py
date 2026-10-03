@@ -6,7 +6,7 @@ from .models import SpecError
 
 ARITY = {name: 1 for name in (
     "sin", "cos", "exp", "log", "log2", "sqrt", "abs", "sum", "mean", "norm",
-    "transpose", "softmax", "normalize")}
+    "transpose", "softmax", "normalize", "xlogx", "length", "ncols")}
 ARITY.update({"minimum": 2, "maximum": 2, "dot": 2, "matmul": 2,
               "linspace": 3, "clip": 3})
 BINARY = {ast.Add: "add", ast.Sub: "sub", ast.Mult: "mul", ast.Div: "div", ast.Pow: "pow"}
