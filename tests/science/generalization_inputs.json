@@ -1,0 +1,343 @@
+{
+  "purpose": "Independent pre-generation expectations for two new primary-paper mechanisms. These are authored science fixtures, not generated lessons or accepted browser evidence. Output names describe physical quantities; match generated computation IDs by meaning, never by a hardcoded generator dispatch.",
+  "prepared_before_generation": true,
+  "independent_of_production_runtime": true,
+  "cases": {
+    "brownian_diffusion": {
+      "input_path": "examples/science_cases/brownian_diffusion.json",
+      "source_url": "https://sites.pitt.edu/~jdnorton/lectures/Rotman_Summer_School_2013/Einstein_1905_docs/Einstein_Brownian_English.pdf",
+      "source_locator": "Sections 3-4, printed pages 12 and 17, PDF pages 8 and 10, equation (11) for one-axis RMS.",
+      "modern_constant_source": "https://www.nist.gov/si-redefinition/kelvin/kelvin-boltzmann-constant",
+      "oracle": "First calculate SI diffusivity D_SI = 1.380649e-23*T/(6*pi*(eta_mPa_s*1e-3)*(radius_um*1e-6)); convert D_um2_s = D_SI*1e12. Then MSD_um2 = 2*D_um2_s*t_seconds; RMS_x_um = sqrt(MSD_um2). This independently checks the converted coefficient used in the input.",
+      "invariant_checks": [
+        "At fixed T, eta and a, multiplying elapsed time by 4 multiplies MSD by 4 and RMS by 2, while D stays fixed.",
+        "Doubling viscosity or particle radius halves D and MSD at fixed time; RMS is divided by sqrt(2).",
+        "Zero time yields exactly zero MSD and RMS with positive unchanged D.",
+        "This is one-axis RMS. 3D RMS would be sqrt(6Dt), mean signed displacement is zero, and no individual trajectory is predicted."
+      ],
+      "valid_states": [
+        {
+          "id": "default",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 1,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 0.21973711302488222,
+            "MSD_um2": 0.43947422604976444,
+            "RMS_x_um": 0.6629285225797458
+          }
+        },
+        {
+          "id": "four_times_time",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 1,
+            "t": 4
+          },
+          "expected": {
+            "D_um2_per_s": 0.21973711302488222,
+            "MSD_um2": 1.7578969041990578,
+            "RMS_x_um": 1.3258570451594915
+          }
+        },
+        {
+          "id": "twice_viscosity",
+          "state": {
+            "T": 300,
+            "eta": 2,
+            "a": 1,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 0.10986855651244111,
+            "MSD_um2": 0.21973711302488222,
+            "RMS_x_um": 0.4687612537581175
+          }
+        },
+        {
+          "id": "twice_radius",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 2,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 0.10986855651244111,
+            "MSD_um2": 0.21973711302488222,
+            "RMS_x_um": 0.4687612537581175
+          }
+        },
+        {
+          "id": "higher_temperature",
+          "state": {
+            "T": 400,
+            "eta": 1,
+            "a": 1,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 0.29298281736650966,
+            "MSD_um2": 0.5859656347330193,
+            "RMS_x_um": 0.7654839219297942
+          }
+        },
+        {
+          "id": "lower_temperature",
+          "state": {
+            "T": 250,
+            "eta": 1,
+            "a": 1,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 0.18311426085406854,
+            "MSD_um2": 0.3662285217081371,
+            "RMS_x_um": 0.605168176384166
+          }
+        },
+        {
+          "id": "zero_time",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 1,
+            "t": 0
+          },
+          "expected": {
+            "D_um2_per_s": 0.21973711302488222,
+            "MSD_um2": 0,
+            "RMS_x_um": 0
+          }
+        },
+        {
+          "id": "max_time",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 1,
+            "t": 60
+          },
+          "expected": {
+            "D_um2_per_s": 0.21973711302488222,
+            "MSD_um2": 26.368453562985867,
+            "RMS_x_um": 5.135022255354485
+          }
+        },
+        {
+          "id": "minimum_viscosity",
+          "state": {
+            "T": 300,
+            "eta": 0.1,
+            "a": 1,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 2.1973711302488224,
+            "MSD_um2": 4.394742260497645,
+            "RMS_x_um": 2.096364057242359
+          }
+        },
+        {
+          "id": "minimum_radius",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 0.1,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 2.1973711302488224,
+            "MSD_um2": 4.394742260497645,
+            "RMS_x_um": 2.096364057242359
+          }
+        },
+        {
+          "id": "maximum_viscosity",
+          "state": {
+            "T": 300,
+            "eta": 5,
+            "a": 1,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 0.04394742260497644,
+            "MSD_um2": 0.08789484520995287,
+            "RMS_x_um": 0.2964706481423631
+          }
+        },
+        {
+          "id": "maximum_radius",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 5,
+            "t": 1
+          },
+          "expected": {
+            "D_um2_per_s": 0.043947422604976444,
+            "MSD_um2": 0.08789484520995289,
+            "RMS_x_um": 0.2964706481423631
+          }
+        }
+      ],
+      "invalid_states": [
+        {
+          "id": "zero_viscosity",
+          "state": {
+            "T": 300,
+            "eta": 0,
+            "a": 1,
+            "t": 1
+          },
+          "expect": "Reject; diffusivity denominator is zero and viscosity must be positive."
+        },
+        {
+          "id": "zero_radius",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 0,
+            "t": 1
+          },
+          "expect": "Reject; diffusivity denominator is zero and radius must be positive."
+        },
+        {
+          "id": "negative_time",
+          "state": {
+            "T": 300,
+            "eta": 1,
+            "a": 1,
+            "t": -1
+          },
+          "expect": "Reject; elapsed time is outside nonnegative domain."
+        }
+      ],
+      "limitations": [
+        "Continuum Stokes drag, spherical particles, sufficiently dilute suspension and diffusive timescale are assumptions; fixed viscosity while changing T is a teaching comparison, not a water-property model.",
+        "Modern k_B and SI/micrometre conversions are not values fitted or quoted by Einstein.",
+        "No stochastic path simulator, exact experiment replication or ballistic-time claim is made."
+      ]
+    },
+    "hubble_relation": {
+      "input_path": "examples/science_cases/hubble_relation.json",
+      "source_url": "https://www.astro.rug.nl/~weygaert/tim1publication/cosmo2007/literature/hubble.1929.pdf",
+      "source_locator": "Equation of condition PDF page 2, rounded K PDF page 3, restricted-range limitation PDF page 5.",
+      "oracle": "Corrected mean radial velocity in km/s = slope K in km/s/Mpc * distance d in Mpc. Products are independently exact decimal arithmetic for these states.",
+      "invariant_checks": [
+        "Doubling distance doubles predicted mean velocity at fixed K.",
+        "Doubling slope doubles predicted velocity at every fixed distance and increases line gradient.",
+        "Zero distance has zero distance-term velocity; observed peculiar/solar motion is outside this exact teaching line."
+      ],
+      "valid_states": [
+        {
+          "id": "default",
+          "state": {
+            "K": 500,
+            "d": 2
+          },
+          "expected": {
+            "v_corrected_km_per_s": 1000
+          }
+        },
+        {
+          "id": "double_distance",
+          "state": {
+            "K": 500,
+            "d": 4
+          },
+          "expected": {
+            "v_corrected_km_per_s": 2000
+          }
+        },
+        {
+          "id": "zero_distance",
+          "state": {
+            "K": 500,
+            "d": 0
+          },
+          "expected": {
+            "v_corrected_km_per_s": 0
+          }
+        },
+        {
+          "id": "historical_individual_fit",
+          "state": {
+            "K": 465,
+            "d": 2
+          },
+          "expected": {
+            "v_corrected_km_per_s": 930
+          }
+        },
+        {
+          "id": "historical_group_fit",
+          "state": {
+            "K": 513,
+            "d": 2
+          },
+          "expected": {
+            "v_corrected_km_per_s": 1026
+          }
+        },
+        {
+          "id": "minimum_slope",
+          "state": {
+            "K": 50,
+            "d": 2
+          },
+          "expected": {
+            "v_corrected_km_per_s": 100
+          }
+        },
+        {
+          "id": "maximum_slope",
+          "state": {
+            "K": 600,
+            "d": 2
+          },
+          "expected": {
+            "v_corrected_km_per_s": 1200
+          }
+        },
+        {
+          "id": "maximum_distance",
+          "state": {
+            "K": 500,
+            "d": 10
+          },
+          "expected": {
+            "v_corrected_km_per_s": 5000
+          }
+        }
+      ],
+      "invalid_states": [
+        {
+          "id": "negative_distance",
+          "state": {
+            "K": 500,
+            "d": -1
+          },
+          "expect": "Reject; distance slider domain is nonnegative."
+        },
+        {
+          "id": "negative_slope",
+          "state": {
+            "K": -50,
+            "d": 2
+          },
+          "expect": "Reject; outside the proposed positive historical-slope teaching range."
+        }
+      ],
+      "limitations": [
+        "The historical coefficient 500 km/s/Mpc is not a present-day Hubble constant estimate.",
+        "Solar-motion terms have been removed; observed data also have peculiar-velocity residuals.",
+        "The exact displayed line is a teaching approximation over a bounded distance interval; this does not reproduce a fit, provide universe age or justify arbitrary cosmological extrapolation."
+      ]
+    }
+  }
+}

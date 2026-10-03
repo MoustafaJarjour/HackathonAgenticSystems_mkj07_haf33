@@ -1,0 +1,109 @@
+{
+  "commit": "61ddce2bac24eb705d7a26a0ec541b09689b506f",
+  "model": "deepseek/deepseek-v4.1-flash",
+  "input_path": "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\examples\\science_cases\\brownian_diffusion.json",
+  "command": [
+    "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\.venv\\Scripts\\python.exe",
+    "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\agent.py",
+    "--input",
+    "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\examples\\science_cases\\brownian_diffusion.json",
+    "--output",
+    "C:\\Users\\Moustafa Jarjour\\OneDrive\\Desktop\\Hackathon\\HackathonAgenticSystems_mkj07_haf33\\review-out\\new-papers-baseline\\brownian_diffusion-265e4a84-run01",
+    "--model",
+    "deepseek/deepseek-v4.1-flash"
+  ],
+  "process_started_utc": "2026-10-03T13:35:50.619076+00:00",
+  "process_exit_code": 1,
+  "external_process_elapsed_seconds": 92.29385859984905,
+  "timing_scope": "Before subprocess launch through child wait/exit; includes child startup, imports, checks, retries and cleanup; excludes harness setup and later report writing.",
+  "external_timeout": false,
+  "launch_error": null,
+  "hashes": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "trace.jsonl": {
+      "raw_sha256": "d682c3baf8607fd228d817cfb2bfa008bbb1a54e7a01f36d38006c0916a58e6f",
+      "canonical_lf_sha256": "d682c3baf8607fd228d817cfb2bfa008bbb1a54e7a01f36d38006c0916a58e6f",
+      "bytes": 28421
+    }
+  },
+  "trace": {
+    "requests": 3,
+    "responses": [
+      {
+        "request_number": 1,
+        "response_id": "gen-1791034553-KtRYHYDXm1FMgUg2oMtJ",
+        "usage": {
+          "prompt_tokens": 7452,
+          "completion_tokens": 3175,
+          "total_tokens": 10627,
+          "cached_tokens": null,
+          "reasoning_tokens": 0
+        },
+        "total_equals_prompt_plus_completion": true
+      },
+      {
+        "request_number": 2,
+        "response_id": "gen-1791034617-iSgCC91MkjxCFLxRGLme",
+        "usage": {
+          "prompt_tokens": 8043,
+          "completion_tokens": 3143,
+          "total_tokens": 11186,
+          "cached_tokens": null,
+          "reasoning_tokens": 0
+        },
+        "total_equals_prompt_plus_completion": true
+      },
+      {
+        "request_number": 3,
+        "response_id": "gen-1791034639-6nHtmRS0udURbAkHY1Bu",
+        "usage": {
+          "prompt_tokens": 8063,
+          "completion_tokens": 624,
+          "total_tokens": 8687,
+          "cached_tokens": null,
+          "reasoning_tokens": 0
+        },
+        "total_equals_prompt_plus_completion": true
+      }
+    ],
+    "observed_usage": {
+      "prompt_tokens": 23558,
+      "completion_tokens": 6942,
+      "total_tokens": 30500
+    },
+    "missing_usage_attempts": {
+      "prompt_tokens": 0,
+      "completion_tokens": 0,
+      "total_tokens": 0
+    },
+    "usage_complete": true,
+    "T_prompt_plus_completion": 30500,
+    "T_observed_lower_bound": 30500,
+    "accounting_note": "T includes all attempts and cached input; reasoning is already included in completion and is not added again. Missing cache/usage fields are unknown.",
+    "trace_finish_result": "failed",
+    "trace_finish_elapsed_seconds": 91.985,
+    "trace_finish_usage_matches_attempts": true,
+    "parse_errors": []
+  },
+  "usable_html": false,
+  "quality_status": "unreviewed",
+  "quality_qualification": "Usable HTML only establishes successful CLI output, not scientific, teaching, visual, control or autonomous quality; no official score is promised.",
+  "manual_quality_review": {
+    "criteria_maxima": {
+      "scientific_accuracy": 25,
+      "teaching": 20,
+      "visuals": 15,
+      "meaningful_controls": 15,
+      "autonomous_operation": 10
+    },
+    "scores": null,
+    "sources": [],
+    "states": [],
+    "findings": [],
+    "reviewer": null
+  }
+}

@@ -67,6 +67,7 @@ For nontrivial numerical expectations, put an independent executable DSL express
 checks.expected instead of calculating decimals mentally. Reference only control ids and constants,
 never computation ids or outputs. The trusted runtime evaluates these strings at the complete case
 state before freezing their numerical values; expected_expressions records the derivations.
+Leave expected_expressions null in new checks; the pipeline writes that metadata after evaluation.
 For example, expected={"result":"2 * a + b"} independently derives a result at that case's a,b.
 Use actual scientific formulas and unit conversions from the supplied source. Derivations establish
 consistency, not independent scientific validation. Never guess a rounded physical constant result.

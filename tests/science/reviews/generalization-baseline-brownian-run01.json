@@ -1,0 +1,2266 @@
+{
+  "package": "examples/generated/generalization-baseline/brownian-run01",
+  "case": "brownian_diffusion",
+  "partial_lesson": "examples/generated/generalization-baseline/brownian-run01/partial.lesson.json",
+  "usable_generated_html": false,
+  "final_lesson_exists": false,
+  "html_exists": false,
+  "unmodified": true,
+  "package_hashes_before": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "3adfa7adaa1fccb42687a5f68f98fd60383daa8eacc294fee6267b914e399bd1",
+      "canonical_lf_sha256": "4447b9ff06c9b2666504dd8ab033ff22588b9e10c4953f15e83062e7b96ab8eb",
+      "bytes": 14098
+    },
+    "trace.jsonl": {
+      "raw_sha256": "d682c3baf8607fd228d817cfb2bfa008bbb1a54e7a01f36d38006c0916a58e6f",
+      "canonical_lf_sha256": "d682c3baf8607fd228d817cfb2bfa008bbb1a54e7a01f36d38006c0916a58e6f",
+      "bytes": 28421
+    }
+  },
+  "package_hashes_after": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "3adfa7adaa1fccb42687a5f68f98fd60383daa8eacc294fee6267b914e399bd1",
+      "canonical_lf_sha256": "4447b9ff06c9b2666504dd8ab033ff22588b9e10c4953f15e83062e7b96ab8eb",
+      "bytes": 14098
+    },
+    "trace.jsonl": {
+      "raw_sha256": "d682c3baf8607fd228d817cfb2bfa008bbb1a54e7a01f36d38006c0916a58e6f",
+      "canonical_lf_sha256": "d682c3baf8607fd228d817cfb2bfa008bbb1a54e7a01f36d38006c0916a58e6f",
+      "bytes": 28421
+    }
+  },
+  "atol": 1e-12,
+  "rtol": 1e-12,
+  "explicit_scientific_control_mapping": {
+    "T": "temp",
+    "eta": "eta",
+    "a": "a",
+    "t": "t"
+  },
+  "explicit_physical_output_mapping": {
+    "D_um2_per_s": "d_value",
+    "MSD_um2": "msd",
+    "RMS_x_um": "rms"
+  },
+  "fixture_valid_total": 12,
+  "fixture_valid_passed": 12,
+  "valid_total": 60,
+  "valid_passed": 60,
+  "invalid_total": 3,
+  "invalid_passed": 3,
+  "records": [
+    {
+      "id": "default",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 0.43947422604976444,
+        "rms": 0.6629285225797458
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.43947422604976444,
+          "rms": 0.6629285225797458,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "four_times_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 1.7578969041990578,
+        "rms": 1.3258570451594915
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 1.7578969041990578,
+          "rms": 1.3258570451594915,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "twice_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 2,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 2,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 0.10986855651244111,
+        "msd": 0.21973711302488222,
+        "rms": 0.4687612537581175
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.10986855651244111,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.21973711302488222,
+          "rms": 0.4687612537581175,
+          "time_factor": 2,
+          "d_double_eta": 0.21973711302488222
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "twice_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 2,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 2,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 0.10986855651244111,
+        "msd": 0.21973711302488222,
+        "rms": 0.4687612537581175
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.10986855651244111,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.21973711302488222,
+          "rms": 0.4687612537581175,
+          "time_factor": 2,
+          "d_double_eta": 0.21973711302488222
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "higher_temperature",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 400,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 400,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 0.29298281736650966,
+        "msd": 0.5859656347330193,
+        "rms": 0.7654839219297942
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.2929828173665096,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.5859656347330192,
+          "rms": 0.7654839219297942,
+          "time_factor": 2,
+          "d_double_eta": 0.5859656347330192
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "lower_temperature",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 250,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 250,
+        "eta": 1,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 0.18311426085406854,
+        "msd": 0.3662285217081371,
+        "rms": 0.605168176384166
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.1831142608540685,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.366228521708137,
+          "rms": 0.605168176384166,
+          "time_factor": 2,
+          "d_double_eta": 0.366228521708137
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 0,
+        "rms": 0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0,
+          "rms": 0,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "max_time",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 26.368453562985867,
+        "rms": 5.135022255354485
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 26.368453562985867,
+          "rms": 5.135022255354485,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "minimum_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 0.1,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 0.1,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 2.1973711302488224,
+        "msd": 4.394742260497645,
+        "rms": 2.096364057242359
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 2.1973711302488224,
+          "d_coeff": 0.000732457043416274,
+          "msd": 4.394742260497645,
+          "rms": 2.096364057242359,
+          "time_factor": 2,
+          "d_double_eta": 4.394742260497645
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "minimum_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 0.1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 0.1,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 2.1973711302488224,
+        "msd": 4.394742260497645,
+        "rms": 2.096364057242359
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 2.1973711302488224,
+          "d_coeff": 0.000732457043416274,
+          "msd": 4.394742260497645,
+          "rms": 2.096364057242359,
+          "time_factor": 2,
+          "d_double_eta": 4.394742260497645
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "maximum_viscosity",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 5,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 5,
+        "a": 1,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 0.04394742260497644,
+        "msd": 0.08789484520995287,
+        "rms": 0.2964706481423631
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.043947422604976444,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.08789484520995289,
+          "rms": 0.2964706481423631,
+          "time_factor": 2,
+          "d_double_eta": 0.08789484520995289
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "maximum_radius",
+      "kind": "independent_fixture",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 5,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 5,
+        "t": 1
+      },
+      "expected": {
+        "d_value": 0.043947422604976444,
+        "msd": 0.08789484520995289,
+        "rms": 0.2964706481423631
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.043947422604976444,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.08789484520995289,
+          "rms": 0.2964706481423631,
+          "time_factor": 2,
+          "d_double_eta": 0.08789484520995289
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_viscosity",
+      "kind": "invalid_domain",
+      "scientific_state": {
+        "T": 300,
+        "eta": 0,
+        "a": 1,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 0,
+        "a": 1,
+        "t": 1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Dynamic viscosity eta: value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "zero_radius",
+      "kind": "invalid_domain",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 0,
+        "t": 1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 0,
+        "t": 1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Particle radius a: value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "negative_time",
+      "kind": "invalid_domain",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": -1
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": -1
+      },
+      "expected": null,
+      "actual": {
+        "ok": false,
+        "error": "Elapsed time t: value is outside the allowed bounds."
+      },
+      "passed": true
+    },
+    {
+      "id": "line:0",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 0.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 0.0,
+        "rms": 0.0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0,
+          "rms": 0,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:3",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 1.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 0.6592113390746467,
+        "rms": 0.8119183081287469
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.6592113390746467,
+          "rms": 0.8119183081287469,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:5",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 2.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 2.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 1.0986855651244112,
+        "rms": 1.0481820286211796
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 1.0986855651244112,
+          "rms": 1.0481820286211796,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:8",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 4.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 1.7578969041990578,
+        "rms": 1.3258570451594915
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 1.7578969041990578,
+          "rms": 1.3258570451594915,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:10",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 5.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 5.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 2.1973711302488224,
+        "rms": 1.4823532407118158
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 2.1973711302488224,
+          "rms": 1.4823532407118158,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:13",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 6.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 6.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 2.856582469323469,
+        "rms": 1.6901427363756794
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 2.856582469323469,
+          "rms": 1.6901427363756794,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:15",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 7.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 7.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 3.2960566953732333,
+        "rms": 1.815504529152498
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 3.2960566953732333,
+          "rms": 1.815504529152498,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:18",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 9.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 9.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 3.95526803444788,
+        "rms": 1.9887855677392372
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 3.95526803444788,
+          "rms": 1.9887855677392372,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:20",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 10.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 10.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 4.394742260497645,
+        "rms": 2.096364057242359
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 4.394742260497645,
+          "rms": 2.096364057242359,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:23",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 11.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 11.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 5.053953599572291,
+        "rms": 2.248099997680773
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 5.053953599572291,
+          "rms": 2.248099997680773,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:26",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 13.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 13.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 5.713164938646938,
+        "rms": 2.3902227801288602
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 5.713164938646938,
+          "rms": 2.3902227801288602,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:28",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 14.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 14.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 6.152639164696702,
+        "rms": 2.480451403413641
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 6.152639164696702,
+          "rms": 2.480451403413641,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:31",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 15.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 15.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 6.811850503771349,
+        "rms": 2.6099522033499674
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 6.811850503771349,
+          "rms": 2.6099522033499674,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:33",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 16.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 16.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 7.251324729821113,
+        "rms": 2.692828388483216
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 7.251324729821113,
+          "rms": 2.692828388483216,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:36",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 18.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 18.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 7.91053606889576,
+        "rms": 2.812567522548705
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 7.91053606889576,
+          "rms": 2.812567522548705,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:38",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 19.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 19.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 8.350010294945525,
+        "rms": 2.8896384367158334
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 8.350010294945525,
+          "rms": 2.8896384367158334,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:41",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 20.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 20.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 9.009221634020172,
+        "rms": 3.0015365455080123
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 9.009221634020172,
+          "rms": 3.0015365455080123,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:43",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 21.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 21.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 9.448695860069936,
+        "rms": 3.0738731040935856
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 9.448695860069936,
+          "rms": 3.0738731040935856,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:46",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 23.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 23.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 10.107907199144583,
+        "rms": 3.1792935062910725
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 10.107907199144583,
+          "rms": 3.1792935062910725,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:49",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 24.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 24.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 10.76711853821923,
+        "rms": 3.2813287763068226
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 10.76711853821923,
+          "rms": 3.2813287763068226,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:51",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 25.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 25.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 11.206592764268994,
+        "rms": 3.347624943787609
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 11.206592764268994,
+          "rms": 3.347624943787609,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:54",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 27.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 27.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 11.86580410334364,
+        "rms": 3.444677648684074
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 11.86580410334364,
+          "rms": 3.444677648684074,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:56",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 28.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 28.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 12.305278329393404,
+        "rms": 3.5078880155149488
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 12.305278329393404,
+          "rms": 3.5078880155149488,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:59",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 29.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 29.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 12.964489668468051,
+        "rms": 3.600623511069722
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 12.964489668468051,
+          "rms": 3.600623511069722,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:61",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 30.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 30.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 13.403963894517815,
+        "rms": 3.661142430241934
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 13.403963894517815,
+          "rms": 3.661142430241934,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:64",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 32.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 32.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 14.063175233592462,
+        "rms": 3.75009003006494
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 14.063175233592462,
+          "rms": 3.75009003006494,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:66",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 33.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 33.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 14.502649459642226,
+        "rms": 3.8082344281362492
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 14.502649459642226,
+          "rms": 3.8082344281362492,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:69",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 34.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 34.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 15.161860798716873,
+        "rms": 3.8938234164785737
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 15.161860798716873,
+          "rms": 3.8938234164785737,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:71",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 35.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 35.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 15.601335024766637,
+        "rms": 3.949852532027827
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 15.601335024766637,
+          "rms": 3.949852532027827,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:74",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 37.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 37.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 16.260546363841286,
+        "rms": 4.032436777414035
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 16.260546363841286,
+          "rms": 4.032436777414035,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:77",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 38.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 38.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 16.91975770291593,
+        "rms": 4.113363307916763
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 16.91975770291593,
+          "rms": 4.113363307916763,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:79",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 39.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 39.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 17.359231928965695,
+        "rms": 4.166441158706756
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 17.359231928965695,
+          "rms": 4.166441158706756,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:82",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 41.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 41.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 18.018443268040343,
+        "rms": 4.24481369061592
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 18.018443268040343,
+          "rms": 4.24481369061592,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:84",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 42.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 42.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 18.457917494090108,
+        "rms": 4.296267856417953
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 18.457917494090108,
+          "rms": 4.296267856417953,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:87",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 43.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 43.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 19.117128833164752,
+        "rms": 4.372313899203116
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 19.117128833164752,
+          "rms": 4.372313899203116,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:89",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 44.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 44.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 19.556603059214517,
+        "rms": 4.422284823393278
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 19.556603059214517,
+          "rms": 4.422284823393278,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:92",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 46.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 46.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 20.215814398289165,
+        "rms": 4.496199995361546
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 20.215814398289165,
+          "rms": 4.496199995361546,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:94",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 47.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 47.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 20.65528862433893,
+        "rms": 4.544808975560901
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 20.65528862433893,
+          "rms": 4.544808975560901,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:97",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 48.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 48.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 21.314499963413574,
+        "rms": 4.616762931255359
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 21.314499963413574,
+          "rms": 4.616762931255359,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:100",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 50.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 50.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 21.973711302488223,
+        "rms": 4.687612537581175
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 21.973711302488223,
+          "rms": 4.687612537581175,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:102",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 51.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 51.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 22.413185528537987,
+        "rms": 4.734256597242907
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 22.413185528537987,
+          "rms": 4.734256597242907,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:105",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 52.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 52.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 23.072396867612632,
+        "rms": 4.803373488248924
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 23.072396867612632,
+          "rms": 4.803373488248924,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:107",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 53.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 53.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 23.511871093662396,
+        "rms": 4.848904112648794
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 23.511871093662396,
+          "rms": 4.848904112648794,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:110",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 55.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 55.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 24.171082432737045,
+        "rms": 4.916409506208473
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 24.171082432737045,
+          "rms": 4.916409506208473,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:112",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 56.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 56.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 24.61055665878681,
+        "rms": 4.960902806827282
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 24.61055665878681,
+          "rms": 4.960902806827282,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:115",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 57.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 57.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 25.269767997861454,
+        "rms": 5.026904415031328
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 25.269767997861454,
+          "rms": 5.026904415031328,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:117",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 58.5
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 58.5
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 25.709242223911218,
+        "rms": 5.070428209127038
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 25.709242223911218,
+          "rms": 5.070428209127038,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    },
+    {
+      "id": "line:120",
+      "kind": "independent_line_sweep",
+      "scientific_state": {
+        "T": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60.0
+      },
+      "state": {
+        "temp": 300,
+        "eta": 1,
+        "a": 1,
+        "t": 60.0
+      },
+      "expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 26.368453562985867,
+        "rms": 5.135022255354485
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 26.368453562985867,
+          "rms": 5.135022255354485,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "passed": true
+    }
+  ],
+  "preserved_generated_checks_review": [
+    {
+      "id": "default_case",
+      "name": "Default state: T=300 K, eta=1 mPa*s, a=1 um, t=1 s",
+      "state": {
+        "a": 1,
+        "eta": 1,
+        "t": 1,
+        "temp": 300
+      },
+      "preserved_generated_expected": {
+        "d_coeff": 0.01380649,
+        "d_value": 0.000732,
+        "msd": 0.001464,
+        "rms": 0.038262
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.43947422604976444,
+          "rms": 0.6629285225797458,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "independent_physical_expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 0.43947422604976444,
+        "rms": 0.6629285225797458
+      },
+      "saved_expected_agree_with_core": false
+    },
+    {
+      "id": "zero_time",
+      "name": "t=0 gives zero MSD and RMS while D stays positive",
+      "state": {
+        "a": 1,
+        "eta": 1,
+        "t": 0,
+        "temp": 300
+      },
+      "preserved_generated_expected": {
+        "d_value": 0.000732,
+        "msd": 0,
+        "rms": 0
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.21973711302488222,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0,
+          "rms": 0,
+          "time_factor": 2,
+          "d_double_eta": 0.43947422604976444
+        }
+      },
+      "independent_physical_expected": {
+        "d_value": 0.21973711302488222,
+        "msd": 0.0,
+        "rms": 0.0
+      },
+      "saved_expected_agree_with_core": false
+    },
+    {
+      "id": "double_radius",
+      "name": "Doubling radius halves D and RMS at fixed t",
+      "state": {
+        "a": 2,
+        "eta": 1,
+        "t": 1,
+        "temp": 300
+      },
+      "preserved_generated_expected": {
+        "d_value": 0.000366,
+        "msd": 0.000732,
+        "rms": 0.027055
+      },
+      "actual": {
+        "ok": true,
+        "outputs": {
+          "d_value": 0.10986855651244111,
+          "d_coeff": 0.000732457043416274,
+          "msd": 0.21973711302488222,
+          "rms": 0.4687612537581175,
+          "time_factor": 2,
+          "d_double_eta": 0.21973711302488222
+        }
+      },
+      "independent_physical_expected": {
+        "d_value": 0.10986855651244111,
+        "msd": 0.21973711302488222,
+        "rms": 0.4687612537581175
+      },
+      "saved_expected_agree_with_core": false
+    }
+  ],
+  "source_url": "https://sites.pitt.edu/~jdnorton/lectures/Rotman_Summer_School_2013/Einstein_1905_docs/Einstein_Brownian_English.pdf",
+  "findings": [
+    {
+      "severity": "generation_failure",
+      "field": "checks",
+      "finding": "Preserved model-authored expected values omit the default temperature factor 300: expected D about .000732 versus independent/core .2197371130. MSD and RMS expectations inherit this error. CLI gates correctly reject these inconsistent cases; the package has no usable HTML."
+    },
+    {
+      "severity": "unit_revision",
+      "field": "computations[id=d_coeff].unit",
+      "finding": "The auxiliary conversion-coefficient unit is dimensionally inconsistent with D=C*T/(eta*a). The coefficient must carry diffusivity*viscosity*radius/temperature in the chosen units, equivalently mPa*micrometre^3/K; main D/MSD/RMS units are correct."
+    },
+    {
+      "severity": "science_revision",
+      "field": "computations[id=d_double_eta]",
+      "finding": "The visible auxiliary readout labeled D after doubling viscosity (halves D) evaluates D*2; it should evaluate D/2. The three primary D/MSD/RMS equations remain correct."
+    },
+    {
+      "severity": "teaching_revision",
+      "field": "explorations and checks[id=double_radius].name",
+      "finding": "Guided numerical prose repeats the erroneous default values; the double-radius check title says RMS halves, whereas RMS divides by sqrt(2)."
+    }
+  ],
+  "main_physical_equations_verdict": "pass",
+  "independent_science_verdict": "failed_generation_no_usable_page",
+  "scope": "These are numerical/source reviews of an unchanged partial lesson only. No page was created or hand-repaired; passing primary computations cannot override failed generated expectations and absent HTML.",
+  "variant": "baseline",
+  "published_package_hashes": {
+    "input.json": {
+      "raw_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "canonical_lf_sha256": "265e4a841142dbdab67610ac5e8a06b8a61887adb68258f0e03caa79f9569045",
+      "bytes": 2817
+    },
+    "measured-run.json": {
+      "raw_sha256": "59ab2be9b8f1a6888ef3e2c6617da7a4cc4e0e577475bed20f50a60b226c2b3a",
+      "canonical_lf_sha256": "068eb189350b60bfdfd4dcd164cc0900a258ecdef111406f15528910c48e3d9a",
+      "bytes": 4253
+    },
+    "partial.lesson.json": {
+      "raw_sha256": "3adfa7adaa1fccb42687a5f68f98fd60383daa8eacc294fee6267b914e399bd1",
+      "canonical_lf_sha256": "4447b9ff06c9b2666504dd8ab033ff22588b9e10c4953f15e83062e7b96ab8eb",
+      "bytes": 14098
+    },
+    "trace.jsonl": {
+      "raw_sha256": "d682c3baf8607fd228d817cfb2bfa008bbb1a54e7a01f36d38006c0916a58e6f",
+      "canonical_lf_sha256": "d682c3baf8607fd228d817cfb2bfa008bbb1a54e7a01f36d38006c0916a58e6f",
+      "bytes": 28421
+    }
+  },
+  "publication_identity": {
+    "byte_preserving_copy": true,
+    "reviewed_partial_or_final_json_preserved": true,
+    "generated_files_modified_by_review": false
+  },
+  "benchmark_input_qualification": "The supplied benchmark excerpts mix a short authentic prose quote, explicitly transcribed equations and authored summaries of source-supported facts. These are focused, enriched inputs rather than raw-paper discovery tests. Several generated grounding quotes promote authored summaries into purported primary-paper quotations; this is a provenance finding and a limitation of benchmark-input representativeness. Inputs were not changed during trials.",
+  "quality_score_assigned": false,
+  "official_quality_or_efficiency_points_promised": false
+}

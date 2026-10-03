@@ -4,6 +4,8 @@ For the current branding and renderer, open the [AhaLab presentation copies](../
 This directory preserves the original reviewed artifacts; their recorded hashes
 and browser observations apply to those historical files, not the new copies.
 
+Additional [new-paper experiments](../../tests/science/GENERALIZATION.md) preserve six exact packages under `generalization-baseline/` and `generalization-compact/`, including failed traces and partial JSON. These are measured reliability/efficiency evidence, not accepted showcases. Only the two baseline Hubble runs produced HTML; both retain independent findings.
+
 These packages preserve fresh CLI output and separately identified model repairs. Keep each package's `input.json`, `lesson.json`, `index.html`, and `trace.jsonl` unchanged during review; publish revisions as distinct packages. Authored development fixtures live separately under `tests/science/` and ignored `review-out/`.
 
 ## Current showcase packages
@@ -12,7 +14,7 @@ The three original showcases were published at `17c2dbd` and remain unchanged. T
 
 | Package | Generation mode | Independent science | Browser evidence |
 |---|---|---|---|
-| [entropy-polished](entropy-polished/index.html) | Fresh CLI parent [entropy-showcase](entropy-showcase/index.html) plus one title-only model repair | 132 legal states and 8 invalid rejections pass; resizing, scale invariance and provenance accepted | Parent: 32 P2 and nine P1 Chromium observations, plus five user offline steps. Final page changes only one chart title; no new browser review claimed |
+| [entropy-polished](entropy-polished/index.html) | Fresh CLI parent [entropy-showcase](entropy-showcase/index.html) plus one title-only model repair | 132 legal states and 8 invalid rejections pass; resizing, scale invariance and provenance accepted | Exact polished page: 16 P2 Chromium observations passed. Parent: 32 P2 and nine P1 observations, plus five user offline steps. Exact polished direct-file offline interaction remains unconfirmed |
 | [attention-showcase](attention-showcase/index.html) | Fresh CLI plus two separately traced teaching repairs | 63 legal states and 11 invalid rejections pass; frozen computations/controls/checks preserved | User verified checkbox on the preceding fresh page offline; final teaching-only revision preserves numerical/UI definitions. P2 exact final-page recheck passed (34 observations) |
 | [enzyme-showcase](enzyme-showcase/index.html) | Fresh CLI plus one separately traced teaching repair | 412 legal states and 6 invalid rejections pass; absolute scan labels and Km caveat accepted | User verified three final slider states offline; P2 exact final-page recheck passed (23 observations) |
 | [logistic-reviewed](logistic-reviewed/index.html) | Saved fresh candidate plus traced model teaching repair | Accepted four-update recurrence and source/teaching scope | P2 science/browser review and user-reported direct-file offline check passed |
