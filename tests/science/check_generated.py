@@ -9,16 +9,22 @@ from src.runtime_checker import close, execute_states
 from src.validator import validate_html, validate_spec
 
 
+def matches_reviewed_hash(raw, expected):
+    """Allow Git's LF-to-CRLF checkout conversion without masking content edits."""
+    return (hashlib.sha256(raw).hexdigest() == expected or
+            hashlib.sha256(raw.replace(b"\r\n", b"\n")).hexdigest() == expected)
+
+
 def check_report(path):
-    report = json.loads(path.read_text())
+    report = json.loads(path.read_text(encoding="utf-8"))
     lesson_path = Path(report["lesson"])
     raw = lesson_path.read_bytes()
-    if hashlib.sha256(raw).hexdigest() != report["sha256_after"]:
+    if not matches_reviewed_hash(raw, report["sha256_after"]):
         raise ValueError(f"Reviewed lesson hash changed: {lesson_path}")
     spec = json.loads(raw)
-    case = json.loads((lesson_path.parent / "input.json").read_text())
+    case = json.loads((lesson_path.parent / "input.json").read_text(encoding="utf-8"))
     compiled, _ = validate_spec(spec, case["excerpt"], case["source_url"])
-    html = (lesson_path.parent / "index.html").read_text()
+    html = (lesson_path.parent / "index.html").read_text(encoding="utf-8")
     validate_html(html, spec)
     if render(spec, compiled) != html:
         raise ValueError("Saved HTML differs from the exact reviewed spec and current renderer/runtime.")
@@ -45,7 +51,7 @@ def check_report(path):
     if revision:
         revised_path = Path(revision["lesson"])
         revised_raw = revised_path.read_bytes()
-        if hashlib.sha256(revised_raw).hexdigest() != revision["sha256"]:
+        if not matches_reviewed_hash(revised_raw, revision["sha256"]):
             raise ValueError("Title revision hash changed.")
         revised = json.loads(revised_raw)
         expected_revision = copy.deepcopy(spec)
@@ -54,7 +60,7 @@ def check_report(path):
         if revised != expected_revision:
             raise ValueError("Title revision changed other reviewed fields.")
         revised_compiled, _ = validate_spec(revised, case["excerpt"], case["source_url"])
-        if revised_compiled != compiled or render(revised, compiled) != (revised_path.parent / "index.html").read_text():
+        if revised_compiled != compiled or render(revised, compiled) != (revised_path.parent / "index.html").read_text(encoding="utf-8"):
             raise ValueError("Title revision changed compiled math or rendered assets.")
         print(f"{revised_path.parent.name}: exact title-only change verified; reviewed math/controls preserved")
 
