@@ -1,0 +1,4965 @@
+{
+  "artifact_commit": "781b369186afe61362dcefc84924c3944f2ceb92",
+  "package": "examples/generated/attention-reviewed",
+  "review_date": "2026-10-03",
+  "reviewer": "P2",
+  "acceptance": "accepted_for_stated_science_and_browser_scope",
+  "generation_mode": "saved_model_candidate_live_repair",
+  "fresh_cli_generation": false,
+  "scope": "Independent review of the exact renderer output after a live model component repair of the earlier saved model candidate. This does not certify a new end-to-end CLI generation or generalization to an unfamiliar mechanism.",
+  "previous_package_review": "tests/browser/reviews/attention.json",
+  "artifact_hashes": {
+    "input.json": {
+      "git_blob_sha256": "02ce57ede53318b81a94bbf8ad0ecece23195d2a758e81709d050635be808560",
+      "reviewed_checkout_sha256": "047b40ee2bd67f90d8c3db178605417d2875e17c37e1c40df86e81077233bee5"
+    },
+    "lesson.json": {
+      "git_blob_sha256": "fb4051b6cd7b9598b9c23364270ac00c0a9b7c5049f10dd3f08f5767f2c208ae",
+      "reviewed_checkout_sha256": "2b177548cc2cc36c883d74eddc1345ee04994e36652599b59f58358f217a963c"
+    },
+    "index.html": {
+      "git_blob_sha256": "446240a00df19006c72b69e95bca5d94909ea9d1de48a24041b2220162fcf2e5",
+      "reviewed_checkout_sha256": "f6b4dbc313f9145789000edc04401daf01bdb4a82bcfc225b9d8cd272c046de3"
+    },
+    "trace.jsonl": {
+      "git_blob_sha256": "d2a8c1e94b8f36721842a4a41845e75c27416d8a2faedcb98ec40afabf75bd06",
+      "reviewed_checkout_sha256": "91459ef5ff4ecb522e188868e6e98f4f758787ba1361848dd684fbda981473d0"
+    }
+  },
+  "hash_note": "Git LF and Windows CRLF hashes recorded. All generated files remained unchanged.",
+  "identity": {
+    "embedded_spec_matches_saved_json": true,
+    "embedded_AST_matches_saved_computations": true,
+    "embedded_math_core_matches_reviewed_checkout": true,
+    "embedded_UI_matches_reviewed_checkout": true,
+    "expressions_preserved_from_original": true,
+    "numerical_cases_preserved_from_original": true
+  },
+  "model": "deepseek/deepseek-v4.1-flash",
+  "trace_summary": {
+    "start": {
+      "mode": "saved_model_candidate_live_repair",
+      "candidate_sha256": "2214ad1f44c1c408bc2fc18eee091c5a910f9f3d08f0949216f567caf44e5983",
+      "fresh_cli_generation": false,
+      "model": "deepseek/deepseek-v4.1-flash",
+      "browser_executed": false,
+      "independent_science_verified": false
+    },
+    "finish_result": "success",
+    "finish": {
+      "requests": 1,
+      "request_limit": 10,
+      "observed_prompt_tokens": 9708,
+      "observed_completion_tokens": 538,
+      "observed_total_tokens": 10246,
+      "observed_reasoning_tokens": 0,
+      "usage_is_complete": true,
+      "attempts_missing_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "reserved_completion_tokens": 3500,
+      "completion_token_limit": 30000,
+      "elapsed_seconds": 10.234,
+      "remaining_seconds": 559.766,
+      "independent_science_verified": false,
+      "browser_executed": false,
+      "teaching_repair_requires_independent_review": true
+    },
+    "live_model_responses": [
+      {
+        "timestamp": "2026-10-03T11:31:29.485158+00:00",
+        "stage": "openrouter",
+        "action": "response",
+        "result": "received",
+        "metadata": {
+          "request_number": 1,
+          "status_code": 200,
+          "response_id": "gen-1791027079-xRnF0aTb7iAsOkiEr47x",
+          "elapsed_seconds": 10.116,
+          "usage": {
+            "prompt_tokens": 9708,
+            "completion_tokens": 538,
+            "total_tokens": 10246,
+            "reasoning_tokens": 0
+          },
+          "resolved_model": "deepseek/deepseek-v4.1-flash"
+        }
+      }
+    ]
+  },
+  "source_fidelity": {
+    "url": "https://arxiv.org/html/1706.03762v7",
+    "equations_independently_verified": true,
+    "equation_transcription_explicitly_identified": true,
+    "original_prose_findings_resolved": true
+  },
+  "numerical_core_observations": [
+    {
+      "state": {
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ok": true,
+      "outputs": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.7071067811865475,
+            0
+          ],
+          [
+            0,
+            0.7071067811865475
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.6697615493266569,
+            0.3302384506733431
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "output": [
+          [
+            0.6697615493266569,
+            0.3302384506733431
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "raw_scores": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "row_sums": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.7071067811865475,
+            0.0
+          ],
+          [
+            0.0,
+            0.7071067811865475
+          ]
+        ],
+        "raw_scores": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.6697615493266569,
+            0.3302384506733431
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "output": [
+          [
+            0.6697615493266569,
+            0.3302384506733431
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "row_sums": [
+          [
+            1.0
+          ],
+          [
+            1.0
+          ]
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "q": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            10,
+            0
+          ],
+          [
+            0,
+            20
+          ]
+        ]
+      },
+      "ok": true,
+      "outputs": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "output": [
+          [
+            5,
+            10
+          ],
+          [
+            5,
+            10
+          ]
+        ],
+        "raw_scores": [
+          [
+            0,
+            0
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "row_sums": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "raw_scores": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "output": [
+          [
+            5.0,
+            10.0
+          ],
+          [
+            5.0,
+            10.0
+          ]
+        ],
+        "row_sums": [
+          [
+            1.0
+          ],
+          [
+            1.0
+          ]
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            10,
+            0
+          ],
+          [
+            0,
+            20
+          ]
+        ]
+      },
+      "ok": true,
+      "outputs": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.7071067811865475,
+            0
+          ],
+          [
+            0,
+            0.7071067811865475
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.6697615493266569,
+            0.3302384506733431
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "output": [
+          [
+            6.697615493266569,
+            6.604769013466862
+          ],
+          [
+            3.302384506733431,
+            13.395230986533138
+          ]
+        ],
+        "raw_scores": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "row_sums": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.7071067811865475,
+            0.0
+          ],
+          [
+            0.0,
+            0.7071067811865475
+          ]
+        ],
+        "raw_scores": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.6697615493266569,
+            0.3302384506733431
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "output": [
+          [
+            6.697615493266569,
+            6.604769013466862
+          ],
+          [
+            3.302384506733431,
+            13.395230986533138
+          ]
+        ],
+        "row_sums": [
+          [
+            1.0
+          ],
+          [
+            1.0
+          ]
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "k": [
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            10,
+            0
+          ],
+          [
+            0,
+            20
+          ]
+        ]
+      },
+      "ok": true,
+      "outputs": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            1.414213562373095,
+            0
+          ],
+          [
+            0,
+            0.7071067811865475
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.8044296825069569,
+            0.19557031749304313
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "output": [
+          [
+            8.04429682506957,
+            3.9114063498608624
+          ],
+          [
+            3.302384506733431,
+            13.395230986533138
+          ]
+        ],
+        "raw_scores": [
+          [
+            2,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "row_sums": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            1.414213562373095,
+            0.0
+          ],
+          [
+            0.0,
+            0.7071067811865475
+          ]
+        ],
+        "raw_scores": [
+          [
+            2.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.8044296825069569,
+            0.19557031749304313
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "output": [
+          [
+            8.04429682506957,
+            3.9114063498608624
+          ],
+          [
+            3.302384506733431,
+            13.395230986533138
+          ]
+        ],
+        "row_sums": [
+          [
+            1.0
+          ],
+          [
+            1.0
+          ]
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            20,
+            0
+          ],
+          [
+            0,
+            20
+          ]
+        ]
+      },
+      "ok": true,
+      "outputs": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.7071067811865475,
+            0
+          ],
+          [
+            0,
+            0.7071067811865475
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.6697615493266569,
+            0.3302384506733431
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "output": [
+          [
+            13.395230986533138,
+            6.604769013466862
+          ],
+          [
+            6.604769013466862,
+            13.395230986533138
+          ]
+        ],
+        "raw_scores": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "row_sums": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.7071067811865475,
+            0.0
+          ],
+          [
+            0.0,
+            0.7071067811865475
+          ]
+        ],
+        "raw_scores": [
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            1.0
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.6697615493266569,
+            0.3302384506733431
+          ],
+          [
+            0.3302384506733431,
+            0.6697615493266569
+          ]
+        ],
+        "output": [
+          [
+            13.395230986533138,
+            6.604769013466862
+          ],
+          [
+            6.604769013466862,
+            13.395230986533138
+          ]
+        ],
+        "row_sums": [
+          [
+            1.0
+          ],
+          [
+            1.0
+          ]
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "q": [
+          [
+            1000,
+            0
+          ],
+          [
+            0,
+            1000
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "v": [
+          [
+            10,
+            0
+          ],
+          [
+            0,
+            20
+          ]
+        ]
+      },
+      "ok": true,
+      "outputs": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            707.1067811865474,
+            0
+          ],
+          [
+            0,
+            707.1067811865474
+          ]
+        ],
+        "attn_weights": [
+          [
+            1,
+            8.08028751644722e-308
+          ],
+          [
+            8.08028751644722e-308,
+            1
+          ]
+        ],
+        "output": [
+          [
+            10,
+            1.616057503289444e-306
+          ],
+          [
+            8.08028751644722e-307,
+            20
+          ]
+        ],
+        "raw_scores": [
+          [
+            1000,
+            0
+          ],
+          [
+            0,
+            1000
+          ]
+        ],
+        "row_sums": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            707.1067811865474,
+            0.0
+          ],
+          [
+            0.0,
+            707.1067811865474
+          ]
+        ],
+        "raw_scores": [
+          [
+            1000.0,
+            0.0
+          ],
+          [
+            0.0,
+            1000.0
+          ]
+        ],
+        "attn_weights": [
+          [
+            1.0,
+            8.08028751644722e-308
+          ],
+          [
+            8.08028751644722e-308,
+            1.0
+          ]
+        ],
+        "output": [
+          [
+            10.0,
+            1.616057503289444e-306
+          ],
+          [
+            8.08028751644722e-307,
+            20.0
+          ]
+        ],
+        "row_sums": [
+          [
+            1.0
+          ],
+          [
+            1.0
+          ]
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "v": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ok": true,
+      "outputs": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.7071067811865475,
+            0.7071067811865475
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "output": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "raw_scores": [
+          [
+            1,
+            1
+          ],
+          [
+            0,
+            0
+          ]
+        ],
+        "row_sums": [
+          [
+            1
+          ],
+          [
+            1
+          ]
+        ]
+      },
+      "expected": {
+        "dk": 2,
+        "scaled_scores": [
+          [
+            0.7071067811865475,
+            0.7071067811865475
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "raw_scores": [
+          [
+            1.0,
+            1.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "attn_weights": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "output": [
+          [
+            0.5,
+            0.5
+          ],
+          [
+            0.5,
+            0.5
+          ]
+        ],
+        "row_sums": [
+          [
+            1.0
+          ],
+          [
+            1.0
+          ]
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "q": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ],
+        "k": [
+          [
+            1,
+            0,
+            0
+          ],
+          [
+            0,
+            1,
+            0
+          ]
+        ],
+        "v": [
+          [
+            1,
+            0
+          ],
+          [
+            0,
+            1
+          ]
+        ]
+      },
+      "ok": false,
+      "error": "Key matrix K: matrix dimensions must stay fixed.",
+      "expected": "Rejected outside the generated control domain/shape",
+      "passed": true
+    }
+  ],
+  "browser": {
+    "name": "Codex in-app Chromium",
+    "version": "not supplied by browser tool",
+    "tolerance": {
+      "atol": 5e-06,
+      "rtol": 5e-06
+    },
+    "observations": [
+      {
+        "action": "Default identity",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit q row 1 column 1",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              2.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "2",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              1.414213562373095,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              2.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.8044296825069569,
+              0.19557031749304313
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              0.8044296825069569,
+              0.19557031749304313
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.80443,
+              0.19557
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.80443,
+              0.19557
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "raw_scores": [
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              1.41421,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit q row 1 column 2",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "1",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.7071067811865475
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0.707107
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit q row 2 column 1",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "1",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.7071067811865475,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "output": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0.707107,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit q row 2 column 2",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "2"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.414213562373095
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.19557031749304313,
+              0.8044296825069569
+            ]
+          ],
+          "output": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.19557031749304313,
+              0.8044296825069569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.19557,
+              0.80443
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.19557,
+              0.80443
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              1.41421
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit k row 1 column 1",
+        "state": {
+          "k": [
+            [
+              2.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "2",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              1.414213562373095,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              2.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.8044296825069569,
+              0.19557031749304313
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              0.8044296825069569,
+              0.19557031749304313
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.80443,
+              0.19557
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.80443,
+              0.19557
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "raw_scores": [
+            [
+              2,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              1.41421,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit k row 1 column 2",
+        "state": {
+          "k": [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "1",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.7071067811865475,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "output": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              1,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0.707107,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit k row 2 column 1",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "1",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.7071067811865475
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0.707107
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit k row 2 column 2",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "2"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              1.414213562373095
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.19557031749304313,
+              0.8044296825069569
+            ]
+          ],
+          "output": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.19557031749304313,
+              0.8044296825069569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.19557,
+              0.80443
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.19557,
+              0.80443
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              2
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              1.41421
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit v row 1 column 1",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              2.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "2",
+            "0",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              1.3395230986533138,
+              0.3302384506733431
+            ],
+            [
+              0.6604769013466862,
+              0.6697615493266569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              1.33952,
+              0.330238
+            ],
+            [
+              0.660477,
+              0.669762
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit v row 1 column 2",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "1",
+            "0",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              0.6697615493266569,
+              1.0
+            ],
+            [
+              0.3302384506733431,
+              1.0
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.669762,
+              1
+            ],
+            [
+              0.330238,
+              1
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit v row 2 column 1",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              1.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "1",
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              1.0,
+              0.3302384506733431
+            ],
+            [
+              1.0,
+              0.6697615493266569
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              1,
+              0.330238
+            ],
+            [
+              1,
+              0.669762
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Edit v row 2 column 2",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              2.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "1",
+            "0",
+            "0",
+            "2"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              0.6697615493266569,
+              0.6604769013466862
+            ],
+            [
+              0.3302384506733431,
+              1.3395230986533138
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              0.669762,
+              0.660477
+            ],
+            [
+              0.330238,
+              1.33952
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Independent scaled identity",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              6.697615493266569,
+              6.604769013466862
+            ],
+            [
+              3.302384506733431,
+              13.395230986533138
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              6.69762,
+              6.60477
+            ],
+            [
+              3.30238,
+              13.3952
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Zero queries",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "0",
+            "0",
+            "0",
+            "0"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "raw_scores": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "output": [
+            [
+              5.0,
+              10.0
+            ],
+            [
+              5.0,
+              10.0
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              5,
+              10
+            ],
+            [
+              5,
+              10
+            ]
+          ],
+          "raw_scores": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Identical keys",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              1.0,
+              0.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "1",
+            "0"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.7071067811865475
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              1.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "output": [
+            [
+              5.0,
+              10.0
+            ],
+            [
+              5.0,
+              10.0
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.5,
+              0.5
+            ],
+            [
+              0.5,
+              0.5
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              5,
+              10
+            ],
+            [
+              5,
+              10
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              1
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0.707107
+            ],
+            [
+              0,
+              0
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Large scores saturate two-key softmax",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1000.0,
+              0.0
+            ],
+            [
+              0.0,
+              1000.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1000",
+            "0",
+            "0",
+            "1000"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              707.1067811865474,
+              0.0
+            ],
+            [
+              0.0,
+              707.1067811865474
+            ]
+          ],
+          "raw_scores": [
+            [
+              1000.0,
+              0.0
+            ],
+            [
+              0.0,
+              1000.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              1.0,
+              8.08028751644722e-308
+            ],
+            [
+              8.08028751644722e-308,
+              1.0
+            ]
+          ],
+          "output": [
+            [
+              10.0,
+              1.616057503289444e-306
+            ],
+            [
+              8.08028751644722e-307,
+              20.0
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              1,
+              8.08029e-308
+            ],
+            [
+              8.08029e-308,
+              1
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              10,
+              1.61606e-306
+            ],
+            [
+              8.08029e-307,
+              20
+            ]
+          ],
+          "raw_scores": [
+            [
+              1000,
+              0
+            ],
+            [
+              0,
+              1000
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              707.107,
+              0
+            ],
+            [
+              0,
+              707.107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Negative query entries legal",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              -1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "-1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              -0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              -1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              3.302384506733431,
+              13.395230986533138
+            ],
+            [
+              3.302384506733431,
+              13.395230986533138
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.330238,
+              0.669762
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              3.30238,
+              13.3952
+            ],
+            [
+              3.30238,
+              13.3952
+            ]
+          ],
+          "raw_scores": [
+            [
+              -1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              -0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Blank query cell",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              null,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Cannot calculate: Query matrix Q: enter a finite number in every field.",
+        "svg_count": 0,
+        "theme_pressed": "false",
+        "expected": {
+          "visible_error": true,
+          "cleared_readouts": 6,
+          "svg_count": 0
+        },
+        "observed": {
+          "attn_weights": "—",
+          "dk": "—",
+          "output": "—",
+          "raw_scores": "—",
+          "row_sums": "—",
+          "scaled_scores": "—"
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Recovery after blank",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              6.697615493266569,
+              6.604769013466862
+            ],
+            [
+              3.302384506733431,
+              13.395230986533138
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              6.69762,
+              6.60477
+            ],
+            [
+              3.30238,
+              13.3952
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Nonfinite query edit rejected",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              null,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Cannot calculate: Query matrix Q: enter a finite number in every field.",
+        "svg_count": 0,
+        "theme_pressed": "false",
+        "expected": {
+          "visible_error": true,
+          "cleared_readouts": 6,
+          "svg_count": 0
+        },
+        "observed": {
+          "attn_weights": "—",
+          "dk": "—",
+          "output": "—",
+          "raw_scores": "—",
+          "row_sums": "—",
+          "scaled_scores": "—"
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Recovery after nonfinite",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              6.697615493266569,
+              6.604769013466862
+            ],
+            [
+              3.302384506733431,
+              13.395230986533138
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              6.69762,
+              6.60477
+            ],
+            [
+              3.30238,
+              13.3952
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Switch to light",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "true",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              6.697615493266569,
+              6.604769013466862
+            ],
+            [
+              3.302384506733431,
+              13.395230986533138
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              6.69762,
+              6.60477
+            ],
+            [
+              3.30238,
+              13.3952
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Restore dark",
+        "state": {
+          "k": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "q": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "v": [
+            [
+              10.0,
+              0.0
+            ],
+            [
+              0.0,
+              20.0
+            ]
+          ]
+        },
+        "raw_control_values": {
+          "k": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "q": [
+            "1",
+            "0",
+            "0",
+            "1"
+          ],
+          "v": [
+            "10",
+            "0",
+            "0",
+            "20"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 2,
+        "theme_pressed": "false",
+        "expected": {
+          "dk": 2,
+          "scaled_scores": [
+            [
+              0.7071067811865475,
+              0.0
+            ],
+            [
+              0.0,
+              0.7071067811865475
+            ]
+          ],
+          "raw_scores": [
+            [
+              1.0,
+              0.0
+            ],
+            [
+              0.0,
+              1.0
+            ]
+          ],
+          "attn_weights": [
+            [
+              0.6697615493266569,
+              0.3302384506733431
+            ],
+            [
+              0.3302384506733431,
+              0.6697615493266569
+            ]
+          ],
+          "output": [
+            [
+              6.697615493266569,
+              6.604769013466862
+            ],
+            [
+              3.302384506733431,
+              13.395230986533138
+            ]
+          ],
+          "row_sums": [
+            [
+              1.0
+            ],
+            [
+              1.0
+            ]
+          ]
+        },
+        "observed": {
+          "attn_weights": [
+            [
+              0.669762,
+              0.330238
+            ],
+            [
+              0.330238,
+              0.669762
+            ]
+          ],
+          "dk": 2,
+          "output": [
+            [
+              6.69762,
+              6.60477
+            ],
+            [
+              3.30238,
+              13.3952
+            ]
+          ],
+          "raw_scores": [
+            [
+              1,
+              0
+            ],
+            [
+              0,
+              1
+            ]
+          ],
+          "row_sums": [
+            [
+              1
+            ],
+            [
+              1
+            ]
+          ],
+          "scaled_scores": [
+            [
+              0.707107,
+              0
+            ],
+            [
+              0,
+              0.707107
+            ]
+          ]
+        },
+        "status": "passed"
+      }
+    ],
+    "console_warnings_errors": [],
+    "disclosure_open_close_states": [
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null
+    ],
+    "labels_and_controls": {
+      "buttons": [
+        {
+          "id": "theme-toggle",
+          "text": "Light theme"
+        }
+      ],
+      "checkboxes": 0,
+      "numeric_cells": [
+        {
+          "label": "Query matrix Q, row 1, column 1",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Query matrix Q, row 1, column 2",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Query matrix Q, row 2, column 1",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Query matrix Q, row 2, column 2",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Key matrix K, row 1, column 1",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Key matrix K, row 1, column 2",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Key matrix K, row 2, column 1",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Key matrix K, row 2, column 2",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Value matrix V, row 1, column 1",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Value matrix V, row 1, column 2",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Value matrix V, row 2, column 1",
+          "max": "",
+          "min": ""
+        },
+        {
+          "label": "Value matrix V, row 2, column 2",
+          "max": "",
+          "min": ""
+        }
+      ],
+      "plot_text": [
+        "query 1",
+        "0.669762",
+        "0.330238",
+        "query 2",
+        "0.330238",
+        "0.669762",
+        "key 1",
+        "key 2",
+        "key position",
+        "query position",
+        "High 0.669762",
+        "Low 0.330238",
+        "query 1",
+        "0.707107",
+        "0",
+        "query 2",
+        "0",
+        "0.707107",
+        "key 1",
+        "key 2",
+        "key position",
+        "query position",
+        "High 0.707107",
+        "Low 0"
+      ],
+      "ranges": []
+    },
+    "layout": {
+      "requested_desktop": [
+        1280,
+        900
+      ],
+      "requested_narrow": [
+        390,
+        844
+      ],
+      "observed": [
+        {
+          "client_width": 1150,
+          "height": 818,
+          "scroll_width": 1150,
+          "width": 1164
+        },
+        {
+          "client_width": 341,
+          "height": 767,
+          "scroll_width": 341,
+          "width": 355
+        }
+      ],
+      "horizontal_overflow": false,
+      "viewport_override_reset": true
+    }
+  },
+  "resolved_findings": [
+    {
+      "id": "attention-impossible-dimension-exploration",
+      "status": "resolved_in_separate_model_repair_package"
+    },
+    {
+      "id": "attention-false-small-matrix-saturation-limit",
+      "status": "resolved_in_separate_model_repair_package"
+    },
+    {
+      "id": "attention-transcription-provenance",
+      "status": "resolved_in_separate_model_repair_package"
+    }
+  ],
+  "findings": [],
+  "offline": {
+    "status": "not tested for this package",
+    "reason": "The browser tool blocks file://; only the revised logistic package has user-reported offline evidence."
+  },
+  "limitations": [
+    "The trace explicitly marks this as a saved-candidate live repair, not a fresh CLI run.",
+    "The required Python 3.11 environment has not been established by P2; checks used Python 3.12.",
+    "Fixed 2x2 supplied matrices only; no scientific scaling checkbox/unscaled mode is generated. This package passes its stated fixed-matrix mechanism, but cannot establish the separate checkbox capability."
+  ]
+}
