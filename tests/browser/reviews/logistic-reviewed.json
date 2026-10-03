@@ -1,0 +1,1148 @@
+{
+  "artifact_commit": "781b369186afe61362dcefc84924c3944f2ceb92",
+  "package": "examples/generated/logistic-reviewed",
+  "review_date": "2026-10-03",
+  "reviewer": "P2",
+  "acceptance": "accepted_for_stated_science_and_browser_scope",
+  "generation_mode": "saved_model_candidate_live_repair",
+  "fresh_cli_generation": false,
+  "scope": "Independent review of the exact renderer output after a live model component repair of the earlier saved model candidate. This does not certify a new end-to-end CLI generation or generalization to an unfamiliar mechanism.",
+  "previous_package_review": "tests/browser/reviews/logistic-map.json",
+  "artifact_hashes": {
+    "input.json": {
+      "git_blob_sha256": "6b0b524c7fd0cabe044ec8d47c1d537b919248154fd566389933985aff21b4da",
+      "reviewed_checkout_sha256": "2ef386202e1f34d5f9b1c5b4add090761b8aece35d479129055ea4dff6772a19"
+    },
+    "lesson.json": {
+      "git_blob_sha256": "0de8b4e2c9bd841fc9c6039326cc50808a89d6a02c55df46103ccfef1940c023",
+      "reviewed_checkout_sha256": "47369daf0b5f8cc8913affcf57c7fde08d972962da44a123b460628a31b0d253"
+    },
+    "index.html": {
+      "git_blob_sha256": "00e035f91c5f4c7a22acebd1c19c66118092d6dfb189dfa7d58598219d92d04f",
+      "reviewed_checkout_sha256": "282bc607ca14445f8cb43e37bed6000098c93f737dec2df239117b960f2695ce"
+    },
+    "trace.jsonl": {
+      "git_blob_sha256": "886d49f6fbc472be76e58adcb690d06613e7d96a048771825bad059a7c1dd7a8",
+      "reviewed_checkout_sha256": "9459ccdadde00eea70bbf5e010f057ad1a31c464e11884585c91631c412b3e3c"
+    }
+  },
+  "hash_note": "Git LF and Windows CRLF hashes recorded. All generated files remained unchanged.",
+  "identity": {
+    "embedded_spec_matches_saved_json": true,
+    "embedded_AST_matches_saved_computations": true,
+    "embedded_math_core_matches_reviewed_checkout": true,
+    "embedded_UI_matches_reviewed_checkout": true,
+    "expressions_preserved_from_original": true,
+    "numerical_cases_preserved_from_original": true
+  },
+  "model": "deepseek/deepseek-v4.1-flash",
+  "trace_summary": {
+    "start": {
+      "mode": "saved_model_candidate_live_repair",
+      "candidate_sha256": "a1b1ee7cb73036f1e31b1c9a95d95e35d7801639f32c4db98f5212a6157796e1",
+      "fresh_cli_generation": false,
+      "model": "deepseek/deepseek-v4.1-flash",
+      "browser_executed": false,
+      "independent_science_verified": false
+    },
+    "finish_result": "success",
+    "finish": {
+      "requests": 1,
+      "request_limit": 10,
+      "observed_prompt_tokens": 5688,
+      "observed_completion_tokens": 718,
+      "observed_total_tokens": 6406,
+      "observed_reasoning_tokens": 0,
+      "usage_is_complete": true,
+      "attempts_missing_usage": {
+        "prompt_tokens": 0,
+        "completion_tokens": 0,
+        "total_tokens": 0
+      },
+      "reserved_completion_tokens": 3500,
+      "completion_token_limit": 30000,
+      "elapsed_seconds": 4.939,
+      "remaining_seconds": 565.061,
+      "independent_science_verified": false,
+      "browser_executed": false,
+      "teaching_repair_requires_independent_review": true
+    },
+    "live_model_responses": [
+      {
+        "timestamp": "2026-10-03T11:27:44.849930+00:00",
+        "stage": "openrouter",
+        "action": "response",
+        "result": "received",
+        "metadata": {
+          "request_number": 1,
+          "status_code": 200,
+          "response_id": "gen-1791026860-HVT2LpKHVDmuAUFJXBzh",
+          "elapsed_seconds": 4.858,
+          "usage": {
+            "prompt_tokens": 5688,
+            "completion_tokens": 718,
+            "total_tokens": 6406,
+            "reasoning_tokens": 0
+          },
+          "resolved_model": "deepseek/deepseek-v4.1-flash"
+        }
+      }
+    ]
+  },
+  "source_fidelity": {
+    "url": "https://ned.ipac.caltech.edu/level5/Sept01/May/May2.html",
+    "equations_independently_verified": true,
+    "equation_transcription_explicitly_identified": true,
+    "original_prose_findings_resolved": true
+  },
+  "numerical_core_observations": [
+    {
+      "state": {
+        "r": 4,
+        "x0": 0.25
+      },
+      "ok": true,
+      "outputs": {
+        "x1": 0.75,
+        "x2": 0.75,
+        "x3": 0.75,
+        "x4": 0.75,
+        "trajectory": [
+          0.25,
+          0.75,
+          0.75,
+          0.75,
+          0.75
+        ]
+      },
+      "expected": {
+        "x1": 0.75,
+        "x2": 0.75,
+        "x3": 0.75,
+        "x4": 0.75,
+        "trajectory": [
+          0.25,
+          0.75,
+          0.75,
+          0.75,
+          0.75
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "r": 4,
+        "x0": 0.5
+      },
+      "ok": true,
+      "outputs": {
+        "x1": 1,
+        "x2": 0,
+        "x3": 0,
+        "x4": 0,
+        "trajectory": [
+          0.5,
+          1,
+          0,
+          0,
+          0
+        ]
+      },
+      "expected": {
+        "x1": 1.0,
+        "x2": 0.0,
+        "x3": 0.0,
+        "x4": 0.0,
+        "trajectory": [
+          0.5,
+          1.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "r": 4,
+        "x0": 0
+      },
+      "ok": true,
+      "outputs": {
+        "x1": 0,
+        "x2": 0,
+        "x3": 0,
+        "x4": 0,
+        "trajectory": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "expected": {
+        "x1": 0,
+        "x2": 0,
+        "x3": 0,
+        "x4": 0,
+        "trajectory": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "r": 4,
+        "x0": 1
+      },
+      "ok": true,
+      "outputs": {
+        "x1": 0,
+        "x2": 0,
+        "x3": 0,
+        "x4": 0,
+        "trajectory": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "expected": {
+        "x1": 0,
+        "x2": 0,
+        "x3": 0,
+        "x4": 0,
+        "trajectory": [
+          1,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "r": 2,
+        "x0": 0.5
+      },
+      "ok": true,
+      "outputs": {
+        "x1": 0.5,
+        "x2": 0.5,
+        "x3": 0.5,
+        "x4": 0.5,
+        "trajectory": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "expected": {
+        "x1": 0.5,
+        "x2": 0.5,
+        "x3": 0.5,
+        "x4": 0.5,
+        "trajectory": [
+          0.5,
+          0.5,
+          0.5,
+          0.5,
+          0.5
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "r": 3,
+        "x0": 0.2
+      },
+      "ok": true,
+      "outputs": {
+        "x1": 0.4800000000000001,
+        "x2": 0.7488,
+        "x3": 0.56429568,
+        "x4": 0.7375981966000129,
+        "trajectory": [
+          0.2,
+          0.4800000000000001,
+          0.7488,
+          0.56429568,
+          0.7375981966000129
+        ]
+      },
+      "expected": {
+        "x1": 0.4800000000000001,
+        "x2": 0.7488,
+        "x3": 0.56429568,
+        "x4": 0.7375981966000129,
+        "trajectory": [
+          0.2,
+          0.4800000000000001,
+          0.7488,
+          0.56429568,
+          0.7375981966000129
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "r": 0,
+        "x0": 0.5
+      },
+      "ok": true,
+      "outputs": {
+        "x1": 0,
+        "x2": 0,
+        "x3": 0,
+        "x4": 0,
+        "trajectory": [
+          0.5,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "expected": {
+        "x1": 0.0,
+        "x2": 0.0,
+        "x3": 0.0,
+        "x4": 0.0,
+        "trajectory": [
+          0.5,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "passed": true
+    },
+    {
+      "state": {
+        "r": 5,
+        "x0": 0.5
+      },
+      "ok": false,
+      "error": "Growth parameter r: value is outside the allowed bounds.",
+      "expected": "Rejected outside the generated control domain/shape",
+      "passed": true
+    },
+    {
+      "state": {
+        "r": 4,
+        "x0": -0.1
+      },
+      "ok": false,
+      "error": "Initial state x0: value is outside the allowed bounds.",
+      "expected": "Rejected outside the generated control domain/shape",
+      "passed": true
+    }
+  ],
+  "browser": {
+    "name": "Codex in-app Chromium",
+    "version": "not supplied by browser tool",
+    "tolerance": {
+      "atol": 5e-06,
+      "rtol": 5e-06
+    },
+    "observations": [
+      {
+        "action": "Default four updates",
+        "state": {
+          "r": 4.0,
+          "x0": 0.5
+        },
+        "raw_control_values": {
+          "r": [
+            "4"
+          ],
+          "x0": [
+            "0.5"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 1.0,
+          "x2": 0.0,
+          "x3": 0.0,
+          "x4": 0.0,
+          "trajectory": [
+            0.5,
+            1.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.5,
+            1,
+            0,
+            0,
+            0
+          ],
+          "x1": 1,
+          "x2": 0,
+          "x3": 0,
+          "x4": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Quarter initial state",
+        "state": {
+          "r": 4.0,
+          "x0": 0.25
+        },
+        "raw_control_values": {
+          "r": [
+            "4"
+          ],
+          "x0": [
+            "0.25"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.75,
+          "x2": 0.75,
+          "x3": 0.75,
+          "x4": 0.75,
+          "trajectory": [
+            0.25,
+            0.75,
+            0.75,
+            0.75,
+            0.75
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.25,
+            0.75,
+            0.75,
+            0.75,
+            0.75
+          ],
+          "x1": 0.75,
+          "x2": 0.75,
+          "x3": 0.75,
+          "x4": 0.75
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Zero initial state",
+        "state": {
+          "r": 4.0,
+          "x0": 0.0
+        },
+        "raw_control_values": {
+          "r": [
+            "4"
+          ],
+          "x0": [
+            "0"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.0,
+          "x2": 0.0,
+          "x3": 0.0,
+          "x4": 0.0,
+          "trajectory": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "x1": 0,
+          "x2": 0,
+          "x3": 0,
+          "x4": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Unit initial state",
+        "state": {
+          "r": 4.0,
+          "x0": 1.0
+        },
+        "raw_control_values": {
+          "r": [
+            "4"
+          ],
+          "x0": [
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.0,
+          "x2": 0.0,
+          "x3": 0.0,
+          "x4": 0.0,
+          "trajectory": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "x1": 0,
+          "x2": 0,
+          "x3": 0,
+          "x4": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Fixed point at r2",
+        "state": {
+          "r": 2.0,
+          "x0": 0.5
+        },
+        "raw_control_values": {
+          "r": [
+            "2"
+          ],
+          "x0": [
+            "0.5"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.5,
+          "x2": 0.5,
+          "x3": 0.5,
+          "x4": 0.5,
+          "trajectory": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.5,
+            0.5,
+            0.5,
+            0.5,
+            0.5
+          ],
+          "x1": 0.5,
+          "x2": 0.5,
+          "x3": 0.5,
+          "x4": 0.5
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Zero growth",
+        "state": {
+          "r": 0.0,
+          "x0": 0.5
+        },
+        "raw_control_values": {
+          "r": [
+            "0"
+          ],
+          "x0": [
+            "0.5"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.0,
+          "x2": 0.0,
+          "x3": 0.0,
+          "x4": 0.0,
+          "trajectory": [
+            0.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.5,
+            0,
+            0,
+            0,
+            0
+          ],
+          "x1": 0,
+          "x2": 0,
+          "x3": 0,
+          "x4": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Nonconstant interior four updates",
+        "state": {
+          "r": 3.0,
+          "x0": 0.2
+        },
+        "raw_control_values": {
+          "r": [
+            "3"
+          ],
+          "x0": [
+            "0.2"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.4800000000000001,
+          "x2": 0.7488,
+          "x3": 0.56429568,
+          "x4": 0.7375981966000129,
+          "trajectory": [
+            0.2,
+            0.4800000000000001,
+            0.7488,
+            0.56429568,
+            0.7375981966000129
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.2,
+            0.48,
+            0.7488,
+            0.564296,
+            0.737598
+          ],
+          "x1": 0.48,
+          "x2": 0.7488,
+          "x3": 0.564296,
+          "x4": 0.737598
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Growth upper endpoint clamp",
+        "state": {
+          "r": 4.0,
+          "x0": 0.2
+        },
+        "raw_control_values": {
+          "r": [
+            "4"
+          ],
+          "x0": [
+            "0.2"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.6400000000000001,
+          "x2": 0.9215999999999999,
+          "x3": 0.28901376000000045,
+          "x4": 0.8219392261226504,
+          "trajectory": [
+            0.2,
+            0.6400000000000001,
+            0.9215999999999999,
+            0.28901376000000045,
+            0.8219392261226504
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.2,
+            0.64,
+            0.9216,
+            0.289014,
+            0.821939
+          ],
+          "x1": 0.64,
+          "x2": 0.9216,
+          "x3": 0.289014,
+          "x4": 0.821939
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Growth lower endpoint clamp",
+        "state": {
+          "r": 0.0,
+          "x0": 0.2
+        },
+        "raw_control_values": {
+          "r": [
+            "0"
+          ],
+          "x0": [
+            "0.2"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.0,
+          "x2": 0.0,
+          "x3": 0.0,
+          "x4": 0.0,
+          "trajectory": [
+            0.2,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.2,
+            0,
+            0,
+            0,
+            0
+          ],
+          "x1": 0,
+          "x2": 0,
+          "x3": 0,
+          "x4": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Initial upper endpoint clamp",
+        "state": {
+          "r": 0.0,
+          "x0": 1.0
+        },
+        "raw_control_values": {
+          "r": [
+            "0"
+          ],
+          "x0": [
+            "1"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.0,
+          "x2": 0.0,
+          "x3": 0.0,
+          "x4": 0.0,
+          "trajectory": [
+            1.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "x1": 0,
+          "x2": 0,
+          "x3": 0,
+          "x4": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Initial lower endpoint clamp",
+        "state": {
+          "r": 0.0,
+          "x0": 0.0
+        },
+        "raw_control_values": {
+          "r": [
+            "0"
+          ],
+          "x0": [
+            "0"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.0,
+          "x2": 0.0,
+          "x3": 0.0,
+          "x4": 0.0,
+          "trajectory": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "x1": 0,
+          "x2": 0,
+          "x3": 0,
+          "x4": 0
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Return to legal interior",
+        "state": {
+          "r": 3.0,
+          "x0": 0.2
+        },
+        "raw_control_values": {
+          "r": [
+            "3"
+          ],
+          "x0": [
+            "0.2"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.4800000000000001,
+          "x2": 0.7488,
+          "x3": 0.56429568,
+          "x4": 0.7375981966000129,
+          "trajectory": [
+            0.2,
+            0.4800000000000001,
+            0.7488,
+            0.56429568,
+            0.7375981966000129
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.2,
+            0.48,
+            0.7488,
+            0.564296,
+            0.737598
+          ],
+          "x1": 0.48,
+          "x2": 0.7488,
+          "x3": 0.564296,
+          "x4": 0.737598
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Switch to light",
+        "state": {
+          "r": 3.0,
+          "x0": 0.2
+        },
+        "raw_control_values": {
+          "r": [
+            "3"
+          ],
+          "x0": [
+            "0.2"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "true",
+        "expected": {
+          "x1": 0.4800000000000001,
+          "x2": 0.7488,
+          "x3": 0.56429568,
+          "x4": 0.7375981966000129,
+          "trajectory": [
+            0.2,
+            0.4800000000000001,
+            0.7488,
+            0.56429568,
+            0.7375981966000129
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.2,
+            0.48,
+            0.7488,
+            0.564296,
+            0.737598
+          ],
+          "x1": 0.48,
+          "x2": 0.7488,
+          "x3": 0.564296,
+          "x4": 0.737598
+        },
+        "status": "passed"
+      },
+      {
+        "action": "Restore dark",
+        "state": {
+          "r": 3.0,
+          "x0": 0.2
+        },
+        "raw_control_values": {
+          "r": [
+            "3"
+          ],
+          "x0": [
+            "0.2"
+          ]
+        },
+        "status_message": "Calculations and visualizations updated.",
+        "svg_count": 1,
+        "theme_pressed": "false",
+        "expected": {
+          "x1": 0.4800000000000001,
+          "x2": 0.7488,
+          "x3": 0.56429568,
+          "x4": 0.7375981966000129,
+          "trajectory": [
+            0.2,
+            0.4800000000000001,
+            0.7488,
+            0.56429568,
+            0.7375981966000129
+          ]
+        },
+        "observed": {
+          "trajectory": [
+            0.2,
+            0.48,
+            0.7488,
+            0.564296,
+            0.737598
+          ],
+          "x1": 0.48,
+          "x2": 0.7488,
+          "x3": 0.564296,
+          "x4": 0.737598
+        },
+        "status": "passed"
+      }
+    ],
+    "console_warnings_errors": [],
+    "disclosure_open_close_states": [
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null,
+      "",
+      null
+    ],
+    "labels_and_controls": {
+      "buttons": [
+        {
+          "id": "theme-toggle",
+          "text": "Light theme"
+        }
+      ],
+      "checkboxes": 0,
+      "numeric_cells": [],
+      "plot_text": [
+        "0",
+        "0.1872",
+        "0.3744",
+        "0.5616",
+        "0.7488",
+        "Iteration",
+        "State x",
+        "x0",
+        "0.2",
+        "x1",
+        "0.48",
+        "x2",
+        "0.7488",
+        "x3",
+        "0.564296",
+        "x4",
+        "0.737598"
+      ],
+      "ranges": [
+        {
+          "id": "control-r",
+          "max": "4",
+          "min": "0",
+          "step": "0.01"
+        },
+        {
+          "id": "control-x0",
+          "max": "1",
+          "min": "0",
+          "step": "0.01"
+        }
+      ]
+    },
+    "layout": {
+      "requested_desktop": [
+        1280,
+        900
+      ],
+      "requested_narrow": [
+        390,
+        844
+      ],
+      "observed": [
+        {
+          "client_width": 1150,
+          "height": 818,
+          "scroll_width": 1150,
+          "width": 1164
+        },
+        {
+          "client_width": 341,
+          "height": 767,
+          "scroll_width": 341,
+          "width": 355
+        }
+      ],
+      "horizontal_overflow": false,
+      "viewport_override_reset": true
+    }
+  },
+  "resolved_findings": [
+    {
+      "id": "logistic-cycle-claim",
+      "status": "resolved_in_separate_model_repair_package"
+    },
+    {
+      "id": "logistic-stale-plot-description",
+      "status": "resolved_in_separate_model_repair_package"
+    },
+    {
+      "id": "logistic-transcription-provenance",
+      "status": "resolved_in_separate_model_repair_package"
+    }
+  ],
+  "findings": [],
+  "offline": {
+    "status": "passed_user_reported",
+    "reviewer": "P2 human user",
+    "date": "2026-10-03",
+    "browser": "Chromium; version not supplied",
+    "method": "file:// opened with network disconnected",
+    "html_sha256": "282bc607ca14445f8cb43e37bed6000098c93f737dec2df239117b960f2695ce",
+    "before": {
+      "state": {
+        "r": 4,
+        "x0": 0.5
+      },
+      "expected": [
+        0.5,
+        1,
+        0,
+        0,
+        0
+      ],
+      "observed": [
+        0.5,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    "after": {
+      "state": {
+        "r": 4,
+        "x0": 0.25
+      },
+      "expected": [
+        0.25,
+        0.75,
+        0.75,
+        0.75,
+        0.75
+      ],
+      "observed": [
+        0.25,
+        0.75,
+        0.75,
+        0.75,
+        0.75
+      ]
+    },
+    "note": "Recorded from the explicit human reply. This is not a tool-executed direct-file check."
+  },
+  "limitations": [
+    "The trace explicitly marks this as a saved-candidate live repair, not a fresh CLI run.",
+    "The required Python 3.11 environment has not been established by P2; checks used Python 3.12."
+  ]
+}
