@@ -28,7 +28,7 @@ def compile_expression(expression: str, names: set[str]) -> tuple[list, set[str]
             raise SpecError("Expression nesting exceeds 32.")
         child = lambda value: visit(value, depth + 1)
         if isinstance(node, ast.Constant) and type(node.value) in (int, float):
-            if not math.isfinite(node.value) or abs(node.value) > 1e6:
+            if abs(node.value) > 1e6 or not math.isfinite(node.value):
                 raise SpecError("Expression constant is out of bounds.")
             return ["num", node.value]
         if isinstance(node, ast.Name) and node.id in names:

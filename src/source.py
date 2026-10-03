@@ -100,8 +100,8 @@ def _extract(data: bytes, is_pdf: bool, budget: Budget) -> tuple[str, tuple[str,
 
 def _checked(text: str, url: str, method: str, locations: tuple[str, ...], trace: Trace) -> Source:
     text = text.strip()
-    if len(text) < 100:
-        raise SourceError("Source extraction produced fewer than 100 characters of usable text.")
+    if not text:
+        raise SourceError("Source extraction produced no usable text.")
     original_length = len(text)
     text = text[:MAX_TEXT_CHARS]
     trace.event(

@@ -12,3 +12,4 @@ review-out/
 *.pdf
 *.zip
 probe-out/
+.DS_Store

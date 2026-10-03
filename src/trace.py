@@ -35,7 +35,11 @@ class Trace:
             return {
                 str(key): (
                     "[REDACTED]"
-                    if self._PRIVATE_KEYS.search(str(key))
+                    if self._PRIVATE_KEYS.search(str(key)) and not (
+                        str(key) in {"reasoning_tokens", "observed_reasoning_tokens"}
+                        and (type(item) is int or item is None)
+                        or str(key) == "reasoning_effort" and isinstance(item, str)
+                        and item in {"none", "minimal", "low", "medium", "high"})
                     else self._redact(item)
                 )
                 for key, item in value.items()
