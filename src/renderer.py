@@ -8,6 +8,7 @@ model output is data and checked expression trees, never executable JavaScript.
 import html
 import json
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 ASSETS = Path(__file__).parent
@@ -28,9 +29,10 @@ def _json(value: object) -> str:
 def _provenance(item: dict) -> str:
     kind = item["provenance"]
     label = "Source-supported relationship" if kind == "source_supported" else "Teaching simplification"
-    evidence = ", ".join(item.get("evidence_ids", []))
+    evidence = ", ".join(f'<a href="#evidence-{_text(identifier)}">{_text(identifier)}</a>'
+                         for identifier in item.get("evidence_ids", []))
     return (f'<span class="badge">{label}</span>'
-            + (f'<span class="evidence"> Evidence: {_text(evidence)}</span>' if evidence else ""))
+            + (f'<span class="evidence"> Evidence: {evidence}</span>' if evidence else ""))
 
 
 def _control(control: dict) -> str:
@@ -59,12 +61,16 @@ def render(spec: dict, compiled: dict) -> str:
     equations = "".join(
         f'<article><p class="formula">{_text(item["expression"])}</p><p>{_text(item["explanation"])}</p>'
         f'<p>{_provenance(item)}</p></article>' for item in spec["equations"])
+    steps = "".join(
+        f'<li><h3>{_text(item["heading"])}</h3><p>{_text(item["body"])}</p>'
+        f'<p>{_provenance(item)}</p></li>' for item in spec.get("explanation_steps", []))
     controls = "".join(_control(item) for item in spec["controls"])
     calculations = "".join(
         f'<article class="calculation"><h3>{_text(item["label"])}</h3>'
-        f'<code>{_text(item["expression"])}</code>'
         f'<pre id="calculation-{_text(item["id"])}" aria-live="polite">—</pre>'
-        f'<p class="muted">{_text(item["unit"])}</p><p>{_provenance(item)}</p></article>'
+        f'<p class="unit">{_text(item["unit"])}</p>'
+        f'<details><summary>Calculation and evidence</summary><code>{_text(item["expression"])}</code>'
+        f'<p>{_provenance(item)}</p></details></article>'
         for item in spec["computations"] if item["show"])
     visuals = "".join(
         f'<figure><h3>{_text(item["title"])}</h3>'
@@ -86,23 +92,29 @@ def render(spec: dict, compiled: dict) -> str:
     simplifications = "".join(f'<li>{_text(item)}</li>' for item in grounding["teaching_simplifications"])
     config = _json({"spec": spec, "compiled": compiled})
     title = _text(spec["title"])
+    source_url = grounding["source_url"]
+    parsed = urlparse(source_url)
+    source_link = (f'<a href="{_text(source_url)}" target="_blank" rel="noopener noreferrer">Read the source</a>'
+                   if parsed.scheme in ("http", "https") and parsed.netloc
+                   else _text(source_url))
     return f'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src 'none'; connect-src 'none'; font-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>{title}</title><style>{style}</style></head>
-<body><main><header><p class="eyebrow">Paper to Playground · interactive lesson</p><h1>{title}</h1></header>
+<body><a class="skip-link" href="#controls">Skip to the interactive controls</a><main><header><p class="eyebrow">Paper to Playground · interactive lesson</p><h1>{title}</h1><nav aria-label="Lesson navigation"><a href="#concept">Understand</a><a href="#controls">Explore</a><a href="#grounding">Check the source</a></nav></header>
 <section id="concept"><h2>The concept</h2><p>{_text(spec["concept_summary"])}</p></section>
 <section id="why"><h2>Why it matters</h2><p>{_text(spec["why_it_matters"])}</p></section>
 <section id="terms"><h2>Symbols and terms</h2><dl>{terms}</dl></section>
 <section id="equations"><h2>Relationships</h2>{equations}</section>
+{('<section id="explanation"><h2>How the mechanism works</h2><ol class="explanation-steps">' + steps + '</ol></section>') if steps else ''}
 <section id="controls"><h2>Explore the mechanism</h2><p class="muted">Changing a value recomputes the displayed results and plots. Arrays use JSON notation.</p><div class="control-grid">{controls}</div>
 <p id="runtime-status" role="status" aria-live="polite">Initializing calculations…</p></section>
-<section id="calculations"><h2>Executable calculations</h2><p class="muted">Displayed numbers are rounded to six significant digits. Calculations use full floating-point precision.</p><div class="calculation-grid">{calculations}</div></section>
+<section id="calculations"><h2>Calculated results</h2><p class="muted">Displayed numbers are rounded to six significant digits. Calculations use full floating-point precision.</p><div class="calculation-grid">{calculations}</div></section>
 <section id="visualizations"><h2>See what changes</h2>{visuals}</section>
-<section id="explorations"><h2>Two guided explorations</h2><ol>{explorations}</ol></section>
+<section id="explorations"><h2>Try these explorations</h2><ol>{explorations}</ol></section>
 <section id="limitations"><h2>Assumptions and limitations</h2><ul>{limitations}</ul></section>
-<section id="grounding"><h2>Grounding in the source</h2><p><strong>{_text(grounding["paper_title"])}</strong></p><p class="source-url">{_text(grounding["source_url"])}</p><h3>Source-supported claims</h3><ul>{claims}</ul><h3>Our teaching simplifications</h3><ul>{simplifications}</ul><p class="muted">This lesson illustrates a mechanism. A toy calculation does not reproduce the paper’s experimental results.</p></section>
+<section id="grounding"><h2>Grounding in the source</h2><p><strong>{_text(grounding["paper_title"])}</strong></p><p class="source-url">{source_link}</p><h3>Source-supported claims</h3><ul>{claims}</ul><h3>Our teaching simplifications</h3><ul>{simplifications}</ul><p class="muted">This lesson illustrates a mechanism. A toy calculation does not reproduce the paper’s experimental results.</p></section>
 <footer>All calculations and visualizations run locally in this file.</footer></main>
 <script id="lesson-data" type="application/json">{config}</script><script>{runtime}</script></body></html>'''
 
@@ -113,6 +125,7 @@ def main() -> int:
     import sys
     from .expressions import compile_computations
     from .models import SpecError, validate_schema
+    from .validator import validate_html
 
     parser = argparse.ArgumentParser(description="Render a saved LessonSpec without an API call.")
     parser.add_argument("--spec", required=True, type=Path)
@@ -123,6 +136,7 @@ def main() -> int:
         validate_schema(spec)
         compiled, _ = compile_computations(spec)
         page = render(spec, compiled)
+        validate_html(page, spec)
         args.output.parent.mkdir(parents=True, exist_ok=True)
         args.output.write_text(page, encoding="utf-8")
     except (OSError, ValueError, SpecError) as exc:

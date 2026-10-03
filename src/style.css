@@ -29,6 +29,17 @@ header {
   padding: 1rem 0 1.5rem
 }
 
+a { color: var(--accent); text-underline-offset: .2em }
+a:focus-visible, summary:focus-visible, button:focus-visible { outline: 3px solid #70cee5; outline-offset: 3px }
+.skip-link { position: absolute; left: 1rem; top: -5rem; padding: .7rem; background: white; z-index: 1 }
+.skip-link:focus { top: 1rem }
+nav { display: flex; flex-wrap: wrap; gap: 1.3rem; margin-top: 1.2rem; font-size: .9rem }
+summary { cursor: pointer; color: var(--muted); font-size: .85rem }
+details code { display: block; margin-top: .5rem; font-size: .85rem }
+.explanation-steps { padding-left: 1.6rem }
+.explanation-steps li { padding-left: .3rem; margin-bottom: 1.4rem }
+.unit { font-size: .85rem; color: var(--muted) }
+
 h1 {
   font-size: clamp(1.8rem,5vw,2.8rem);
   line-height: 1.15;
@@ -194,6 +205,9 @@ pre {
   padding-top: 0;
   margin-top: 0
 }
+
+.calculation { background: var(--bg); padding: .9rem; border-radius: .4rem }
+.calculation-grid .calculation+article { padding-top: .9rem }
 
 .visual {
   min-height: 180px
