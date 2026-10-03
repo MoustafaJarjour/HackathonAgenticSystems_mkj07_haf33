@@ -45,9 +45,9 @@
     "invalid_states": [{"substrate": 0, "km": 0, "vmax": 10}, {"substrate": -1, "km": 2, "vmax": 10}]
   },
   "logistic_map": {
-    "source_url": "https://www.esalq.usp.br/departamentos/leb/aulas/lce164/simple.pdf",
+    "source_url": "https://ned.ipac.caltech.edu/level5/Sept01/May/May2.html",
     "source_title": "Simple mathematical models with very complicated dynamics",
-    "locator": "Equation (3), section 1",
+    "locator": "Section 2, equation (3)",
     "quote": "This is sometimes called the \"logistic\" difference equation.",
     "relationship": "Equation (3) transcribed: X_(t+1) = a*X_t*(1-X_t). Rename a to r for the teaching example.",
     "cases": [
