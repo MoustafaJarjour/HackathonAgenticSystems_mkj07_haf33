@@ -1,0 +1,220 @@
+{
+  "why_it_matters": "The logistic difference equation is the standard minimal example of a deterministic rule whose repeated application can produce complicated behavior. Seeing the first few iterates makes the recurrence concrete before any claims about long-term dynamics are made.",
+  "visualizations": [
+    {
+      "id": "trajectory_view",
+      "kind": "bars",
+      "labels": [
+        "x0",
+        "x1",
+        "x2",
+        "x3",
+        "x4"
+      ],
+      "source": "trajectory",
+      "title": "Trajectory: initial state plus four updates",
+      "value_label": "x value",
+      "x_label": "Iteration",
+      "y_label": "State x"
+    }
+  ],
+  "title": "Four Updates of the Logistic Difference Equation",
+  "terms": [
+    {
+      "symbol": "x",
+      "meaning": "The state of the population or system at a given iteration, restricted here to the interval [0,1]."
+    },
+    {
+      "symbol": "r",
+      "meaning": "The growth or control parameter, restricted here to the interval [0,4]."
+    },
+    {
+      "symbol": "x_next",
+      "meaning": "The state at the next iteration, computed as r*x*(1-x)."
+    },
+    {
+      "symbol": "x0",
+      "meaning": "The initial state before any update is applied."
+    }
+  ],
+  "schema_version": 2,
+  "limitations": [
+    "Only four updates are shown; this short trajectory does not establish chaos or any long-term asymptotic behavior.",
+    "The source text is a reprint excerpt; only the recurrence equation and its name are treated as source-supported here.",
+    "The numerical checks use exactly representable states and do not test sensitivity to small perturbations."
+  ],
+  "grounding": {
+    "paper_title": "Simple mathematical models with very complicated dynamics",
+    "source_url": "https://ned.ipac.caltech.edu/level5/Sept01/May/May2.html",
+    "source_claims": [
+      {
+        "id": "logistic_name",
+        "claim": "The recurrence is sometimes called the logistic difference equation.",
+        "locator": "Section 2, FIRST-ORDER DIFFERENCE EQUATIONS, equation (3)",
+        "quote": "This is sometimes called the \"logistic\" difference equation."
+      },
+      {
+        "id": "logistic_equation",
+        "claim": "The first-order difference equation is X_(t+1) = a*X_t*(1-X_t).",
+        "locator": "Section 2, FIRST-ORDER DIFFERENCE EQUATIONS, equation (3)",
+        "quote": "X_(t+1) = a*X_t*(1-X_t)"
+      }
+    ],
+    "teaching_simplifications": [
+      "The source uses X_(t+1) = a*X_t*(1-X_t); this lesson renames a to r and X to x for modern teaching notation.",
+      "The lesson restricts x to [0,1] and r to [0,4] and displays only four updates, which is a pedagogical choice not stated as a theorem in the excerpt.",
+      "The trajectory visualization is a simple line plot of five values, not a reproduction of any figure from the paper."
+    ]
+  },
+  "explorations": [
+    {
+      "why": "This shows how the same recurrence can produce a fixed point or a longer cycle depending on r, without claiming chaos.",
+      "observe": "At r=2 the values settle to 0.5 after the first update; at r=4 they move through 0.5, 1, 0, 0, 0.",
+      "change": "Set r to 2 and x0 to 0.5, then set r to 4 and x0 to 0.5."
+    },
+    {
+      "why": "This demonstrates that the recurrence uses each output as the next input, so the trajectory is a sequence of dependent states.",
+      "observe": "The first update changes, and all later updates shift accordingly because each step feeds the previous result forward.",
+      "change": "Change x0 from 0.5 to 0.25 while keeping r=4."
+    }
+  ],
+  "explanation_steps": [
+    {
+      "provenance": "source_supported",
+      "heading": "The recurrence rule",
+      "evidence_ids": [
+        "logistic_equation",
+        "logistic_name"
+      ],
+      "body": "The source gives the first-order difference equation X_(t+1) = a*X_t*(1-X_t), sometimes called the logistic difference equation. In modern teaching notation we write x_next = r*x*(1-x)."
+    },
+    {
+      "provenance": "teaching_simplification",
+      "heading": "Iterating four times",
+      "evidence_ids": [],
+      "body": "Starting from an initial state x0, we compute x1 = r*x0*(1-x0), then use x1 as the input to compute x2, and so on through x4. This produces a short trajectory of five values: x0, x1, x2, x3, x4."
+    },
+    {
+      "provenance": "teaching_simplification",
+      "heading": "What the short trajectory shows",
+      "evidence_ids": [],
+      "body": "Four updates are enough to see the recurrence in action and to compare different r values, but they are not enough to establish long-term behavior such as chaos. The lesson therefore makes no claim beyond the displayed iterates."
+    }
+  ],
+  "equations": [
+    {
+      "provenance": "source_supported",
+      "expression": "x_next = r*x*(1-x)",
+      "explanation": "The logistic difference equation in modern teaching notation, equivalent to the source's X_(t+1) = a*X_t*(1-X_t).",
+      "evidence_ids": [
+        "logistic_equation"
+      ]
+    },
+    {
+      "provenance": "teaching_simplification",
+      "expression": "x1 = r*x0*(1-x0)",
+      "explanation": "The first update obtained by applying the recurrence once to the initial state x0.",
+      "evidence_ids": []
+    }
+  ],
+  "controls": [
+    {
+      "step": 0.01,
+      "min": 0,
+      "meaning": "The growth parameter r in the recurrence x_next = r*x*(1-x).",
+      "max": 4,
+      "label": "Growth parameter r",
+      "kind": "range",
+      "id": "r",
+      "default": 4
+    },
+    {
+      "step": 0.01,
+      "min": 0,
+      "meaning": "The initial state x0 before any update is applied.",
+      "max": 1,
+      "label": "Initial state x0",
+      "kind": "range",
+      "id": "x0",
+      "default": 0.5
+    }
+  ],
+  "concept_summary": "The logistic difference equation x_next = r*x*(1-x) is applied repeatedly, using each output as the next input. Starting from an initial state x0, four updates produce a short trajectory of five values. This demonstrates recurrence without claiming to establish chaos.",
+  "computations": [
+    {
+      "evidence_ids": [],
+      "expression": "r*x0",
+      "id": "x1",
+      "label": "First update x1",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": ""
+    },
+    {
+      "evidence_ids": [],
+      "expression": "r*x1*(1-x1)",
+      "id": "x2",
+      "label": "Second update x2",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": ""
+    },
+    {
+      "evidence_ids": [],
+      "expression": "r*x2*(1-x2)",
+      "id": "x3",
+      "label": "Third update x3",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": ""
+    },
+    {
+      "evidence_ids": [],
+      "expression": "r*x3*(1-x3)",
+      "id": "x4",
+      "label": "Fourth update x4",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": ""
+    },
+    {
+      "evidence_ids": [],
+      "expression": "[x0, x1, x2, x3, x4]",
+      "id": "trajectory",
+      "label": "Trajectory: x0, x1, x2, x3, x4",
+      "provenance": "teaching_simplification",
+      "show": true,
+      "unit": ""
+    }
+  ],
+  "checks": [
+    {
+      "state": {
+        "r": 4,
+        "x0": 0.5
+      },
+      "rtol": 0.001,
+      "name": "r=4, x0=0.5",
+      "id": "case_r4",
+      "expected": {
+        "x1": 1,
+        "x4": 0
+      },
+      "atol": 0.001
+    },
+    {
+      "state": {
+        "r": 2,
+        "x0": 0.5
+      },
+      "rtol": 0.001,
+      "name": "r=2, x0=0.5",
+      "id": "case_r2",
+      "expected": {
+        "x1": 0.5,
+        "x4": 0.5
+      },
+      "atol": 0.001
+    }
+  ]
+}

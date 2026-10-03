@@ -1,0 +1,8 @@
+{
+  "source_url": "https://ned.ipac.caltech.edu/level5/Sept01/May/May2.html",
+  "paper_title": "Simple mathematical models with very complicated dynamics",
+  "source_locator": "Section 2, FIRST-ORDER DIFFERENCE EQUATIONS, equation (3)",
+  "focus": "Apply x_next = r*x*(1-x) repeatedly, using each output as the next input. Display the initial state and four updates. This short trajectory demonstrates recurrence, without claiming to establish chaos. Choose complete numerical checks at exactly representable states r=4,x0=0.5 and r=2,x0=0.5, checking named first and fourth updates. The trajectory visualization includes the initial state plus all four updates, hence five values.",
+  "audience": "Undergraduate learner",
+  "excerpt": "Simple mathematical models with very complicated dynamics. Robert M. May (1976). Section 2, equation (3), Caltech/NED reprint.\nThis is sometimes called the \"logistic\" difference equation.\nEquation transcription: X_(t+1) = a*X_t*(1-X_t). Modern teaching notation renames a to r: x_next = r*x*(1-x). The teaching experiment includes x in [0,1] and r in [0,4], displaying only four successive updates."
+}
