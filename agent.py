@@ -127,10 +127,7 @@ def main(argv=None) -> int:
                     spec = design_visualizations(client, case, context, spec, max_tokens=args.visualization_tokens)
                     visualizations_designed = True
                     stage = "visualization_validation"
-                    try:
-                        compiled, spec_checks = validate_spec(spec, source.text, case["source_url"])
-                    except SpecError as exc:
-                        raise VisualizationDesignError(str(exc)) from exc
+                    compiled, spec_checks = validate_spec(spec, source.text, case["source_url"])
                     trace.event("validation", "visualization_spec_checks", "passed", checks=spec_checks)
                     stage = "runtime"
                     runtime_checks = check_runtime(spec, compiled, timeout=min(5.0, budget.remaining()))

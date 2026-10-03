@@ -60,7 +60,8 @@ def view_errors(spec, outputs):
     for view in spec["visualizations"]:
         if view["kind"] == "diagram":
             for source in visualization_sources(view):
-                shape(outputs[source])  # Scalars, vectors and matrices all have live representations.
+                if source in outputs:
+                    shape(outputs[source])
             continue
         dims = shape(outputs[view["source"]])
         required = {"line": 0, "bars": 1, "heatmap": 2}[view["kind"]]
@@ -153,7 +154,7 @@ def check_runtime(spec, compiled, timeout=5.0):
         records.append(record)
     visible = {item["id"] for item in spec["computations"] if item["show"]}
     for view in spec["visualizations"]:
-        visible.update(visualization_sources(view))
+        visible.update(source for source in visualization_sources(view) if source in compiled)
     baseline = results[0].get("outputs")
     probe_results = results[1 + len(cases):1 + len(cases) + len(probes)]
     background_results = results[1 + len(cases) + len(probes):1 + len(cases) + 2 * len(probes)]

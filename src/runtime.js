@@ -298,7 +298,7 @@
             case "line": return linePlot(vis,values,outputs,b);
             case "bars": return barsPlot(vis,outputs);
             case "heatmap": return heatmapPlot(vis,outputs);
-            case "diagram": return diagramPlot(vis,outputs);
+            case "diagram": return diagramPlot(vis,{...values,...outputs});
             default: fail(`Unsupported visualization: ${vis.kind}`);
           }
         } catch(error) {fail(`${vis.title}: ${error.message}`);}

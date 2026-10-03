@@ -91,7 +91,8 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
                     "Charts need source, x_label and y_label.")
             require("diagram" not in v, "Charts cannot include diagram metadata.")
         sources = visualization_sources(v)
-        require(sources <= set(compiled), "Visualization source must reference a computation.")
+        require(sources <= (set(compiled) | set(controls) if v["kind"] == "diagram" else set(compiled)),
+                "Visualization source must reference a computation or a diagram input control.")
         visible.update(sources)
         if v["kind"] == "line":
             control = controls.get(v.get("sweep_control"))
@@ -100,7 +101,7 @@ def validate_spec(spec: dict, source_text: str, source_url: str) -> tuple[dict, 
             require(control["id"] in dependencies[v["source"]],
                     f"{v['id']}: line source '{v['source']}' must be a scalar computation depending on "
                     f"swept control '{control['id']}'. Bind the current-value formula; the renderer samples it.")
-    used = set().union(*(dependencies[name] for name in visible))
+    used = set().union(*(dependencies.get(name, {name}) for name in visible))
     require(set(controls) <= used, "Every control must affect a visual or shown calculation.")
     grounding = spec["grounding"]
     require(grounding["source_url"] == source_url, "Grounding source_url must equal the input URL.")

@@ -30,7 +30,7 @@ Place each node in a distinct grid slot: column 0-2, row 0-3. Use adjacent slots
 keep paths clear of other nodes, and use branches/convergence when they explain real relationships.
 Every node must participate in an edge. Edge from/to use local node ids; no self edges or duplicate
 connections. Edge labels are optional, short operation/relationship labels, never arbitrary equations.
-Node source is optional, references an existing computation, and displays a live scalar, vector preview,
+Node source is optional, references an existing computation or input control, and displays a live scalar, vector preview,
 or matrix shape and small entry preview; omit it for conceptual nodes. Diagrams may explain a sourced mechanism or explicitly
 mark a teaching_simplification. source_supported diagrams need existing grounding evidence_ids.
 Use restrained inline Markdown and $...$ LaTeX in labels, details and captions. No HTML, images, code,

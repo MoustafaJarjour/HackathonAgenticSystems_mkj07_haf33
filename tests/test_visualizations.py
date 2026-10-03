@@ -116,9 +116,11 @@ class VisualizationTests(unittest.TestCase):
                     validate_spec(spec, SOURCE, SOURCE_URL)
         invalid = diagram()
         invalid["diagram"]["edges"][0]["to"] = "missing"
-        code, events, _ = run_fixture(self.output, visualization_responses=[completion({"visualizations": [invalid]})])
+        empty = {"controls": [], "computations": [], "visualizations": [], "teaching": {}}
+        code, events, _ = run_fixture(self.output, [completion(lesson()), completion(empty), completion(empty)],
+                                     visualization_responses=[completion({"visualizations": [invalid]})])
         self.assertEqual(code, 1)
-        self.assertEqual(events[-1]["metadata"]["error_type"], "VisualizationDesignError")
+        self.assertEqual(events[-1]["metadata"]["error_type"], "SpecError")
 
     def test_node_bound_hidden_computation_is_a_visible_control_effect(self):
         spec = lesson()

@@ -96,6 +96,6 @@ def normalize_references(spec):
         if isinstance(diagram, dict) and isinstance(diagram.get("nodes"), list):
             for node_index, node in enumerate(diagram["nodes"]):
                 if isinstance(node, dict) and "source" in node:
-                    node["source"] = reference(node["source"], computations,
+                    node["source"] = reference(node["source"], computations | controls,
                                                f"visualizations/{index}/diagram/nodes/{node_index}/source")
     return result, records
